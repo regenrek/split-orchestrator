@@ -1,0 +1,22 @@
+# Split Orchestrator profiles for herdr-projects.
+# Add them to ~/.config/herdr-projects/config.toml, or create the same two
+# profiles in the Projects popup (prefix+a, then settings).
+
+[profiles.split-lead]
+agent = "claude"
+model = "opus"
+description = "Coordinator: plans, makes the design decisions, integrates and verifies"
+
+[profiles.split-worker]
+agent = "claude"
+model = "sonnet"
+effort = "high"
+description = "Worker: one clearly scoped slice with known files and a checkable done criterion"
+
+# Optional: make them the defaults for new projects. Existing projects keep
+# their settings; change those with
+#   herdr-projects set <project> thread_profile split-worker
+#   herdr-projects set <project> coordinator_profile split-lead
+[defaults]
+thread_profile = "split-worker"
+coordinator_profile = "split-lead"

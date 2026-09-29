@@ -1,0 +1,14 @@
+{
+  "name": "split-orchestrator",
+  "description": "Split Orchestrator for Claude Code: a strong model coordinates, a cheaper one implements.",
+  "owner": {
+    "name": "Kevin Kern"
+  },
+  "plugins": [
+    {
+      "name": "split-orchestrator",
+      "source": "./plugin",
+      "description": "Your main model plans, decides and verifies; a Sonnet implementer subagent builds the clearly scoped slices."
+    }
+  ]
+}

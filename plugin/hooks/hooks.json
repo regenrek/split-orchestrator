@@ -1,0 +1,18 @@
+{
+  "description": "Load the split-orchestrator delegation rules into every session, and again after /clear and compaction",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/rules/coordinator.md"],
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
