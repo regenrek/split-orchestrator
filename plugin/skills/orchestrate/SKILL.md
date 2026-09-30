@@ -14,6 +14,7 @@ Run the task as its coordinator. You own the plan, every design decision, the in
 - Find the project's checks: test, build, lint and typecheck commands (package.json, Makefile, pyproject.toml, CI config).
 - Write down what done means for the whole task: the behaviour someone can observe, plus the checks that must pass.
 - If an open question would change the design, ask the user now. Questions that only affect one slice can wait for that slice.
+- Before long unattended work, settle the environment facts you'll need, such as which browser, ports or credentials. Find them out yourself where you can and ask the rest now, not halfway through.
 
 ## 2. Split the work into slices
 
@@ -50,9 +51,9 @@ Check: <exact command(s) to run>
 
 ## 4. Handle reports
 
-- **done:** confirm that the reported check actually ran and passed before you build on it.
-- **blocked, or an assumption you didn't plan for:** make the decision yourself. Then send a new brief with the decision and the previous report, or take the slice over.
-- A slice that comes back blocked twice is yours.
+- **done:** don't rely on the report alone. Rerun the slice's check after you merge it.
+- **blocked, or an assumption you didn't plan for:** make the decision yourself, then send a new brief with the decision and the previous report.
+- A slice that comes back blocked twice needs a different cut: narrow it, split it or change the approach. Take it over yourself only if what's left is small.
 
 ## 5. Integrate
 
@@ -61,6 +62,6 @@ Check: <exact command(s) to run>
 
 ## 6. Verify and report
 
-- Run the full checks on the integrated result, not just the per-slice checks. Fix what fails, or report it.
-- If the user wants independent verification and a tool for it is available, such as Proofloop, run it now.
+- Run the checks that cover the integrated result, not just the per-slice checks. Let a subagent run long suites, builds and e2e runs and report the exit code, the failing tests and the last lines of output, so your own context stays small. Fix what fails, or report it.
+- If the user wants independent verification and a tool for it is available, such as a reviewer from another model or Proofloop, run it now. Have every fix of a review finding reviewed again before you call it done. If that isn't possible, report the fix as unreviewed and don't push it.
 - Report to the user: what each slice changed, the decisions you made, every check with its result, anything unverified, and suggested follow-ups.

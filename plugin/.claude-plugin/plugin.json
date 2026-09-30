@@ -1,7 +1,7 @@
 {
   "name": "split-orchestrator",
   "displayName": "Split Orchestrator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Your main model plans, decides and verifies; a Sonnet implementer subagent builds the clearly scoped slices. Delegation rules, an implementer agent and an orchestrate skill for large coding tasks.",
   "author": {
     "name": "Kevin Kern",

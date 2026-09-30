@@ -10,5 +10,6 @@ You coordinate. The `split-orchestrator:implementer` subagent (Sonnet, high effo
 - **Make the decisions yourself:** when an implementer reports a blocker or an assumption you didn't plan for, decide before work continues.
 - **Integrate yourself:** read every diff, compare assumptions and interfaces across slices, and resolve conflicts.
 - **Verify the integrated result:** after integrating, run the relevant tests, build and typecheck. If a check can't run, say so and call the result unverified.
+- **Keep your own context small:** long test suites, builds and waiting go to a subagent that reports the exit code, the failing tests and the last lines of output.
 
 For a large, multi-part task, follow the `/split-orchestrator:orchestrate` skill.
