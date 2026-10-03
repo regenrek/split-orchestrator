@@ -1,70 +1,50 @@
-# Usage & models
+# Usage
 
 [Back to the README](../README.md)
 
-## Install from your shell
+## Roles
+
+| Role | Model | Effort | Responsibility |
+|---|---|---|---|
+| Coordinator/reviewer | `claude-opus-5-5` | `high` | Scope, contracts, ownership, integrated review & final acceptance |
+| Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
+
+Farcall is the required transport. There is no native implementer agent, alternate host worker route or Astra review step. A single Sol worker can implement & integrate. Add workers only for independent deliverables.
+
+These are workflow instructions, not runtime enforcement of model selection or file access. The plugin cannot change the coordinator's model or effort. Start it with the exact settings & check actual worker execution metadata. Missing evidence stays unverified; a mismatch blocks further dispatch. No silent substitutions.
+
+## Setup
+
+Install Split Orchestrator & Farcall's `codex-worker` as shown in the README. Use Farcall with `run` & `run_batch` support; the reviewed reference is 0.1.7. Follow its [installation guide](https://github.com/regenrek/farcall-mcp/blob/main/docs/installation.md). Node 24+, a signed-in Codex CLI & access to the requested model are required.
 
 ```sh
-claude plugin marketplace add regenrek/split-orchestrator
-claude plugin install split-orchestrator@split-orchestrator
+CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
+  claude --model claude-opus-5-5 --effort high
 ```
 
-Start a new session afterwards. The plugin was tested with Claude Code 2.1.284, where the `sonnet` alias resolved to Sonnet 5.5.
+Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
-## Use
+For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Worker browser tools are separate and must not be assumed from the parent connection.
 
-Run your main session on Opus, then work as usual:
+## Task prompt
 
-```bash
-claude --model opus
+Use `/split-orchestrator:orchestrate` followed by the task & constraints. Plan approval is explicit in the short README prompt. The skill respects existing approval rather than asking again.
+
+```text
+/split-orchestrator:orchestrate Build <feature> in <repository>.
+Constraints: <scope, product behavior and environment restrictions>.
+Propose a short plan with observable acceptance criteria and wait for approval.
+Use the fewest workers needed, with isolated checkouts and explicit ownership.
+Give one Sol worker integration responsibility.
+Verify the integrated result through the real entry point and persisted state.
+Report coordinator review findings, evidence and unresolved criteria.
+No push, main merge, deployment or publishing without approval.
 ```
 
-- **Everyday work:** small and mid-size tasks usually stay with the coordinator. It keeps small edits, design questions and anything unclear, and hands off clearly scoped work only when that's clearly bigger than the brief.
-- **A large task:** `/split-orchestrator:orchestrate migrate the billing module to the new payments API`
-- **Delegation on request:** ask for it ("give each module its own subagent"), or call the agent directly with `@agent-split-orchestrator:implementer`.
+The full [orchestration skill](../plugin/skills/orchestrate/SKILL.md) covers failure/retry/conflict behavior, shared ownership, the minimal end-to-end path & acceptance. The [Farcall reference](../plugin/skills/orchestrate/references/farcall.md) covers call arguments, permissions, settings evidence, batch waiting & exact-session corrections.
 
-## How the coordinator decides
+## Upgrade from 0.1
 
-| Delegate to the implementer | Keep in the main session |
-|---|---|
-| A feature slice, bug fix, tests or docs with known files and a checkable done criterion | Open-ended design, unclear requirements, decisions that span modules |
-| Work clearly bigger than the brief it needs | Edits where the brief would be as long as the work |
-| Independent slices with separate files, in parallel | Slices that touch the same files (those run one after another) |
+Version 0.2 replaces the Sonnet-subagent workflow. Update both marketplace plugins & start a new session; an existing session retains old instructions.
 
-Every brief states the goal, context, the files the implementer may edit, the interfaces to use, constraints, done criteria and the exact check to run. When an implementer reports a blocker, the coordinator makes the decision. At the end, the coordinator reads every diff, compares the slices' assumptions and runs the checks on the integrated result, not just the per-slice ones.
-
-The full rules are in [`plugin/rules/coordinator.md`](../plugin/rules/coordinator.md), the implementer in [`plugin/agents/implementer.md`](../plugin/agents/implementer.md), and the orchestration steps in [`plugin/skills/orchestrate/SKILL.md`](../plugin/skills/orchestrate/SKILL.md).
-
-## Models and effort
-
-- **Coordinator:** whatever your session runs. The plugin doesn't change it; Opus is the intended choice.
-- **Implementer:** Sonnet, high effort. Anthropic's [guidance for Sonnet 5.5](https://platform.claude.com/docs/en/models/sonnet-5-5/whats-new-sonnet-5-5) is medium for well-specified agentic coding and high for harder or longer tasks. The plugin has a single worker tier that also takes the harder well-specified slices, so it starts at high. The evals are there to test that choice.
-- **No max effort** for the worker: Anthropic's effort guidance tops out at high for harder agentic coding, and max spends the most tokens.
-- **One main model per session.** Sonnet 5.5 can't read Opus 5.5's thinking blocks, so switching the main model mid-session drops the reasoning so far. Start a new session instead.
-- **For single-session work without subagents**, the [advisor](https://code.claude.com/docs/en/advisor.md) is the lighter option: `claude --model sonnet --advisor opus` lets Sonnet work and consult Opus at decision points.
-
-## Other hosts
-
-Split Orchestrator is a Claude Code plugin, so it runs wherever Claude Code runs. Two hosts have their own way to run work in parallel, and the plugin has notes for both:
-
-| Host | What you get | Support |
-|---|---|---|
-| Claude Code (terminal, IDE, desktop) | Everything above | Supported, covered by the evals |
-| [bb](../hosts/bb/README.md) | The plugin inside bb threads, plus optional rules for running slices as bb child threads with their own worktree | Supported; the child-thread rules aren't covered by the evals |
-| [herdr](../hosts/herdr/README.md) | The plugin in herdr panes, plus `split-lead` and `split-worker` profiles for herdr-projects | Experimental |
-
-## Optional review & browser checks
-
-The README's second example adds Astra review through [Farcall](https://github.com/regenrek/farcall-mcp) & real browser checks through Claude in Chrome. Neither is bundled with Split Orchestrator or needed for the first example.
-
-Install Farcall's `codex-worker`, sign in to the Codex CLI & follow its [host setup guide](https://github.com/regenrek/farcall-mcp/blob/main/docs/installation.md). Start the parent with automatic MCP backgrounding disabled so it can wait for the review without polling.
-
-```sh
-CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 claude --model opus --chrome
-```
-
-Connect the Claude in Chrome extension before the run. If multiple browsers are connected, identify the target browser in the prompt. Use a model ID your Codex CLI supports; the example requests `gpt-6-astra` at high effort, with read-only access.
-
-Both examples require plan approval before implementation & approval before push, publish or deployment. These are explicit instructions for those runs. By default, the orchestration skill shares its plan & continues unless you ask to approve it first.
-
-Three reviewer calls are a budget, not a guarantee of completion. If the final review leads to more fixes, report any unreviewed changes as remaining work.
+If you installed the old optional bb custom-instruction block, remove it with the [bb cleanup helper](../hosts/bb/README.md). Remove old herdr `split-worker` profile/default entries you added for this plugin; the [herdr notes](../hosts/herdr/README.md) describe the new setup. This repository does not edit your host or user configuration automatically.

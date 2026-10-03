@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.2.0 (unreleased)
+
+- Replace the native Sonnet implementer with `gpt-6.1-sol`, high, through Farcall. Coordinator/reviewer is `claude-opus-5-5`, high. No Astra or silent substitutions.
+- Assign one Sol worker exclusive integration responsibility. Use isolated checkouts, shared-component ownership and the fewest workers needed.
+- Deliver shared contracts and a minimal real end-to-end path before expanding dependent work.
+- Use direct Farcall completion waits, batch independent tasks and return corrections to exact original sessions.
+- Require coordinator acceptance of the integrated application and persisted outcomes, including relevant failure, retry and conflict behavior. Keep failed or unverified criteria open.
+- Verify actual settings where metadata supports it; distinguish requested settings from independently reported model identity.
+- Make Farcall a required separate installation. Retire native host-worker profiles and the active Sonnet eval suite; preserve the old results as historical evidence.
+- Refresh setup, examples and the workflow diagram. The bb helper now only removes the old global instruction block.
+
+
 ## 0.1.1 (2026-09-30)
 
 Fixes from the first real run and independent reviews by Fable 5.1 and Astra. Prompt changes only.

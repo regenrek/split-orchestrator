@@ -1,18 +1,9 @@
-# Split Orchestrator in herdr (experimental)
+# Split Orchestrator in herdr
 
-[herdr](https://herdr.dev) runs Claude Code in its panes, so the plugin works there as in any terminal: install it as in the [main README](../../README.md), and each Claude Code pane gets the rules, the implementer subagent and the orchestrate skill.
+Use a Claude Code pane with Split Orchestrator & Farcall installed, following the [main README](../../README.md). Start the parent with `claude-opus-5-5`, high, and the completion-wait environment settings.
 
-If you use the [herdr-projects](https://github.com/eliasstravik/herdr-projects) plugin, its coordinator starts worker threads from named profiles. [`profiles.toml`](profiles.toml) defines two that match the plugin's split:
+The coordinator dispatches Sol through Farcall. This version does not provide herdr-projects worker profiles or use panes as an alternate implementation transport.
 
-| Profile | Model | Effort | Role |
-|---|---|---|---|
-| `split-lead` | Opus | default | Coordinator |
-| `split-worker` | Sonnet | high | Worker threads |
+If you added the old `split-lead` / `split-worker` profiles and defaults for 0.1, remove those entries from your herdr-projects settings or choose your usual defaults. Do not delete unrelated profiles. This repository does not edit your settings.
 
-The herdr-projects coordinator picks a profile per thread by its description, so the worker's description says what kind of task belongs there.
-
-Profiles live in `~/.config/herdr-projects/config.toml`, which the coordinator never writes. Add them yourself, or in the Projects popup (`prefix+a`, then settings).
-
-## Status
-
-Experimental: the profile format follows the herdr-projects docs, and the author doesn't use herdr day to day. Reports and pull requests are welcome.
+Host-specific waiting and browser behavior still need a live check in your setup.

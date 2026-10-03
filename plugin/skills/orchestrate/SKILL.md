@@ -1,67 +1,68 @@
 ---
 name: orchestrate
-description: Coordinate a large, multi-part coding task. Plan it, split it into clearly scoped slices, delegate them to split-orchestrator:implementer subagents, then integrate and verify the result yourself. Use for features, migrations or refactors made of several independent pieces of work, or when the user asks to orchestrate, split up or delegate a task.
-argument-hint: <task>
+description: Coordinate implementation through Farcall with Opus reviewing and Sol implementing and integrating. Use for features, fixes, migrations or refactors that the user wants built or orchestrated. Requires the configured Opus session and Farcall Codex worker; do not use for read-only questions.
+argument-hint: <task and optional constraints>
 ---
 
 # Orchestrate
 
-Run the task as its coordinator. You own the plan, every design decision, the integration and the final check. `split-orchestrator:implementer` subagents (Sonnet, high effort) build the clearly scoped slices.
+You coordinate and own final acceptance. Sol owns implementation, integration and corrections.
 
-## 1. Understand the task and define done
+## 1. Verify the setup
 
-- Read enough of the code to plan: entry points, the modules involved, existing patterns.
-- Find the project's checks: test, build, lint and typecheck commands (package.json, Makefile, pyproject.toml, CI config).
-- Write down what done means for the whole task: the behaviour someone can observe, plus the checks that must pass.
-- If an open question would change the design, ask the user now. Questions that only affect one slice can wait for that slice.
-- Before long unattended work, settle the environment facts you'll need, such as which browser, ports or credentials. Find them out yourself where you can and ask the rest now, not halfway through.
+- Coordinator/reviewer: `claude-opus-5-5`, effort `high`.
+- Every implementation/integration worker: `gpt-6.1-sol`, effort `high`, through Farcall's `codex_worker.run` or `codex_worker.run_batch`.
+- No Astra, Sonnet workers, aliases or silent model/effort substitutions. Read the parent session settings and verify worker settings from execution metadata, not a model's self-description. If settings conflict or cannot be verified, report the blocker; do not claim a verified run. A requested setting alone is not evidence of the executed setting.
+- Confirm Farcall and the required local tools are available. Read [the Farcall call contract](references/farcall.md) before dispatch. Do not start replacement workers through native agents, host threads or shell CLI calls if Farcall is unavailable.
+- Follow project instructions. Identify the actual application/entry point, mandatory local checks, browser and test data before unattended execution. Resolve only missing prerequisites; do not repeat an approval already given.
 
-## 2. Split the work into slices
+## 2. Define the work and owners
 
-Give each slice a goal, the files it owns, the interfaces it uses or provides, a done criterion and a check. Then decide who builds it:
+- Read only enough to establish scope, observable acceptance criteria and shared contracts. Leave detailed exploration to the worker that will implement and correct that deliverable.
+- Specify success, failure, retry and conflict behavior where relevant. Include observable stored outcomes, not just response messages.
+- Use the fewest workers needed. Start with one unless independent deliverables justify more. Do not split investigation, coding and fixes into separate owners.
+- Assign each worker an isolated checkout at an agreed base revision, with an explicit branch and file/component ownership. Keep the user's checkout and unsaved work intact. For multi-repository tasks, isolate every writable repository and any mutable runtime state, ports or databases used concurrently.
+- Assign each shared interface/component to exactly one owner. Other workers request changes from that owner; no competing local types, adapters or second implementations. Settle ownership in every handoff.
+- Name one Sol worker as the exclusive integrator and designate its integration branch/checkout. Other workers deliver commits to it. The integrator owns merges and conflict resolution; you review the resulting diff. With one worker, that worker also integrates.
+- Share the short plan and honor any requested plan-approval gate before implementation or dispatch. Preparation must not become unauthorized product changes.
 
-| Slice | Owner |
-|---|---|
-| Clearly scoped, known files, checkable | implementer |
-| Needs a design decision, has unclear requirements or cuts across modules | you |
-| A few lines, or tightly coupled to what you're doing | you |
+## 3. Prove the path, then dispatch independent work
 
-Settle shared interfaces (types, function signatures, API shapes, file formats) before you dispatch anything. Either build them first or write them verbatim into every brief that depends on them.
+Have the relevant owner deliver the shared interfaces early and implement the smallest real path through the entry point, backend and persistence as applicable. Exercise it before dependent work expands. If it fails, return it to that owner first; independent work can continue.
 
-Share the plan with the user in a few lines (slices, owners, what runs in parallel) and continue, unless they asked to approve plans first.
+Each brief stands alone. Include the user's task and constraints, plus only the context needed for that worker's assigned slice. These ownership and acceptance requirements are part of the requested orchestration, not extra restrictions invented by the transport.
 
-## 3. Dispatch
-
-The implementer sees nothing of your conversation, so every brief has to stand on its own:
-
+```text
+Task and constraints: <user request and this worker's deliverable>
+Checkout / branch / base: <assigned paths and exact revision>
+Ownership: <editable files/components; shared owners; integration owner>
+Contracts: <agreed interfaces and required upstream commits>
+Acceptance: <observable success, relevant failure/retry/conflict behavior>
+Checks: <mandatory local checks and actual entry point>
+Handoff: exact changes/commit, evidence, blockers, decisions, unverified criteria.
+Do not edit another owner's components, delegate further, or push, merge to
+main, deploy or publish. Request shared changes from the coordinator.
 ```
-Goal: <what this slice delivers and why>
-Context: <decisions already made, relevant background>
-You may edit: <files or directories>
-Read for context: <files>
-Interfaces: <exact signatures, types or formats to use or provide>
-Constraints: <no new dependencies, keep the public API, style rules, ...>
-Done when: <observable criteria>
-Check: <exact command(s) to run>
-```
 
-- **Parallel:** slices that share no files and don't need each other's output go out together, in one message. In a git repository, give each `isolation: "worktree"` and tell it in the brief to commit its work on the worktree branch, so you can merge it. If worktree isolation isn't available, run them in the shared tree and tell each implementer not to commit.
-- **Sequential:** everything else runs one after another in the working tree.
-- Never dispatch a slice that needs another slice's unfinished result.
+Use direct Farcall completion waits and batch independent tasks in disjoint checkouts. Do not dispatch consumers of unfinished contracts. Do not poll worker status, tail logs repeatedly or do the same work while waiting. A timeout or interrupted batch has an unknown outcome until reconciled, not permission to launch duplicates.
 
-## 4. Handle reports
+## 4. Integrate and correct
 
-- **done:** don't rely on the report alone. Rerun the slice's check after you merge it.
-- **blocked, or an assumption you didn't plan for:** make the decision yourself, then send a new brief with the decision and the previous report.
-- A slice that comes back blocked twice needs a different cut: narrow it, split it or change the approach. Take it over yourself only if what's left is small.
+- Inspect each handoff, including changed paths against ownership, exact session/delegation IDs, actual model/effort evidence, check exit codes and unresolved findings. A completed Farcall call is not task acceptance.
+- Resume the exclusive integrator after its dependencies return. It integrates the agreed commits and runs the mandatory checks against the combined result. Shared ownership violations must be reconciled with the owner before integration is accepted.
+- Workers keep useful regression tests with the implementation, not only in temporary worker artifacts. No extra suites or CI machinery by default.
+- Return corrections to the original worker session with the findings and expected behavior. If that session cannot be resumed, report the limitation before assigning a replacement. Repeated failure calls for a narrower task or a revised decision, never an unannounced model switch.
+- Serialize integration with corrections to the integrator's own checkout. Reintegrate corrected commits through the same integrator; do not edit worker code yourself.
 
-## 5. Integrate
+## 5. Accept the integrated result
 
-- Merge worktree branches one at a time and resolve conflicts yourself.
-- Read every diff. Look for mismatched assumptions or interfaces between slices, duplicated helpers, and edits outside the agreed files.
+- Read the integrated diff yourself. Check shared ownership, interfaces and evidence. Call this **coordinator review**, not independent review.
+- UI tasks require real browser journeys against the real application/backend. Check persisted results by reloading or reading the actual storage/API. Screenshots, mocks and success messages alone do not establish acceptance.
+- For other tasks, exercise the actual CLI, API or library entry point and inspect real outputs and state.
+- Where relevant, test failed reads/writes, delayed responses, concurrent changes and retries with unchanged and changed input. Preserve unsaved work and never acknowledge changes that were not applied.
+- A failed assertion must produce a failed verification result. Missing tools, inaccessible environments and unrun checks remain open; never convert them into a pass.
+- Use worker check evidence to target your acceptance work. Own final acceptance without rerunning every full suite. Keep mandatory local checks; after corrections, recheck affected paths and broaden only if the change or failure requires it.
 
-## 6. Verify and report
+## 6. Report the exact final state
 
-- Run the checks that cover the integrated result, not just the per-slice checks. Let a subagent run long suites, builds and e2e runs and report the exit code, the failing tests and the last lines of output, so your own context stays small. Fix what fails, or report it.
-- If the user wants independent verification and a tool for it is available, such as a reviewer from another model or Proofloop, run it now. Have every fix of a review finding reviewed again before you call it done. If that isn't possible, report the fix as unreviewed and don't push it.
-- Report to the user: what each slice changed, the decisions you made, every check with its result, anything unverified, and suggested follow-ups.
+Report the integrated branch/commit, requested and verified models/efforts, what changed, check evidence, coordinator-review findings and unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria remain open. No push, main merge, deployment or publishing without approval.

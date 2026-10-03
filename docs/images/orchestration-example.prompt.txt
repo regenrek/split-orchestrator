@@ -1,26 +1,11 @@
-Generated with the built-in ImageGen tool.
+Generated with the built-in ImageGen tool; edited from the previous diagram.
 
-Use case: infographic-diagram.
-Asset type: a finished schematic image for the English README of Split Orchestrator.
-Create a clean, friendly Excalidraw-style hand-drawn orchestration diagram, landscape 1536x1024. White background, slightly irregular charcoal pen strokes, very light flat pastel fills, simple rounded rectangles, generous whitespace, large highly readable handwritten lettering. No 3D, mascots, gradients, shadows or decorative clutter.
-Layout and exact node text:
-One top-center wide pale-orange rectangle:
-"Orchestrator"
-"Opus"
-"Plan · split · integrate · verify"
-Three smaller rectangles evenly spaced in one row below it:
-Left pale-orange rectangle, with a second offset outline suggesting multiple workers:
-"Implementers"
-"Sonnet"
-"Scoped tasks · separate worktrees"
-Middle pale-teal rectangle with a tiny simple browser window icon:
-"Browser checks"
-"Claude in Chrome"
-"After integration"
-Right pale-lavender rectangle with a DASHED outline:
-"Astra review"
-"via Farcall · optional"
-"Read-only advice"
-Connect each bottom box ONLY to the orchestrator, with clean bidirectional arrows, both arrowheads clearly visible. Route the three connections in separate lanes with no crossings. The Astra connection is dashed to emphasize optionality. Label the left connection "Briefs / changes", middle connection "Actions / results", right connection "Questions / findings". Do not connect the lower boxes to each other. The browser is a tool driven by the orchestrator after integration, not another independent implementer.
-One small centered footer: "The orchestrator decides. Astra advises."
-No additional title, text, branding, numbers or labels. Use ample internal padding and ensure every label is correctly spelled and comfortably legible at README width.
+Update this orchestration diagram for the new Split Orchestrator workflow. Preserve the friendly Excalidraw-style charcoal hand-drawn outlines, white background, very light pastel fills and large legible handwriting. Use landscape 1536x1024. Replace ALL old content with the following clean diagram; no Astra and no Sonnet anywhere.
+Top center orange box: "Coordinator & reviewer" then "Opus 5.5 · high" then "Scope · contracts · final acceptance".
+Bottom row three boxes:
+Left pale teal stacked box: "Implementers" then "Sol 6.1 · high" then "Isolated checkouts" then "Build · test · correct".
+Middle pale teal single box: "One integrator" then "Sol 6.1 · high" then "Merge · resolve · verify".
+Right pale orange box with small browser/terminal icon: "Real application" then "Browser / CLI / API" then "Verify persisted outcomes".
+Connect top coordinator to left workers by a bidirectional arrow labelled "Farcall · direct wait". Connect left workers to middle integrator by a rightward arrow labelled "Commits". Connect middle integrator to right real application by a rightward arrow labelled "Integrated result". Connect coordinator directly to right real application with a bidirectional arrow labelled "Coordinator acceptance". Make paths simple, with adequate space for labels and no crossing lines. The integrator is one of the Sol workers, not an extra required worker; add short note under middle box "One worker can do both".
+Footer exact text: "Fewest workers needed. Corrections return to the same sessions."
+No additional title or content. Keep all text comfortably legible at README width.

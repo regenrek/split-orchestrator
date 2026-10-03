@@ -1,15 +1,12 @@
-# Split orchestrator: delegation rules
+# Split Orchestrator
 
-You coordinate. The `split-orchestrator:implementer` subagent (Sonnet, high effort) builds clearly scoped slices. Apply these rules whenever you consider delegating.
+For implementation work, use `/split-orchestrator:orchestrate`. Its roles are fixed: coordinator/reviewer `claude-opus-5-5`, high; implementation/integration `gpt-6.1-sol`, high, through Farcall's Codex worker. No Astra or Sonnet workers. Verify session settings and worker execution metadata; never silently substitute a model or effort. If the required setup is missing, report the blocker before dispatch. These rules do not require workers for questions or read-only discussion.
 
-- **Delegate** clearly scoped work: a feature slice, bug fix, tests or docs with known files and a checkable done criterion.
-- **Keep** open-ended design, unclear requirements, decisions that span modules, and trivial or tightly coupled edits. The number of files doesn't decide it; uncertainty does.
-- **Delegate when the work is clearly bigger than the brief:** if writing the brief would take about as long as doing the work, do it yourself. Delegation pays off through parallel progress and a clean context for a self-contained slice.
-- **Brief like a new colleague:** goal, context, the files it may edit, interfaces to use or provide, constraints, done criteria and the exact check to run. The implementer sees nothing of this conversation.
-- **Parallel only with separate files:** independent slices with non-overlapping files can run at once, each with `isolation: "worktree"` where available. Serialize slices that touch the same files.
-- **Make the decisions yourself:** when an implementer reports a blocker or an assumption you didn't plan for, decide before work continues.
-- **Integrate yourself:** read every diff, compare assumptions and interfaces across slices, and resolve conflicts.
-- **Verify the integrated result:** after integrating, run the relevant tests, build and typecheck. If a check can't run, say so and call the result unverified.
-- **Keep your own context small:** long test suites, builds and waiting go to a subagent that reports the exit code, the failing tests and the last lines of output.
-
-For a large, multi-part task, follow the `/split-orchestrator:orchestrate` skill.
+- Follow project instructions and the user's scope and approval gates. Explore only enough to settle acceptance criteria, shared contracts and ownership; workers investigate the implementation details of their own deliverables.
+- Use the fewest workers needed. Give each an isolated checkout and explicit ownership. Only the assigned owner edits shared components; other workers request changes. One Sol worker owns integration, even when there is only one worker.
+- Deliver shared interfaces and prove one minimal end-to-end path before expanding dependent work. Parallelize only independent deliverables.
+- Call Farcall directly and wait for completion. Batch independent tasks. No model-driven status polling, replacement work while a call is pending, or native-agent/CLI fallback around Farcall.
+- Workers implement, verify locally and correct their work. Return findings to the exact original sessions. Keep handoffs short: changes, evidence, blockers and decisions.
+- Review the integrated diff and exercise the real entry point yourself. UI work needs real browser journeys against the application/backend and persisted outcomes. A failed assertion fails verification. Worker reports support, but do not replace, acceptance.
+- Keep mandatory local checks. Avoid duplicate full verification passes; recheck affected paths after fixes. No extra suites or CI machinery by default.
+- Label the final review as coordinator review. Unverified or failing criteria remain open. No push, main merge, deployment or publishing without approval.

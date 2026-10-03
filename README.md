@@ -2,66 +2,53 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Let Opus plan & review while Sonnet builds the clearly scoped parts.
+Opus coordinates & reviews. Sol builds & integrates through [Farcall](https://github.com/regenrek/farcall-mcp).
 
-A Claude Code plugin for work that benefits from a few implementers. Your main session owns the decisions, integration & final checks. Each implementer gets clear file ownership & a checkable task, using Sonnet, high effort. Small edits stay in the main session.
+A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration; Opus owns final acceptance.
+
+The coordinator uses `claude-opus-5-5`, high. Workers use `gpt-6.1-sol`, high. No Astra or silent model substitutions.
 
 ## Install
 
-In Claude Code, run
+Install both plugins in Claude Code. Farcall is required.
 
 ```text
+/plugin marketplace add regenrek/farcall-mcp
+/plugin install codex-worker@farcall
 /plugin marketplace add regenrek/split-orchestrator
 /plugin install split-orchestrator@split-orchestrator
 ```
 
-Start a new Opus session. The delegation rules load automatically. Use `/split-orchestrator:orchestrate` for a larger task.
+With Node 24+ & a signed-in Codex CLI available, start a new coordinator session from your repository.
 
-![Example orchestration. Opus coordinates Sonnet implementers in separate worktrees, drives browser checks after integration & optionally consults Astra through Farcall for read-only review.](docs/images/orchestration-example.png)
+```sh
+CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
+  claude --model claude-opus-5-5 --effort high
+```
+
+[Setup, browser access & upgrading from 0.1](docs/usage.md).
+
+![Opus coordinates Sol workers through Farcall. One Sol worker integrates their commits. Opus checks the integrated application and persisted outcomes.](docs/images/orchestration-example.png)
 
 ## Try it
-
-Replace `<feature>` & `<repository>` with your task.
 
 ```text
 /split-orchestrator:orchestrate Build <feature> in <repository>.
 Propose a short plan and wait for my approval.
-Split the work, implement it and run relevant tests.
 Report what changed, what passed and what remains open.
-No push, publish or deployment without approval.
+No push, main merge, deployment or publishing without approval.
 ```
 
-### With Farcall (optional)
+The skill handles ownership, isolated checkouts, worker corrections & coordinator acceptance. Add constraints or specific user journeys to the prompt. UI work requires a working browser connection to the real application/backend.
 
-For an independent review, add [Farcall](https://github.com/regenrek/farcall-mcp). This example also uses Claude in Chrome for browser checks. [Set up both integrations first](docs/usage.md#optional-review--browser-checks).
+## Why this workflow
 
-```text
-/split-orchestrator:orchestrate Build <feature> in <repository>.
-Read the existing code and propose a short plan with acceptance criteria.
-Wait for my approval before starting implementers.
-Give each implementer clear file ownership and its own worktree branch.
-You own architecture, integration and final verification.
+In practical builds, Opus coordinated Sol workers through Farcall & returned corrections to their original sessions. The benchmarks also exposed shared-file conflicts, lost drafts & retries that reported success without saving changes. This workflow makes ownership & persisted outcomes explicit. It is not a claim that a model pairing guarantees quality.
 
-For difficult decisions, consult Astra through Farcall: codex-worker,
-model gpt-6-astra, effort high, read-only. Maximum 3 calls: planning,
-after two failed attempts, and final diff review. Request concrete
-correctness risks, not style advice. You decide; Astra advises.
-Wait for completion without polling.
-
-Run relevant tests and real browser checks using Claude in Chrome.
-Explicitly report checks you could not run.
-No push, publish or deployment without approval.
-Finish with: what changed, what passed, review findings and remaining work.
-```
-
-## A real use case
-
-In one finance-app release run, Opus planned & integrated eight Sonnet slices in separate worktrees. All three Astra reviews found concrete issues. Real browser journeys caught three more bugs. The run reported 16 passing end-to-end tests.
-
-Verification accounted for most coordinator token usage, & the last fixes still needed independent review. A useful run, with remaining work clearly reported.
+[Evidence & verification limits](docs/evaluation.md).
 
 ## Docs
 
-[Usage & models](docs/usage.md) · [Evals & results](docs/evaluation.md) · [Development](docs/development.md) · [bb](hosts/bb/README.md) · [herdr](hosts/herdr/README.md)
+[Usage](docs/usage.md) · [Verification](docs/evaluation.md) · [Development](docs/development.md) · [bb](hosts/bb/README.md) · [herdr](hosts/herdr/README.md)
 
 [MIT license](LICENSE)

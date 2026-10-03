@@ -1,6 +1,6 @@
 {
   "name": "split-orchestrator",
-  "description": "Split Orchestrator for Claude Code: a strong model coordinates, a cheaper one implements.",
+  "description": "Split Orchestrator for Claude Code: Opus coordinates and reviews, Sol implements and integrates through Farcall.",
   "owner": {
     "name": "Kevin Kern"
   },
@@ -8,7 +8,7 @@
     {
       "name": "split-orchestrator",
       "source": "./plugin",
-      "description": "Your main model plans, decides and verifies; a Sonnet implementer subagent builds the clearly scoped slices."
+      "description": "Opus coordinates and reviews; Sol implements and integrates through Farcall. Isolated ownership, direct completion waits and acceptance against the real application."
     }
   ]
 }

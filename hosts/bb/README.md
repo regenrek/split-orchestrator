@@ -1,37 +1,18 @@
 # Split Orchestrator in bb
 
-[bb](https://getbb.app) runs Claude Code threads, so the plugin works there on two levels:
+Install Split Orchestrator & Farcall's Codex worker on the machine running Claude Code, as in the [main README](../../README.md). Start a new Claude Code thread with `claude-opus-5-5`, high, and the [parent wait settings](../../docs/usage.md#setup). For UI tasks, verify its browser connection.
 
-| Level | What it adds | Setup |
-|---|---|---|
-| **Subagents** | The coordinator delegates to `split-orchestrator:implementer` inside one thread, as in a terminal | Install the plugin (see the [main README](../../README.md)) |
-| **Child threads** (optional) | Slices that deserve their own branch or PR run as bb child threads with their own worktree, visible and steerable in the sidebar | Add [`instructions.md`](instructions.md) to bb's custom instructions |
+Workers run through Farcall from that coordinator. They are not bb child threads. Do not install extra model-routing rules or use `bb thread spawn` as an implementation fallback.
 
-## Subagents
+## Remove the old 0.1 child-thread rules
 
-Install the plugin at user scope on each machine that runs your bb threads:
+If you previously used this repository's optional installer, its global instruction block can still redirect work to the retired native-worker setup. The helper now only removes that marked block, preserving other instructions. Preview first; `--apply` writes the change.
 
-```bash
-claude plugin marketplace add regenrek/split-orchestrator
-claude plugin install split-orchestrator@split-orchestrator
+```sh
+hosts/bb/install.sh
+hosts/bb/install.sh --apply
 ```
 
-Then start a **new** Claude Code thread and ask: *"Which subagent types can you launch?"* The answer should include `split-orchestrator:implementer`. Existing threads load plugins only when their session starts.
+It does not install new global instructions. Start a new coordinator session after cleanup. The plugin hook & skill are the workflow source.
 
-## Child threads
-
-bb decides a child thread's model from the spawn flags, and without them the child inherits the parent's model. [`instructions.md`](instructions.md) makes the coordinator pass Sonnet and high effort explicitly, and tells it when a child thread is worth more than a subagent.
-
-bb's `instructions set` replaces the whole text, so use the script, which keeps whatever else is there:
-
-```bash
-hosts/bb/install.sh            # dry run: print the result
-hosts/bb/install.sh --apply    # write it
-hosts/bb/install.sh --remove --apply
-```
-
-The instructions apply to every agent on the bb host, from each thread's next session start. Custom instructions are limited to 4,096 characters; the block uses about 1,200.
-
-## Status
-
-Subagents in bb follow from plugin loading and need the one check above. The child-thread instructions follow bb's documented `thread spawn` flags; they haven't been measured with evals, because the eval harness runs plain Claude Code only.
+The local checks exercise cleanup against a fake bb CLI. Actual Farcall waiting, model settings & browser access must be checked in the intended host session; local packaging checks do not prove them.
