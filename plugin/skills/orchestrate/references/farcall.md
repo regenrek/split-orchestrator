@@ -6,7 +6,7 @@ Use the installed Farcall Codex worker tools directly. Tool prefixes vary by hos
 
 The parent must start with `CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0` and a client MCP timeout of at least 7200 seconds. These are parent-host settings, not worker arguments. If the host backgrounds or rejects a call, report it and fix the host setup; do not replace the wait with polling.
 
-For one worker, call `run` with these fields. Use the actual assigned checkout and an unused delegation ID.
+For one implementation worker authorized to commit in a standalone clone, call `run` with these fields. Use the actual assigned checkout and an unused delegation ID.
 
 ```json
 {
@@ -16,15 +16,22 @@ For one worker, call `run` with these fields. Use the actual assigned checkout a
   "model": "gpt-6.1-sol",
   "effort": "high",
   "sandbox": "workspace-write",
+  "writable_roots": ["/absolute/path/isolated-checkout/.git"],
   "timeout_seconds": 3600
 }
 ```
 
-For independent tasks use one `run_batch` call with `batch_id` and `tasks`. Each of the 1–5 task entries has its own `task_id` plus the same run fields above, unique delegation ID and distinct non-overlapping checkout. Five is the transport limit, not a target worker count. Integration runs after the required tasks return, never concurrently against a worker's checkout.
+For independent tasks use one `run_batch` call with `batch_id` and `tasks`. Each of the 1–5 task entries has its own `task_id` plus the same run fields above, unique delegation ID and distinct non-overlapping checkout. Adjust writable roots to each role; omit the Git root for QA that only executes checks. Five is the transport limit, not a target worker count. Integration runs after the required tasks return, never concurrently against a worker's checkout.
 
 Use `prompt` or a `prompt_file` under that worker's `cwd/artifacts`, never both. Carry the ownership/acceptance brief into the assigned task. Do not claim the worker inherited the coordinator's history or browser connection.
 
-Use `workspace-write` for implementation. Pass any necessary, already-authorized `writable_roots` and `network_access` explicitly, including on resume; keep writable areas disjoint across a batch. Full access requires explicit authorization and must not be an automatic response to a permission failure. Worktrees can need access to shared Git metadata for commits; verify this before dispatch or use standalone local clones with `--no-hardlinks`. Do not grant every worker write access to the integration checkout.
+Use `workspace-write` for implementation. Pass any necessary, already-authorized `writable_roots` and `network_access` explicitly, including on resume; keep writable areas disjoint across a batch. Full access requires explicit authorization and must not be an automatic response to a permission failure. Codex may keep `.git` read-only even in a standalone clone. For a worker authorized to commit, resolve its Git metadata paths and include the needed paths explicitly before dispatch. The example assumes a standalone clone with its own `.git` directory. Worktrees share Git metadata; prefer standalone local clones with `--no-hardlinks` when disjoint writable roots are required. QA that only executes checks does not need Git write access. Do not grant every worker write access to the integration checkout.
+
+## QA access and isolation
+
+QA uses the same exact Sol/high settings and direct completion contract in a fresh session. Give it an isolated checkout at the integrated commit and separate ports, databases and test data. It may write evidence and explicitly assigned test files, but not product code. Before resuming that same QA session, the coordinator prepares its checkout at the new integrated commit and restarts/rebinds the runtime, preserving existing evidence and unresolved drafts. QA verifies the hash and runtime revision. Do not force away local changes. If QA is explicitly assigned regression-test commits, grant its own Git metadata write access for that task and send those commits through the integrator.
+
+Verify actual browser/Electron access inside that session before declaring live testing available. Parent tools, profiles and connections are not inherited. Use only the configured and authorized host/browser surface. Do not work around a blocked connection with a different browser, personal profile or broader permissions. Keep missing checks open and agree an available alternative with the user, such as coordinator testing. Existing authorization remains valid; do not ask again for already approved access.
 
 ## Settings evidence
 

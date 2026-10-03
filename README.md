@@ -2,9 +2,9 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Opus coordinates & reviews. Sol builds & integrates through [Farcall](https://github.com/regenrek/farcall-mcp).
+Opus coordinates & reviews. Sol builds, integrates & tests through [Farcall](https://github.com/regenrek/farcall-mcp).
 
-A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration; Opus owns final acceptance.
+A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
 The coordinator uses `claude-opus-5-5`, high. Workers use `gpt-6.1-sol`, high. No Astra or silent model substitutions.
 
@@ -28,7 +28,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
 
 [Setup, browser access & upgrading from 0.1](docs/usage.md).
 
-![Opus coordinates Sol workers through Farcall. One Sol worker integrates their commits. Opus checks the integrated application and persisted outcomes.](docs/images/orchestration-example.png)
+![Opus coordinates Sol workers through Farcall. One Sol worker integrates their commits. A fresh Sol QA session tests the integrated application. Opus reviews the evidence and owns acceptance.](docs/images/orchestration-example.png)
 
 ## Try it
 
@@ -39,7 +39,7 @@ Report what changed, what passed and what remains open.
 No push, main merge, deployment or publishing without approval.
 ```
 
-The skill handles ownership, isolated checkouts, worker corrections & coordinator acceptance. Add constraints or specific user journeys to the prompt. UI work requires a working browser connection to the real application/backend.
+The skill handles ownership, isolated checkouts, worker corrections & coordinator acceptance. Add constraints or specific user journeys to the prompt. UI work requires a working browser connection in the QA session to the real application/backend.
 
 ## Why this workflow
 

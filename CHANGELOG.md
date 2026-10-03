@@ -1,6 +1,17 @@
 # Changelog
 
-## 0.2.0 (unreleased)
+## 0.3.0 (2026-10-03)
+
+- Add fresh Sol-high QA sessions for live browser/Electron checks of the integrated application. QA reports and rechecks defects; original implementation sessions repair them. Opus reviews the diff and actual evidence and owns acceptance, without routinely duplicating QA journeys.
+- Make applicable changed-retry, failed-refresh, delayed-save and concurrent-status cases explicit. Verify persisted outcomes and preserve unsaved drafts.
+- Require the integrator to check changed paths against ownership before intake and escalate semantic conflicts.
+- Tie acceptance evidence to the final integrated commit and running instance, with reproducible test data and working tools in the actual QA session. Recheck affected paths and core journeys after fixes.
+- Keep a fresh reviewer optional. Budget exhaustion reports open criteria; it never replaces acceptance.
+- Refresh the workflow diagram, setup and verification notes. See [verification](docs/evaluation.md) for the release smoke test and its limits.
+
+## 0.2.0 (2026-10-03)
+
+Published to the marketplace's main branch; no separate release tag.
 
 - Replace the native Sonnet implementer with `gpt-6.1-sol`, high, through Farcall. Coordinator/reviewer is `claude-opus-5-5`, high. No Astra or silent substitutions.
 - Assign one Sol worker exclusive integration responsibility. Use isolated checkouts, shared-component ownership and the fewest workers needed.

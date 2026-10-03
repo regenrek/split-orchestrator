@@ -13,7 +13,7 @@ The [workflow experiments](https://kevinkern.dev/benchmarks/marlies-workflows/) 
 
 The practical collaboration-app run also exercised Farcall batches, integration handoffs & original-session corrections. It used xhigh workers and separate Astra reviews. The earlier finance release likewise included Astra, and later added project-specific model routing. Neither is proof of the exact 0.2 high/high workflow without Astra.
 
-Version 0.2 adopts the requested Opus/Sol split with explicit shared ownership, one integration owner, an early real end-to-end path & coordinator acceptance of persisted outcomes. There is no general quality ranking or verified cost-saving claim for this new version.
+Version 0.2 adopted the requested Opus/Sol split with explicit shared ownership, one integration owner, an early real end-to-end path & coordinator acceptance of persisted outcomes. Version 0.3 adds a fresh Sol QA session for live testing, concrete stateful scenarios & evidence bound to the final integrated revision. Opus owns acceptance and checks live when evidence or risk requires it. There is no general quality ranking or verified cost-saving claim for this split.
 
 ## Local checks
 
@@ -28,11 +28,19 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Missing Farcall or wrong model/effort | Coordinator reports the blocker before implementation; no native worker, fallback model or direct CLI substitute |
 | One small CLI feature | One isolated Sol worker implements & integrates; Opus exercises the actual command and reloads persisted state |
 | Two independent deliverables with a shared interface | One owner delivers the shared interface and minimal working path first; later batch uses disjoint checkouts; only the assigned integrator merges |
-| Correction after integrated review | Exact original worker session resumes, the integrator incorporates the fix, Opus rechecks affected paths without a duplicate full pass |
-| UI read/write failure & delayed response | Real backend/browser interaction preserves unsaved input; reload proves what was stored; changed retries never acknowledge unapplied changes |
+| Correction after integrated review | Exact original worker session resumes, the integrator incorporates the fix, the original QA session rechecks affected paths and core journeys on the new integrated commit |
+| UI read/write failure & delayed response | Fresh Sol QA uses a real backend/browser; newer input survives failed refresh and delayed save responses, and reload proves what was stored |
+| Retry or concurrent status change | Changed retries never acknowledge unapplied changes; a second session's status change cannot hide the first session's local draft |
+| Missing QA browser/Electron access | Checks stay open; an authorized alternative is agreed explicitly, with no silent tool or permission substitution |
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 
-The 0.2 live acceptance scenarios have not yet been run. The older recorded workflows are supporting design evidence only.
+## 0.3 release smoke
+
+On 2026-10-03, the installed 0.3 candidate completed a small live CLI task through Opus high → Sol high implementation/integration → fresh Sol high QA → Opus coordinator review. A reused operation ID with changed content was rejected without altering persisted data. Identical retries & new IDs worked. The worker's regression test passed, and QA exercised the actual CLI from a separate clean clone.
+
+The worker initially could not commit because its clone's `.git` was read-only in the sandbox. Resuming the same session with that authorized directory as an explicit writable root resolved it. The Farcall reference now specifies this setup. No product correction was needed.
+
+See the [smoke record](smoke-v0.3.md) for settings, outcomes & evidence limits. This validates a narrow CLI path, fresh QA separation & a worker permission-recovery resume. Browser/Electron access, UI race scenarios, parallel integration and product-fix QA rechecks were not exercised. No comparative quality or cost measurement was made.
 
 ## Historical results
 

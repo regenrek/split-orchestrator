@@ -1,6 +1,6 @@
 # Split Orchestrator in bb
 
-Install Split Orchestrator & Farcall's Codex worker on the machine running Claude Code, as in the [main README](../../README.md). Start a new Claude Code thread with `claude-opus-5-5`, high, and the [parent wait settings](../../docs/usage.md#setup). For UI tasks, verify its browser connection.
+Install Split Orchestrator & Farcall's Codex worker on the machine running Claude Code, as in the [main README](../../README.md). Start a new Claude Code thread with `claude-opus-5-5`, high, and the [parent wait settings](../../docs/usage.md#setup). For UI tasks, verify browser control in the actual Sol QA session; a parent connection is not inherited.
 
 Workers run through Farcall from that coordinator. They are not bb child threads. Do not install extra model-routing rules or use `bb thread spawn` as an implementation fallback.
 

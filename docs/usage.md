@@ -8,8 +8,9 @@
 |---|---|---|---|
 | Coordinator/reviewer | `claude-opus-5-5` | `high` | Scope, contracts, ownership, integrated review & final acceptance |
 | Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
+| Live QA (fresh session) | `gpt-6.1-sol` | `high` | Real browser/Electron or entry-point checks, persisted outcomes & rechecks; no product fixes |
 
-Farcall is the required transport. There is no native implementer agent, alternate host worker route or Astra review step. A single Sol worker can implement & integrate. Add workers only for independent deliverables.
+Farcall is the required transport. There is no native implementer agent, alternate host worker route or Astra review step. A single Sol worker can implement & integrate. Add implementers only for independent deliverables. Use separate QA for UI/Electron and substantial multi-worker work; small tasks can be checked directly by Opus. Opus evaluates actual evidence without routinely replaying QA clicks. Evidence gaps, contradictions, marked risks or a user request trigger its own live checks. A fresh reviewer is optional, with an agreed model and transport.
 
 These are workflow instructions, not runtime enforcement of model selection or file access. The plugin cannot change the coordinator's model or effort. Start it with the exact settings & check actual worker execution metadata. Missing evidence stays unverified; a mismatch blocks further dispatch. No silent substitutions.
 
@@ -24,7 +25,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
 
 Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
-For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Worker browser tools are separate and must not be assumed from the parent connection.
+For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. QA browser tools are separate and must not be assumed from the parent connection. Verify access in that exact session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 
 ## Task prompt
 
@@ -36,12 +37,21 @@ Constraints: <scope, product behavior and environment restrictions>.
 Propose a short plan with observable acceptance criteria and wait for approval.
 Use the fewest workers needed, with isolated checkouts and explicit ownership.
 Give one Sol worker integration responsibility.
-Verify the integrated result through the real entry point and persisted state.
+For UI or substantial multi-worker work, have fresh Sol QA verify the integrated result and persisted state.
 Report coordinator review findings, evidence and unresolved criteria.
 No push, main merge, deployment or publishing without approval.
 ```
 
 The full [orchestration skill](../plugin/skills/orchestrate/SKILL.md) covers failure/retry/conflict behavior, shared ownership, the minimal end-to-end path & acceptance. The [Farcall reference](../plugin/skills/orchestrate/references/farcall.md) covers call arguments, permissions, settings evidence, batch waiting & exact-session corrections.
+
+## Update
+
+```sh
+claude plugin marketplace update split-orchestrator
+claude plugin update split-orchestrator@split-orchestrator
+```
+
+Start a new Claude session after updating. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
 
 ## Upgrade from 0.1
 

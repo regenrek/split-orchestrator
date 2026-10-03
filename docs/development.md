@@ -23,6 +23,7 @@ plugin/
   skills/orchestrate/
     SKILL.md
     references/farcall.md
+    references/acceptance.md
 hosts/
   bb/       setup notes & removal of the old custom-instruction block
   herdr/    coordinator setup notes

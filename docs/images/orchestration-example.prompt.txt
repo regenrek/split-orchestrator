@@ -1,11 +1,9 @@
 Generated with the built-in ImageGen tool; edited from the previous diagram.
 
-Update this orchestration diagram for the new Split Orchestrator workflow. Preserve the friendly Excalidraw-style charcoal hand-drawn outlines, white background, very light pastel fills and large legible handwriting. Use landscape 1536x1024. Replace ALL old content with the following clean diagram; no Astra and no Sonnet anywhere.
-Top center orange box: "Coordinator & reviewer" then "Opus 5.5 · high" then "Scope · contracts · final acceptance".
-Bottom row three boxes:
-Left pale teal stacked box: "Implementers" then "Sol 6.1 · high" then "Isolated checkouts" then "Build · test · correct".
-Middle pale teal single box: "One integrator" then "Sol 6.1 · high" then "Merge · resolve · verify".
-Right pale orange box with small browser/terminal icon: "Real application" then "Browser / CLI / API" then "Verify persisted outcomes".
-Connect top coordinator to left workers by a bidirectional arrow labelled "Farcall · direct wait". Connect left workers to middle integrator by a rightward arrow labelled "Commits". Connect middle integrator to right real application by a rightward arrow labelled "Integrated result". Connect coordinator directly to right real application with a bidirectional arrow labelled "Coordinator acceptance". Make paths simple, with adequate space for labels and no crossing lines. The integrator is one of the Sol workers, not an extra required worker; add short note under middle box "One worker can do both".
-Footer exact text: "Fewest workers needed. Corrections return to the same sessions."
-No additional title or content. Keep all text comfortably legible at README width.
+Edit this workflow diagram for Split Orchestrator 0.3. Preserve its friendly hand-drawn Excalidraw style, charcoal outlines, light pastel fills, white background, and large legible lettering. Landscape 1536x1024. Replace all content with this clear four-role diagram.
+Top center orange box: "Coordinator" / "Opus 5.5 · high" / "Architecture · evidence · acceptance".
+Bottom row three boxes with adequate space: left pale teal "Implementers" / "Sol 6.1 · high" / "Build · test · fix"; middle pale teal "One integrator" / "Sol 6.1 · high" / "Ownership · merge · checks"; right pale blue "Fresh QA session" / "Sol 6.1 · high" / "Browser · Electron · CLI" / "Test the integrated app" / "No product fixes".
+Arrows: top to left bidirectional labelled "Farcall · direct waits". left to middle rightward labelled "Commits". middle to right rightward labelled "Integrated commit". right to top upward labelled "Evidence & findings". No arrow showing Opus doing all live tests.
+Under integrator small note "One implementer can integrate".
+Footer "Opus owns acceptance. Fixes & rechecks return to the same sessions."
+No Astra or Sonnet, no other text. Keep labels away from arrows and boxes; readable at README width.
