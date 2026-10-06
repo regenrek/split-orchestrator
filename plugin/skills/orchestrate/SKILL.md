@@ -23,6 +23,7 @@ You coordinate and own final acceptance. Sol owns implementation, integration an
 - Specify success, failure, retry and conflict behavior where relevant. Include observable stored outcomes, not just response messages.
 - For stateful features, turn the applicable cases in [acceptance evidence](references/acceptance.md) into explicit criteria. Mark high-risk cases requiring your own live check before dispatch; add checks later if new risks emerge.
 - Use the fewest workers needed. Start with one implementer unless independent deliverables justify more. Do not split investigation, coding and fixes into separate owners.
+- Choose one run ID. Use it in every checkout, branch, temp directory, container, volume, database and port name the run creates. Record each resource and process as it is created in a plain Markdown list at `artifacts/<run-id>/run.md` in the coordinator's checkout. Cleanup touches only listed items.
 - Assign each worker an isolated checkout at an agreed base revision, with an explicit branch and file/component ownership. Keep the user's checkout and unsaved work intact. For multi-repository tasks, isolate every writable repository and any mutable runtime state, ports or databases used concurrently.
 - Assign each shared interface/component to exactly one owner. Other workers request changes from that owner; no competing local types, adapters or second implementations. Settle ownership in every handoff.
 - Name one Sol worker as the exclusive integrator and designate its integration branch/checkout. Other workers deliver commits to it. The integrator owns merges and conflict resolution; you review the resulting diff. With one implementer, that implementer also integrates.
@@ -38,10 +39,12 @@ Each brief stands alone. Include the user's task and constraints, plus only the 
 ```text
 Task and constraints: <user request and this worker's deliverable>
 Checkout / branch / base: <assigned paths and exact revision>
+Run ID / resource list: <run ID; coordinator's artifacts/<run-id>/run.md>
 Ownership: <editable files/components; shared owners; integration owner>
 Contracts: <agreed interfaces and required upstream commits>
 Acceptance: <observable success, relevant failure/retry/conflict behavior>
 Checks: <mandatory local checks and actual entry point>
+Temp data: only inside your checkout or $TMPDIR, named with the run ID. No copies of the repository, databases, dependencies or build output. Stop processes you started. Remove disposable data you created; report leftovers (path, size, reason).
 Handoff: exact changes/commit, evidence, blockers, decisions, unverified criteria.
 Do not edit another owner's components, delegate further, or push, merge to
 main, deploy or publish. Request shared changes from the coordinator.
@@ -68,6 +71,14 @@ Use direct Farcall completion waits and batch independent tasks in disjoint chec
 - Keep mandatory local checks. After corrections, QA rechecks affected paths and core journeys on the final integrated commit; broaden for changes to shared components or new failures. Avoid duplicate full verification passes. Confirm final evidence matches the reported final state; do not carry an earlier pass across unverified code changes.
 
 ## 6. Report the exact final state
+
+Close the run before reporting:
+
+- Stop processes the run started. Remove listed checkouts, temp directories, containers, volumes and test databases, except items needed for an open criterion or resumable correction. Keep evidence in the coordinator's `artifacts/<run-id>/`.
+- Before removing a worker checkout, copy its Farcall records for resumable sessions from `artifacts/farcall/` into the coordinator's `artifacts/<run-id>/`, retaining delegation IDs.
+- Never remove unlisted paths, anything a running process uses, or a checkout or Farcall records while `artifacts/farcall/.active` exists. Never prune shared caches or run host-wide cleanup.
+- An aborted or timed-out run keeps its checkouts and reports them as open. Unknown worker outcomes block cleanup.
+- Report cleanup separately from acceptance: removed items and leftovers (path, size, reason), including anything retained for an open criterion or resumable correction.
 
 Report the integrated branch/commit, requested and verified models/efforts, what changed, check evidence, coordinator-review findings and unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria remain open. No push, main merge, deployment or publishing without approval.
 

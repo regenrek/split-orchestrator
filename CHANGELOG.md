@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Track run-owned resources and clean them up at close, preserving evidence, resume records and open items; use local worker clones without copying dependencies or build output.
+
 ## 0.3.0 (2026-10-03)
 
 - Add fresh Sol-high QA sessions for live browser/Electron checks of the integrated application. QA reports and rechecks defects; original implementation sessions repair them. Opus reviews the diff and actual evidence and owns acceptance, without routinely duplicating QA journeys.

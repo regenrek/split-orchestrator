@@ -17,6 +17,8 @@ For every applicable case, the success/error message, displayed state and persis
 
 ## Reproducible evidence
 
+Keep reports, logs, screenshots, commands and hashes as evidence, not repository copies, dependencies, build output or database copies. Reference database provisioning/reset commands instead; keep a database copy only when needed to reproduce a finding, and say why.
+
 For each scenario, record:
 
 - Integrated commit(s), clean/dirty state and the checkout used. Relevant uncommitted changes invalidate a claim about that commit alone.
@@ -26,6 +28,8 @@ For each scenario, record:
 - Persisted outcome checked by reload, API or storage when applicable. Explain non-applicability for checks without persisted state.
 
 QA owns an isolated checkout and runtime state. It may create test evidence; it cannot repair product code. Agree ownership before it adds regression tests, then integrate those tests through the sole integrator.
+
+QA checkouts, containers and test databases belong to the run. Name them with the run ID and list them as created in the coordinator's `artifacts/<run-id>/run.md`. Remove them at run close under the skill's cleanup rules; keep the evidence in the coordinator's `artifacts/<run-id>/`.
 
 After a fix, the coordinator prepares the QA checkout and runtime at the new integrated commit while preserving evidence and unresolved drafts. Resume the original QA session, verify that revision, and repeat affected scenarios plus core journeys. Broaden coverage when shared changes or new failures justify it. Opus checks evidence gaps, contradictions and pre-marked risks itself when needed, without routinely repeating every journey.
 

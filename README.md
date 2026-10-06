@@ -41,6 +41,8 @@ No push, main merge, deployment or publishing without approval.
 
 The skill handles ownership, isolated checkouts, worker corrections & coordinator acceptance. Add constraints or specific user journeys to the prompt. UI work requires a working browser connection in the QA session to the real application/backend.
 
+Each worker gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
+
 ## Why this workflow
 
 In practical builds, Opus coordinated Sol workers through Farcall & returned corrections to their original sessions. The benchmarks also exposed shared-file conflicts, lost drafts & retries that reported success without saving changes. This workflow makes ownership & persisted outcomes explicit. It is not a claim that a model pairing guarantees quality.

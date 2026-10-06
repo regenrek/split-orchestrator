@@ -25,7 +25,9 @@ For independent tasks use one `run_batch` call with `batch_id` and `tasks`. Each
 
 Use `prompt` or a `prompt_file` under that worker's `cwd/artifacts`, never both. Carry the ownership/acceptance brief into the assigned task. Do not claim the worker inherited the coordinator's history or browser connection.
 
-Use `workspace-write` for implementation. Pass any necessary, already-authorized `writable_roots` and `network_access` explicitly, including on resume; keep writable areas disjoint across a batch. Full access requires explicit authorization and must not be an automatic response to a permission failure. Codex may keep `.git` read-only even in a standalone clone. For a worker authorized to commit, resolve its Git metadata paths and include the needed paths explicitly before dispatch. The example assumes a standalone clone with its own `.git` directory. Worktrees share Git metadata; prefer standalone local clones with `--no-hardlinks` when disjoint writable roots are required. QA that only executes checks does not need Git write access. Do not grant every worker write access to the integration checkout.
+Use `workspace-write` for implementation. Pass any necessary, already-authorized `writable_roots` and `network_access` explicitly, including on resume; keep writable areas disjoint across a batch. Full access requires explicit authorization and must not be an automatic response to a permission failure. Codex may keep `.git` read-only even in a standalone clone. For a worker authorized to commit, resolve its Git metadata paths and include the needed paths explicitly before dispatch. The example assumes a standalone clone with its own `.git` directory. QA that only executes checks does not need Git write access. Do not grant every worker write access to the integration checkout.
+
+For workers needing Git writes, use a plain local clone: `git clone <path-to-main-checkout> <run-id>-<worker>`. It has its own `.git`; Git hardlinks immutable object files where possible, keeping object storage cheap. Do not use `--no-hardlinks` (full object copy), or `--shared`/`--reference` without `--dissociate` (borrowed objects can disappear when the source prunes). See [git-clone](https://git-scm.com/docs/git-clone). Install dependencies in the checkout with the project's package manager, using its shared store where supported; never copy `node_modules` or build output. Reuse the checkout for corrections; remove it at run close under the skill's cleanup rules. Worktrees remain fine for QA that does not write Git metadata.
 
 ## QA access and isolation
 
@@ -41,6 +43,7 @@ Farcall 0.1.7 records `requested_model`, `requested_effort`, `session_id` and `e
 
 ## Completion, corrections and recovery
 
+- Resume/retry records live in `artifacts/farcall/<delegation_id>/` inside the worker checkout. Before removing that checkout, copy records for resumable sessions into the coordinator's `artifacts/<run-id>/`, retaining delegation IDs. Never delete the records or checkout while `artifacts/farcall/.active` exists. Aborted or timed-out runs keep their checkouts; unknown worker outcomes block cleanup.
 - Read each result, not only the batch's overall status. `completed` means the CLI returned, not that acceptance criteria passed. If `result_truncated` is true, read the needed part of `result_file` instead of rerunning.
 - Record the exact returned `session_id` and `delegation_id` per worker, with its checkout. Resume corrections with both `resume_session_id` and `resume_delegation_id`, the same model/effort and needed permissions, and a new delegation ID. Batch corrections also need a new batch ID.
 - Never use an implicit latest session or resume an `unknown` ID. If a session is lost, report it before a replacement is assigned.

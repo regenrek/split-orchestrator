@@ -27,6 +27,10 @@ Set the environment before launching the parent. The plugin cannot retrofit comp
 
 For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. QA browser tools are separate and must not be assumed from the parent connection. Verify access in that exact session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 
+Each worker gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
+
+Keep `artifacts/` ignored.
+
 ## Task prompt
 
 Use `/split-orchestrator:orchestrate` followed by the task & constraints. Plan approval is explicit in the short README prompt. The skill respects existing approval rather than asking again.
