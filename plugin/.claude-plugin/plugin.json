@@ -1,8 +1,8 @@
 {
   "name": "split-orchestrator",
   "displayName": "Split Orchestrator",
-  "version": "0.3.1",
-  "description": "Opus coordinates and reviews; Haiku handles bounded routine checks; Sol implements, integrates and runs acceptance QA through Farcall. Small contexts, clear ownership and direct completion waits.",
+  "version": "0.3.2",
+  "description": "Opus coordinates and reviews; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
   "author": {
     "name": "Kevin Kern",
     "url": "https://github.com/regenrek"

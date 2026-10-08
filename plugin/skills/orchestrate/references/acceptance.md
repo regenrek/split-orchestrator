@@ -1,6 +1,10 @@
 # Acceptance evidence
 
-Opus defines expected behavior and applicable scenarios before implementation. Implementers keep reproducible regression tests with the code. A fresh Sol QA session exercises the integrated application; Opus evaluates the diff and evidence and owns acceptance. Haiku handles explicit routine checks, including small non-UI entry-point checks; smoke results do not replace Sol acceptance QA. The coordinator does not click through the browser.
+Opus defines expected behavior and applicable scenarios before implementation. Implementers keep reproducible regression tests with the code. A fresh Sol QA session exercises the integrated application; Opus evaluates the diff and evidence and owns acceptance. Sol also owns browser smoke and Electron tests, each in a separate Farcall session. Haiku checks only status, logs and HTTP/file links or content without any browser/GUI. Smoke results do not replace Sol acceptance QA. The coordinator does not click through the browser.
+
+## Browser and Electron smoke
+
+Use exact `gpt-6.1-sol`, high, through Farcall, with a short explicit checklist and verified browser/Electron access in that session. Record the revision, running instance, named viewport, expected/actual outcomes and evidence. Assert no unintended element extends beyond the viewport and no unintended horizontal overflow; document intended scroll regions. Screenshots alone do not prove these assertions. Keep smoke separate from acceptance QA and never route GUI work to Haiku or the coordinator.
 
 ## Stateful scenarios
 

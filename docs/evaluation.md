@@ -13,7 +13,7 @@ Practical workflow experiments informed this change. They compare complete runs,
 
 The practical collaboration-app run also exercised Farcall batches, integration handoffs & original-session corrections. It used xhigh workers and separate Astra reviews. The earlier finance release likewise included Astra, and later added project-specific model routing. Neither is proof of the exact 0.2 high/high workflow without Astra.
 
-Version 0.2 adopted the requested Opus/Sol split with explicit shared ownership, one integration owner, an early real end-to-end path & coordinator acceptance of persisted outcomes. Version 0.3 adds a fresh Sol QA session for live testing, concrete stateful scenarios & evidence bound to the final integrated revision. Opus owns acceptance and checks live when evidence or risk requires it. There is no general quality ranking or verified cost-saving claim for this split.
+Version 0.2 adopted the requested Opus/Sol split with explicit shared ownership, one integration owner, an early real end-to-end path & coordinator acceptance of persisted outcomes. Version 0.3 adds a fresh Sol QA session for live testing, concrete stateful scenarios & evidence bound to the final integrated revision. Opus owns acceptance and assigns live rechecks to Sol when evidence or risk requires it. There is no general quality ranking or verified cost-saving claim for this split.
 
 ## Local checks
 
@@ -26,13 +26,19 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Scenario | Observable acceptance |
 |---|---|
 | Missing Farcall or wrong model/effort | Coordinator reports the blocker before implementation; no native worker, fallback model or direct CLI substitute |
-| One small CLI feature | One isolated Sol worker implements & integrates; Opus exercises the actual command and reloads persisted state |
+| One small CLI feature | One isolated Sol worker implements & integrates; Sol QA exercises the actual command and reloads persisted state; Opus reviews the evidence |
+| Browser smoke or Electron tests | Each has its own Sol-high Farcall session with verified tool access, explicit checkpoints and viewport/overflow assertions; no Haiku or coordinator GUI fallback |
+| Non-GUI routine check | Haiku low checks status, logs or HTTP/file links and content; GUI requests return to the coordinator for Sol |
 | Two independent deliverables with a shared interface | One owner delivers the shared interface and minimal working path first; later batch uses disjoint checkouts; only the assigned integrator merges |
 | Correction after integrated review | Exact original worker session resumes, the integrator incorporates the fix, the original QA session rechecks affected paths and core journeys on the new integrated commit |
 | UI read/write failure & delayed response | Fresh Sol QA uses a real backend/browser; newer input survives failed refresh and delayed save responses, and reload proves what was stored |
 | Retry or concurrent status change | Changed retries never acknowledge unapplied changes; a second session's status change cannot hide the first session's local draft |
 | Missing QA browser/Electron access | Checks stay open; an authorized alternative is agreed explicitly, with no silent tool or permission substitution |
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
+
+## 0.3.2 verification scope
+
+Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.
 
 ## 0.3.1 routine-check smoke
 

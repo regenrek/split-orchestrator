@@ -2,11 +2,11 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Opus coordinates & reviews. Haiku handles routine checks. Sol builds, integrates & runs acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
+Opus coordinates & reviews. Haiku handles checks without a GUI. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
-The coordinator uses `claude-opus-5-5`, high. Sol workers use `gpt-6.1-sol`, high. Routine subagents use `claude-haiku-5-5`, low. No Astra or silent model substitutions.
+The coordinator uses `claude-opus-5-5`, high. Sol workers use `gpt-6.1-sol`, high. Non-GUI routine subagents use `claude-haiku-5-5`, low. No Astra or silent model substitutions.
 
 ## Install
 
@@ -43,7 +43,7 @@ The skill handles ownership, isolated checkouts, worker corrections & coordinato
 
 Each implementer gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
 
-Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents handle smoke checks, logs & routine waits; Sol keeps acceptance QA. The coordinator reviews evidence without clicking through the browser. [Context & check roles](docs/usage.md#keep-context-small).
+Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a short checklist at the same high effort. The coordinator reviews evidence without clicking through the browser. [Context & check roles](docs/usage.md#keep-context-small).
 
 ## Why this workflow
 

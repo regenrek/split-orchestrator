@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.2 (unreleased)
+
+- Route browser smoke, Electron tests and acceptance QA to separate Sol-high sessions through Farcall. Quick smoke uses a short checklist with the same viewport/layout assertion and settings verification.
+- Limit Haiku low to non-GUI status, log, HTTP/file link and content checks, and bounded waits. Opus high reviews diffs and evidence without browser clicks.
+
 ## 0.3.1 (2026-10-08)
 
 - Keep coordinator context small: 15-line worker summaries, linked detail files, targeted reads and bounded routine waits. Farcall completion waits remain direct.

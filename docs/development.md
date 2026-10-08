@@ -12,7 +12,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
   --plugin-dir /absolute/path/split-orchestrator/plugin
 ```
 
-The SessionStart hook loads compact coordinator rules. The skill owns the workflow; its Farcall reference owns the transport details. The native Haiku agent handles bounded routine checks; no server or implementer runtime is bundled here.
+The SessionStart hook loads compact coordinator rules. The skill owns the workflow; its Farcall reference owns the transport details. The native Haiku agent handles bounded non-GUI routine checks; Sol handles browser/Electron tests through Farcall; no server or implementer runtime is bundled here.
 
 ```text
 .claude-plugin/marketplace.json
