@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.3 (unreleased)
+## 0.3.3 (2026-10-08)
 
 - Prefer same-session compaction when host identity, child ownership and result delivery are preserved. Keep short checkpoints linking authoritative state; reconcile tasks, delegations and results after compaction. No fixed token thresholds or daily replacement.
 - Separate coordinator replacement from context maintenance. Require completed waits/children and reconciled results, or verified host transfer; transfer dispatch authority once. Persist task/attempt IDs and dispatch intent before calls. Never redispatch for a missing notice or compact during a Farcall wait.
