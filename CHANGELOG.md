@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 (unreleased)
+
+- Bound coordinator sessions with initial 150k/200k thresholds, milestone/daily rotation and a fresh 2–5k-token file handoff. Keep authoritative task state, one dispatch owner and exact delegation/revision records; preserve pending waits and late results.
+- Manage 3–5 active streams and queue the rest. Write results to files; wake immediately only for blockers, decisions or acceptance-ready results and batch routine progress by milestone or 10–15 minutes. No acknowledgement-only messages or broad broadcasts.
+- Document optional compaction/cache controls and their tradeoffs without changing user configuration. Thresholds and savings remain unvalidated; the starter sets coordinator effort.
+
 ## 0.3.2 (2026-10-08)
 
 - Route browser/Electron smoke to separate Sol-medium Farcall sessions with fixed checklists and viewport/layout assertions. Implementation, integration and acceptance QA stay Sol-high; verify actual effort against the assigned role.

@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.3 verification scope
+
+The coordinator-continuity instructions and documentation pass local packaging/link/hook checks. Rotation, late-result delivery, batching and context savings have not been exercised live. The 150k/200k context thresholds and 3–5-stream guidance are starting values; compare workload evidence before treating them as validated. No user configuration was changed.
+
 ## 0.3.2 verification scope
 
 Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Only fixed-checklist smoke uses medium; implementation, integration and acceptance QA stay high. The initial medium/high comparison is required for early real smoke runs but has not yet been performed here. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.

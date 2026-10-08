@@ -45,6 +45,8 @@ Each implementer gets its own local clone with installed dependencies (plan seve
 
 Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator reviews evidence without clicking through the browser. [Context & check roles](docs/usage.md#keep-context-small).
 
+Keep 3–5 active streams per coordinator. Prepare a handoff near 150k context tokens; rotate near 200k, at a completed milestone or daily, using a fresh session and a short file handoff. These are starting values, not proven limits. [Session handoffs, batched wakeups & optional cache settings](docs/coordinator-context.md).
+
 ## Why this workflow
 
 In practical builds, Opus coordinated Sol workers through Farcall & returned corrections to their original sessions. The benchmarks also exposed shared-file conflicts, lost drafts & retries that reported success without saving changes. This workflow makes ownership & persisted outcomes explicit. It is not a claim that a model pairing guarantees quality.

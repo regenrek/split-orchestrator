@@ -26,6 +26,12 @@ You coordinate and own final acceptance. Sol owns implementation, integration an
 - Read targeted ranges and search results. Do not preload large documents or entire unrelated skills into the coordinator; still read instructions fully when required.
 - Haiku checks status, logs, links and content via HTTP/files only: no browser (including headless), GUI, Electron or screenshot triage. Give Sol browser smoke and Electron tests in separate Farcall sessions from implementation and acceptance QA. A quick smoke uses a short brief and fixed checklist at Sol/medium. Spot-check the first medium runs with high acceptance QA on the same cases and revision. If medium finds substantially fewer issues, return smoke to high and record the decision; see [acceptance evidence](references/acceptance.md). Include a named viewport and no unintended element extending beyond it or horizontal overflow; document intended scroll regions. Screenshots alone do not prove layout assertions. The coordinator does not click through the browser. See the [routine checker](../../agents/routine-checker.md).
 
+## Bound coordinator sessions
+
+Prepare a handoff near 150k context tokens; start a fresh coordinator near 200k, after a completed milestone or at least daily during active work, whichever comes first. These are starting thresholds, not validated optima. Use a 2–5k-token handoff file, never resume or fork the large transcript. Keep authoritative state in repository/planning files. Before transfer, follow the [continuity contract](references/coordination.md): one successor owns dispatch; preserve pending Farcall waits and route late results by task ID. The starter sets Opus/high; missing host support leaves rotation open.
+
+Manage 3–5 active streams; queue additional work while independent workers may remain parallel. Children/workers write results to files. Wake immediately only for blockers, decisions or acceptance-ready results; batch other progress per milestone or no more often than a 10–15-minute interval. No acknowledgement-only messages or broadcasts to unaffected threads. These rules reduce extra notifications, not direct tool-completion delivery.
+
 ## 2. Define the work and owners
 
 - Read only enough to establish scope, observable acceptance criteria and shared contracts. Leave detailed exploration to the worker that will implement and correct that deliverable.
@@ -46,6 +52,7 @@ Have the relevant owner deliver the shared interfaces early and integrate the sm
 Each brief stands alone. Include the user's task and constraints, plus only the context needed for that worker's assigned slice. These ownership and acceptance requirements are part of the requested orchestration, not extra restrictions invented by the transport.
 
 ```text
+Task ID / task record: <durable ID and authoritative file path>
 Task and constraints: <user request and this worker's deliverable>
 Checkout / branch / base: <assigned paths and exact revision>
 Run ID / resource list: <run ID; coordinator's artifacts/<run-id>/run.md>
@@ -54,6 +61,7 @@ Contracts: <agreed interfaces and required upstream commits>
 Acceptance: <observable success, relevant failure/retry/conflict behavior>
 Checks: <mandatory local checks and actual entry point>
 Temp data: only inside your checkout or $TMPDIR, named with the run ID. No copies of the repository, databases, dependencies or build output. Stop processes you started. Remove disposable data you created; report leftovers (path, size, reason).
+Result file: <assigned artifact path; include task ID and result event ID>
 Handoff: at most 15 chat lines; exact changes/commit, evidence link, blockers,
 decisions and unverified criteria. Details in the assigned artifacts file.
 Do not edit another owner's components, delegate further, or push, merge to

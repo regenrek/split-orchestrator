@@ -45,6 +45,8 @@ Farcall 0.1.7 records `requested_model`, `requested_effort`, `session_id` and `e
 
 ## Completion, corrections and recovery
 
+Coordinator rotation follows the [continuity contract](coordination.md). Preserve task IDs, batch/session/delegation IDs and result paths in the handoff. Finish pending direct waits before transferring dispatch; unknown outcomes remain open, never a reason for duplicate work. Worker result files survive rotation and notify only affected owners; do not add routine progress polling.
+
 - Resume/retry records live in `artifacts/farcall/<delegation_id>/` inside the worker checkout. Before removing that checkout, copy records for resumable sessions into the coordinator's `artifacts/<run-id>/`, retaining delegation IDs. Never delete the records or checkout while `artifacts/farcall/.active` exists. Aborted or timed-out runs keep their checkouts; unknown worker outcomes block cleanup.
 - Read each result, not only the batch's overall status. `completed` means the CLI returned, not that acceptance criteria passed. If `result_truncated` is true, read the needed part of `result_file` instead of rerunning.
 - Record the exact returned `session_id` and `delegation_id` per worker, with its checkout. Resume corrections with both `resume_session_id` and `resume_delegation_id`, the same model/effort and needed permissions, and a new delegation ID. Batch corrections also need a new batch ID.
