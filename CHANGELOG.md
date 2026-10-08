@@ -1,10 +1,9 @@
 # Changelog
 
-## 0.3.1 (unreleased)
+## 0.3.1 (2026-10-08)
 
 - Keep coordinator context small: 15-line worker summaries, linked detail files, targeted reads and bounded routine waits. Farcall completion waits remain direct.
 - Add an exact `claude-haiku-5-5` / low routine-check subagent for smoke checks, logs and layout triage. Sol high retains acceptance QA; the coordinator reviews evidence without browser clicks. Verify actual model/effort and report deviations from starter-set coordinator high.
-
 - Track run-owned resources and clean them up at close, preserving evidence, resume records and open items; use local worker clones without copying dependencies or build output.
 
 ## 0.3.0 (2026-10-03)

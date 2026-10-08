@@ -4,7 +4,7 @@
 
 ## Why the workflow changed
 
-The [workflow experiments](https://kevinkern.dev/benchmarks/marlies-workflows/) informed this change. They compare complete runs, not isolated model capability. Task decomposition, worker count, effort, review & environments varied.
+Practical workflow experiments informed this change. They compare complete runs, not isolated model capability. Task decomposition, worker count, effort, review & environments varied.
 
 - **N, Opus → Sonnet.** Review caught one draft-loss case; later checks still found duplicate saves & drafts disappearing after a failed filter request.
 - **O, Opus → Sol through Farcall.** Original-session corrections worked, but the worker ran at medium after failed starts. Later checks found lost drafts & duplicate saves. This is not evidence for an exact high/high configuration.
