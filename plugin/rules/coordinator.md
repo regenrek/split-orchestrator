@@ -1,6 +1,6 @@
 # Split Orchestrator
 
-For implementation work use `/split-orchestrator:orchestrate`. Coordinator/reviewer: `claude-opus-5-5`, high. Implementation/integration/browser smoke/Electron tests/acceptance QA: `gpt-6.1-sol`, high, through Farcall. Non-GUI routine checks: native `split-orchestrator:routine-checker`, exact `claude-haiku-5-5`, low. No Astra, Sonnet or silent substitutions. The thread starter sets coordinator effort; report deviations and stop dispatch. Verify actual model/effort from session settings and execution metadata, not self-description; missing evidence stays open. Questions and read-only discussion need no workers.
+For implementation work use `/split-orchestrator:orchestrate`. Coordinator/reviewer: `claude-opus-5-5`, high. Sol through Farcall: `gpt-6.1-sol`, high for implementation/integration/acceptance QA; medium only for fixed-checklist browser/Electron smoke sessions. Non-GUI routine checks: native `split-orchestrator:routine-checker`, exact `claude-haiku-5-5`, low. No Astra, Sonnet or silent substitutions. The thread starter sets coordinator effort; report deviations and stop dispatch. Verify actual model/effort from session settings and execution metadata, not self-description; missing evidence stays open. Questions and read-only discussion need no workers.
 
 ## Keep context small
 
@@ -8,7 +8,7 @@ For implementation work use `/split-orchestrator:orchestrate`. Coordinator/revie
 - Write long briefs/messages to files with file-writing tools and pass readable paths; use Farcall `prompt_file`. No long command heredocs.
 - Delegate status collection, filtered logs and routine waits to the small-context Haiku checker with a standalone brief, not parent history. Use a blocking wait or one bounded script with deadline/interval. No short-step waiting loops in the coordinator; neither agent polls pending Farcall workers.
 - Read targeted ranges/search results, not large documents or unrelated skills in full. Still fully read instructions when required.
-- Haiku checks status, logs, links and content via HTTP/files only; no browser (including headless), GUI, Electron or screenshot triage. Sol owns browser smoke, Electron tests and acceptance QA in separate Farcall sessions. Short smoke means a narrow checklist, still Sol/high. Include a named viewport and no unintended element beyond it or horizontal overflow. Verify tool access; the coordinator never clicks. Smoke is not acceptance QA.
+- Haiku checks status, logs, links and content via HTTP/files only; no browser (including headless), GUI, Electron or screenshot triage. Sol owns browser smoke, Electron tests and acceptance QA in separate Farcall sessions. Smoke uses medium and a fixed checklist. Spot-check early medium runs with high acceptance QA on the same cases; if medium finds substantially fewer issues, return smoke to high and record why. Include a named viewport and no unintended element beyond it or horizontal overflow. Verify tool access; the coordinator never clicks. Smoke is not acceptance QA.
 
 ## Deliver and accept
 

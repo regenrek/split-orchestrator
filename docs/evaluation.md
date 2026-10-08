@@ -27,7 +27,7 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 |---|---|
 | Missing Farcall or wrong model/effort | Coordinator reports the blocker before implementation; no native worker, fallback model or direct CLI substitute |
 | One small CLI feature | One isolated Sol worker implements & integrates; Sol QA exercises the actual command and reloads persisted state; Opus reviews the evidence |
-| Browser smoke or Electron tests | Each has its own Sol-high Farcall session with verified tool access, explicit checkpoints and viewport/overflow assertions; no Haiku or coordinator GUI fallback |
+| Browser/Electron smoke | Each has its own Sol-medium Farcall session with verified tool access, explicit checkpoints and viewport/overflow assertions; no Haiku or coordinator GUI fallback |
 | Non-GUI routine check | Haiku low checks status, logs or HTTP/file links and content; GUI requests return to the coordinator for Sol |
 | Two independent deliverables with a shared interface | One owner delivers the shared interface and minimal working path first; later batch uses disjoint checkouts; only the assigned integrator merges |
 | Correction after integrated review | Exact original worker session resumes, the integrator incorporates the fix, the original QA session rechecks affected paths and core journeys on the new integrated commit |
@@ -35,10 +35,11 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Retry or concurrent status change | Changed retries never acknowledge unapplied changes; a second session's status change cannot hide the first session's local draft |
 | Missing QA browser/Electron access | Checks stay open; an authorized alternative is agreed explicitly, with no silent tool or permission substitution |
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
+| Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
 ## 0.3.2 verification scope
 
-Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.
+Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Only fixed-checklist smoke uses medium; implementation, integration and acceptance QA stay high. The initial medium/high comparison is required for early real smoke runs but has not yet been performed here. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.
 
 ## 0.3.1 routine-check smoke
 

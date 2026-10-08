@@ -1,8 +1,9 @@
 # Changelog
 
-## 0.3.2 (unreleased)
+## 0.3.2 (2026-10-08)
 
-- Route browser smoke, Electron tests and acceptance QA to separate Sol-high sessions through Farcall. Quick smoke uses a short checklist with the same viewport/layout assertion and settings verification.
+- Route browser/Electron smoke to separate Sol-medium Farcall sessions with fixed checklists and viewport/layout assertions. Implementation, integration and acceptance QA stay Sol-high; verify actual effort against the assigned role.
+- Spot-check early medium smoke runs with high acceptance QA on the same cases. Return smoke to high if medium finds substantially fewer issues, recording the decision.
 - Limit Haiku low to non-GUI status, log, HTTP/file link and content checks, and bounded waits. Opus high reviews diffs and evidence without browser clicks.
 
 ## 0.3.1 (2026-10-08)

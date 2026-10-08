@@ -4,7 +4,9 @@ Opus defines expected behavior and applicable scenarios before implementation. I
 
 ## Browser and Electron smoke
 
-Use exact `gpt-6.1-sol`, high, through Farcall, with a short explicit checklist and verified browser/Electron access in that session. Record the revision, running instance, named viewport, expected/actual outcomes and evidence. Assert no unintended element extends beyond the viewport and no unintended horizontal overflow; document intended scroll regions. Screenshots alone do not prove these assertions. Keep smoke separate from acceptance QA and never route GUI work to Haiku or the coordinator.
+Use exact `gpt-6.1-sol`, medium, through Farcall, only for smoke sessions with a short fixed checklist and verified browser/Electron access in that session. Record the revision, running instance, named viewport, expected/actual outcomes and evidence. Assert no unintended element extends beyond the viewport and no unintended horizontal overflow; document intended scroll regions. Screenshots alone do not prove these assertions. Keep smoke separate from acceptance QA and never route GUI work to Haiku or the coordinator.
+
+Spot-check the first medium smoke runs with a separate Sol-high acceptance session using the same cases, revision, runtime and test data. Compare reproducible findings in the evidence. If medium finds substantially fewer issues, return smoke to high and record why; do not silently change settings. Medium is never sufficient for acceptance QA. This is an initial validation of the effort choice, not a duplicate full pass on every run.
 
 ## Stateful scenarios
 
