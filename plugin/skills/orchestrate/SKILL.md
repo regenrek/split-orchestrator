@@ -6,33 +6,42 @@ argument-hint: <task and optional constraints>
 
 # Orchestrate
 
-You coordinate and own final acceptance. Sol owns implementation, integration and corrections. A fresh Sol QA session tests the integrated result without repairing product code.
+You coordinate and own final acceptance. Sol owns implementation, integration and corrections. A fresh Sol QA session tests the integrated result without repairing product code. Haiku handles bounded routine checks in a small context.
 
 ## 1. Verify the setup
 
-- Coordinator/reviewer: `claude-opus-5-5`, effort `high`.
+- Coordinator/reviewer: `claude-opus-5-5`, effort `high`. The thread starter sets effort; report deviations and stop dispatch rather than silently continuing.
+- Routine checks: native `split-orchestrator:routine-checker` subagent, exact `claude-haiku-5-5`, effort `low`. Its brief defines checkpoints and evidence; it is not a Farcall implementer or acceptance QA. Verify actual model from the matching Claude transcript and effort from execution settings; requested values or self-description alone do not prove execution. Missing verification stays open; never substitute an alias.
 - Every implementation/integration/QA worker: `gpt-6.1-sol`, effort `high`, through Farcall's `codex_worker.run` or `codex_worker.run_batch`.
 - No Astra, Sonnet workers, aliases or silent model/effort substitutions. Read the parent session settings and verify worker settings from execution metadata, not a model's self-description. If settings conflict or cannot be verified, report the blocker; do not claim a verified run. A requested setting alone is not evidence of the executed setting.
 - Confirm Farcall and the required local tools are available. Read [the Farcall call contract](references/farcall.md) before dispatch. Do not start replacement workers through native agents, host threads or shell CLI calls if Farcall is unavailable.
 - Follow project instructions. Verify the actual entry point, start command, mandatory local checks and reproducible test data before delegation. Test fixtures must be versioned or have documented provisioning/reset steps, including external backends. Resolve only missing prerequisites; do not repeat an approval already given.
-- For live QA, verify browser/Electron control in the actual QA session, not only in the coordinator. A worker does not inherit your browser connection. Missing access leaves the affected checks open; agree a transparent alternative, such as coordinator testing, with the user. Do not silently switch tools, models or permissions.
+- For live QA, verify browser/Electron control in the actual QA session, not only in the coordinator. A worker does not inherit your browser connection. Missing access leaves the affected checks open; agree a transparent alternative, such as restoring access in the assigned QA session, with the user. Do not silently switch tools, models or permissions.
+
+## Keep context small
+
+- Worker and child-agent chat reports: at most 15 lines covering findings, evidence, blockers and decisions; link the detailed artifact. Keep failures and unverified settings visible.
+- Write long briefs/messages once with file-writing tools and pass the path (`prompt_file` for Farcall), not a long heredoc in a command. Ensure the receiver can read that path.
+- Delegate status collection, filtered log inspection and routine waits to the small-context routine checker. Give it a standalone brief, not a full-history fork; receive only its summary. Use a blocking wait or one bounded script with a deadline and interval, never many short coordinator steps. Farcall completion waits remain direct; neither agent polls pending workers.
+- Read targeted ranges and search results. Do not preload large documents or entire unrelated skills into the coordinator; still read instructions fully when required.
+- Haiku checks reachability, links, expected content, screenshot triage and logs against explicit checkpoints. UI smoke includes a named viewport and no unintended element extending beyond it or horizontal overflow. Verify actual browser access first. The coordinator does not click through the browser; Sol retains acceptance QA. See the [routine checker](../../agents/routine-checker.md).
 
 ## 2. Define the work and owners
 
 - Read only enough to establish scope, observable acceptance criteria and shared contracts. Leave detailed exploration to the worker that will implement and correct that deliverable.
 - Specify success, failure, retry and conflict behavior where relevant. Include observable stored outcomes, not just response messages.
-- For stateful features, turn the applicable cases in [acceptance evidence](references/acceptance.md) into explicit criteria. Mark high-risk cases requiring your own live check before dispatch; add checks later if new risks emerge.
+- For stateful features, turn the applicable cases in [acceptance evidence](references/acceptance.md) into explicit criteria. Mark high-risk cases for explicit Sol QA checks before dispatch; add checks later if new risks emerge.
 - Use the fewest workers needed. Start with one implementer unless independent deliverables justify more. Do not split investigation, coding and fixes into separate owners.
 - Choose one run ID. Use it in every checkout, branch, temp directory, container, volume, database and port name the run creates. Record each resource and process as it is created in a plain Markdown list at `artifacts/<run-id>/run.md` in the coordinator's checkout. Cleanup touches only listed items.
-- Assign each worker an isolated checkout at an agreed base revision, with an explicit branch and file/component ownership. Keep the user's checkout and unsaved work intact. For multi-repository tasks, isolate every writable repository and any mutable runtime state, ports or databases used concurrently.
+- Assign each implementation/integration/QA worker an isolated checkout at an agreed base revision, with an explicit branch and file/component ownership. Keep the user's checkout and unsaved work intact. For multi-repository tasks, isolate every writable repository and any mutable runtime state, ports or databases used concurrently.
 - Assign each shared interface/component to exactly one owner. Other workers request changes from that owner; no competing local types, adapters or second implementations. Settle ownership in every handoff.
 - Name one Sol worker as the exclusive integrator and designate its integration branch/checkout. Other workers deliver commits to it. The integrator owns merges and conflict resolution; you review the resulting diff. With one implementer, that implementer also integrates.
-- Use a fresh Sol-high QA session for UI/Electron work and substantial multi-worker features, or when explicitly requested. For a small non-UI CLI/API or single-worker task, exercise the entry point yourself unless its risk justifies separate QA. QA owns test execution and evidence, not product repairs. An optional fresh reviewer needs an explicitly agreed model and transport; it is not an automatic extra role or an Astra exception.
+- Use a fresh Sol-high QA session for UI/Electron work and substantial multi-worker features, or when explicitly requested. For a small non-UI CLI/API task, use Haiku for routine entry-point checks and assess its evidence; behavior requiring acceptance QA goes to Sol. QA owns test execution and evidence, not product repairs. An optional fresh reviewer needs an explicitly agreed model and transport; it is not an automatic extra role or an Astra exception.
 - Share the short plan and honor any requested plan-approval gate before implementation or dispatch. Preparation must not become unauthorized product changes.
 
 ## 3. Prove the path, then dispatch independent work
 
-Have the relevant owner deliver the shared interfaces early and integrate the smallest real path through the entry point, backend, persistence and reload as applicable. The owner checks it locally, then the integrator supplies the early integrated revision. The assigned QA session exercises that revision before dependent work expands; for tasks without separate QA, you exercise it. If it fails, return it to the owner first; independent work can continue.
+Have the relevant owner deliver the shared interfaces early and integrate the smallest real path through the entry point, backend, persistence and reload as applicable. The owner checks it locally, then the integrator supplies the early integrated revision. The assigned QA session exercises that revision before dependent work expands; for small non-UI tasks without separate QA, Haiku runs the explicit entry-point checklist and you assess the evidence. If it fails, return it to the owner first; independent work can continue.
 
 Each brief stands alone. Include the user's task and constraints, plus only the context needed for that worker's assigned slice. These ownership and acceptance requirements are part of the requested orchestration, not extra restrictions invented by the transport.
 
@@ -45,7 +54,8 @@ Contracts: <agreed interfaces and required upstream commits>
 Acceptance: <observable success, relevant failure/retry/conflict behavior>
 Checks: <mandatory local checks and actual entry point>
 Temp data: only inside your checkout or $TMPDIR, named with the run ID. No copies of the repository, databases, dependencies or build output. Stop processes you started. Remove disposable data you created; report leftovers (path, size, reason).
-Handoff: exact changes/commit, evidence, blockers, decisions, unverified criteria.
+Handoff: at most 15 chat lines; exact changes/commit, evidence link, blockers,
+decisions and unverified criteria. Details in the assigned artifacts file.
 Do not edit another owner's components, delegate further, or push, merge to
 main, deploy or publish. Request shared changes from the coordinator.
 ```
@@ -66,7 +76,7 @@ Use direct Farcall completion waits and batch independent tasks in disjoint chec
 - Give QA the integrated commit in its own checkout with isolated ports, test data and mutable runtime state. Bind the running application to that checkout/revision. QA runs applicable critical scenarios and core journeys against the real application/backend, including browser/Electron interaction for those surfaces. For other tasks, exercise the actual CLI, API or library entry point and inspect real outputs and state.
 - Read [acceptance evidence](references/acceptance.md) for the scenario and evidence contract. Every result identifies the commit, running instance or command, steps, expected/actual behavior and persisted outcomes where applicable. Missing evidence leaves the criterion open. Screenshots, mocks and success messages alone do not establish acceptance.
 - QA does not edit product code. Return defects to the original implementation sessions and reintegrate through the designated integrator. Before resuming the same QA session, prepare its checkout at the new integrated commit, preserve evidence and unresolved drafts, and restart/rebind its runtime. Do not force away local changes. QA verifies the checked-out hash and runtime revision before rechecking. QA-authored regression tests must be assigned file ownership and go through the integrator before final checks; avoid concurrent edits to implementer-owned tests.
-- Do not routinely replay QA's clicks yourself. Perform your own live checks for evidence gaps, contradictory results, marked risks or an explicit user request. For tasks without separate QA, perform the relevant entry-point checks yourself.
+- Do not click through the browser yourself. Assign evidence gaps, contradictions and marked risks to Sol QA for targeted live rechecks; review the resulting evidence yourself. Haiku smoke checks do not replace Sol acceptance QA.
 - A failed assertion must produce a failed verification result. Missing tools, inaccessible environments and unrun checks remain open; never convert them into a pass.
 - Keep mandatory local checks. After corrections, QA rechecks affected paths and core journeys on the final integrated commit; broaden for changes to shared components or new failures. Avoid duplicate full verification passes. Confirm final evidence matches the reported final state; do not carry an earlier pass across unverified code changes.
 
@@ -80,6 +90,6 @@ Close the run before reporting:
 - An aborted or timed-out run keeps its checkouts and reports them as open. Unknown worker outcomes block cleanup.
 - Report cleanup separately from acceptance: removed items and leftovers (path, size, reason), including anything retained for an open criterion or resumable correction.
 
-Report the integrated branch/commit, requested and verified models/efforts, what changed, check evidence, coordinator-review findings and unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria remain open. No push, main merge, deployment or publishing without approval.
+Keep the chat report within 15 lines and link the detailed evidence. Report the integrated branch/commit, requested and verified models/efforts, what changed, check evidence, coordinator-review findings and unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria remain open. No push, main merge, deployment or publishing without approval.
 
 An exhausted time, cost or correction budget ends the run with documented open items. It does not replace acceptance. “Done” applies only to the integrated state that was actually verified.

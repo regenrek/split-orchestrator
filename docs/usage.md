@@ -8,11 +8,20 @@
 |---|---|---|---|
 | Coordinator/reviewer | `claude-opus-5-5` | `high` | Scope, contracts, ownership, integrated review & final acceptance |
 | Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
+| Routine checks (small-context subagent) | `claude-haiku-5-5` | `low` | Explicit smoke checklist, reachability, links, content, screenshot triage, logs & bounded routine waits; no product changes |
 | Live QA (fresh session) | `gpt-6.1-sol` | `high` | Real browser/Electron or entry-point checks, persisted outcomes & rechecks; no product fixes |
 
-Farcall is the required transport. There is no native implementer agent, alternate host worker route or Astra review step. A single Sol worker can implement & integrate. Add implementers only for independent deliverables. Use separate QA for UI/Electron and substantial multi-worker work; small tasks can be checked directly by Opus. Opus evaluates actual evidence without routinely replaying QA clicks. Evidence gaps, contradictions, marked risks or a user request trigger its own live checks. A fresh reviewer is optional, with an agreed model and transport.
+Farcall is the required transport for Sol. Haiku uses the bundled native `split-orchestrator:routine-checker` subagent with a standalone brief, not a full-history fork. It is not a substitute implementer. A single Sol worker can implement & integrate; add implementers only for independent deliverables. Fresh Sol acceptance QA remains required for UI/Electron and substantial multi-worker work. Small non-UI routine checks go to Haiku. Opus reviews the integrated diff and actual evidence, assigning gaps and critical live rechecks to Sol QA. The coordinator does not click through the browser. A fresh reviewer is optional, with an agreed model and transport.
 
-These are workflow instructions, not runtime enforcement of model selection or file access. The plugin cannot change the coordinator's model or effort. Start it with the exact settings & check actual worker execution metadata. Missing evidence stays unverified; a mismatch blocks further dispatch. No silent substitutions.
+These are workflow instructions, not runtime enforcement of model selection or file access. The thread starter sets coordinator effort to `high`; the plugin cannot change it. The coordinator reports deviations and stops dispatch. Verify actual worker execution metadata; for Haiku, inspect the matching Claude transcript's model and execution settings for effort. Definitions and requested values alone are not proof. Missing evidence stays unverified; no aliases or silent substitutions.
+
+## Keep context small
+
+Keep worker and child-agent chat reports within 15 lines, linking detailed files. Write long briefs/messages once to a file and pass its path; use Farcall `prompt_file` for long worker tasks. Read targeted ranges and filtered search results, while still reading required instructions.
+
+Delegate status collection, log inspection and routine waits to Haiku with explicit checkpoints, a deadline and evidence paths. Use one bounded script or blocking wait, not repeated coordinator steps. Farcall calls still wait directly; neither agent polls pending workers.
+
+UI smoke checks include a named viewport and no unintended element extending beyond it or horizontal overflow. Haiku records expected/actual outcomes, failed assertions and missing access. It writes evidence only and never fixes product code. Green smoke does not constitute acceptance; Sol owns acceptance QA.
 
 ## Setup
 
@@ -25,9 +34,9 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
 
 Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
-For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. QA browser tools are separate and must not be assumed from the parent connection. Verify access in that exact session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
+For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Both Haiku smoke and Sol QA need actual browser tools; do not assume access from the parent connection. Verify access in each assigned session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 
-Each worker gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
+Each implementer gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
 
 Keep `artifacts/` ignored.
 
@@ -55,7 +64,7 @@ claude plugin marketplace update split-orchestrator
 claude plugin update split-orchestrator@split-orchestrator
 ```
 
-Start a new Claude session after updating. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
+Start a new Claude session after updating. Version 0.3.1 adds bounded Haiku routine checks and concise context/file handoffs. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
 
 ## Upgrade from 0.1
 

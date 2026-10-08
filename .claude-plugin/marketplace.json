@@ -1,6 +1,6 @@
 {
   "name": "split-orchestrator",
-  "description": "Split Orchestrator for Claude Code: Opus coordinates and reviews, Sol implements, integrates and tests through Farcall.",
+  "description": "Split Orchestrator for Claude Code: Opus coordinates, Haiku checks routine tasks, Sol builds and runs acceptance QA through Farcall.",
   "owner": {
     "name": "Kevin Kern"
   },
@@ -8,7 +8,7 @@
     {
       "name": "split-orchestrator",
       "source": "./plugin",
-      "description": "Opus coordinates and reviews; Sol implements, integrates and tests through Farcall. Isolated ownership, direct completion waits and acceptance against the real application."
+      "description": "Opus coordinates and reviews; Haiku handles bounded routine checks; Sol implements, integrates and runs acceptance QA through Farcall. Small contexts, clear ownership and direct completion waits."
     }
   ]
 }

@@ -34,6 +34,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Missing QA browser/Electron access | Checks stay open; an authorized alternative is agreed explicitly, with no silent tool or permission substitution |
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 
+## 0.3.1 routine-check smoke
+
+The local native Haiku checker passed a three-point documentation smoke with `claude-haiku-5-5` and low effort confirmed in its child transcript. See the [smoke record and limits](smoke-v0.3.1.md). Browser/layout behavior and token savings were not measured.
+
 ## 0.3 release smoke
 
 On 2026-10-03, the installed 0.3 candidate completed a small live CLI task through Opus high → Sol high implementation/integration → fresh Sol high QA → Opus coordinator review. A reused operation ID with changed content was rejected without altering persisted data. Identical retries & new IDs worked. The worker's regression test passed, and QA exercised the actual CLI from a separate clean clone.
