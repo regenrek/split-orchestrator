@@ -26,11 +26,15 @@ You coordinate and own final acceptance. Sol owns implementation, integration an
 - Read targeted ranges and search results. Do not preload large documents or entire unrelated skills into the coordinator; still read instructions fully when required.
 - Haiku checks status, logs, links and content via HTTP/files only: no browser (including headless), GUI, Electron or screenshot triage. Give Sol browser smoke and Electron tests in separate Farcall sessions from implementation and acceptance QA. A quick smoke uses a short brief and fixed checklist at Sol/medium. Spot-check the first medium runs with high acceptance QA on the same cases and revision. If medium finds substantially fewer issues, return smoke to high and record the decision; see [acceptance evidence](references/acceptance.md). Include a named viewport and no unintended element extending beyond it or horizontal overflow; document intended scroll regions. Screenshots alone do not prove layout assertions. The coordinator does not click through the browser. See the [routine checker](../../agents/routine-checker.md).
 
-## Bound coordinator sessions
+## Maintain context and continuity
 
-Prepare a handoff near 150k context tokens; start a fresh coordinator near 200k, after a completed milestone or at least daily during active work, whichever comes first. These are starting thresholds, not validated optima. Use a 2–5k-token handoff file, never resume or fork the large transcript. Keep authoritative state in repository/planning files. Before transfer, follow the [continuity contract](references/coordination.md): one successor owns dispatch; finish pending Farcall waits and native children, persist their results, then route late results by task ID. A fresh coordinator does not inherit native child handles; defer rotation if completion/results cannot be secured. The starter sets Opus/high; missing host support leaves rotation open.
+Prefer compaction in the same thread/session when the host preserves identity, child ownership and result delivery. Before relying on this, check the [continuity contract](references/coordination.md): stable identity, child handles/routing, pending-call survival, cross-session resume/readdressing and shared artifact access. Unknown capabilities are unsupported. Let the host manage context size; there are no fixed token limits or daily replacement. Milestones/day boundaries are checkpoint and review opportunities. The coordinator never runs `/autocompact`, which writes user settings.
 
-Manage 3–5 active streams; queue additional work while independent workers may remain parallel. Children/workers write results to files. Wake immediately only for blockers, decisions or acceptance-ready results; batch other progress per milestone or no more often than a 10–15-minute interval. No acknowledgement-only messages or broadcasts to unaffected threads. These rules reduce extra notifications, not direct tool-completion delivery.
+Maintain a short checkpoint linking authoritative repo/planning records. Persist task/attempt IDs and dispatch intent before worker calls, then returned session/delegation IDs and consumed events. After compaction, reload the checkpoint and reconcile task, delegation and result entries before dispatch. Do not compact during a Farcall wait; request manual compaction only after the direct wait returns. Unknown worker outcomes require recovery, never replacement work.
+
+Coordinator replacement is separate: stop new dispatch, finish waits and session-bound children, persist/reconcile results, or use a verified host transfer. Transfer dispatch authority once; predecessor stays inactive. Same-root ancestry does not transfer handles. Re-parent only with verified authorization lineage, delivery and recovery, including late/queued notices and descendants. Missing notices never justify redispatch. If unsafe, continue in the supported session or checkpoint and report the limitation.
+
+Recommend 3–5 active streams and milestone/10–15-minute routine batches, adjusted to workload; queue additional streams while independent workers stay parallel. Children/workers write result files. Wake immediately for blockers, decisions or acceptance-ready results. No acknowledgement-only chats or broadcasts to unaffected threads. Normal tool completion still returns directly.
 
 ## 2. Define the work and owners
 
@@ -52,7 +56,7 @@ Have the relevant owner deliver the shared interfaces early and integrate the sm
 Each brief stands alone. Include the user's task and constraints, plus only the context needed for that worker's assigned slice. These ownership and acceptance requirements are part of the requested orchestration, not extra restrictions invented by the transport.
 
 ```text
-Task ID / task record: <durable ID and authoritative file path>
+Task / attempt ID / task record: <durable IDs and authoritative file path>
 Task and constraints: <user request and this worker's deliverable>
 Checkout / branch / base: <assigned paths and exact revision>
 Run ID / resource list: <run ID; coordinator's artifacts/<run-id>/run.md>
@@ -61,7 +65,7 @@ Contracts: <agreed interfaces and required upstream commits>
 Acceptance: <observable success, relevant failure/retry/conflict behavior>
 Checks: <mandatory local checks and actual entry point>
 Temp data: only inside your checkout or $TMPDIR, named with the run ID. No copies of the repository, databases, dependencies or build output. Stop processes you started. Remove disposable data you created; report leftovers (path, size, reason).
-Result file: <assigned artifact path; include task ID and result event ID>
+Result file: <assigned artifact path; include task/attempt IDs and result event ID>
 Handoff: at most 15 chat lines; exact changes/commit, evidence link, blockers,
 decisions and unverified criteria. Details in the assigned artifacts file.
 Do not edit another owner's components, delegate further, or push, merge to

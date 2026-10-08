@@ -24,7 +24,7 @@ Delegate status collection, log inspection and routine waits to Haiku with expli
 
 Sol UI smoke checks include a named viewport and no unintended element extending beyond it or horizontal overflow. Document intended scroll regions; screenshots alone do not prove the assertion. Both smoke and routine checkers record expected/actual outcomes, failed assertions and missing access. They write evidence only and never fix product code. Green smoke does not constitute acceptance; Sol-high owns acceptance QA. Spot-check the first medium smoke runs with a separate high acceptance session on the same cases, revision, runtime and data. If medium finds substantially fewer issues, return smoke to high and record why. This initial comparison does not require duplicate full checks on every run.
 
-Keep authoritative task state in repository/planning files and follow [coordinator continuity](coordinator-context.md): 150k handoff warning, fresh coordinator near 200k or at milestone/daily boundaries, exactly one dispatch owner, and 3–5 active streams. These are starting values. Results go to files; routine wakeups are batched. Optional compaction/cache settings are recommendations only; the plugin does not edit user configuration.
+Keep authoritative task state in repository/planning files. [Coordinator continuity](coordinator-context.md) prefers same-session compaction with verified identity, child ownership and result delivery, followed by checkpoint reconciliation. Replacement is a separate guarded operation; no fixed token thresholds or daily replacement. Stream counts and routine notification batches are adjustable guidance. Optional compaction/cache settings are documented for the user; the coordinator does not execute `/autocompact` or edit configuration.
 
 ## Setup
 
@@ -67,7 +67,7 @@ claude plugin marketplace update split-orchestrator
 claude plugin update split-orchestrator@split-orchestrator
 ```
 
-Start a new Claude session after updating. Version 0.3.3 adds bounded coordinator sessions, durable handoffs and batched notifications. Version 0.3.2 routes all browser/Electron checks to Sol and limits Haiku to non-GUI checks. Version 0.3.1 introduced concise context/file handoffs. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
+Start a new Claude session after updating. Version 0.3.3 adds host-aware continuity, durable checkpoints and batched notifications. Version 0.3.2 routes all browser/Electron checks to Sol and limits Haiku to non-GUI checks. Version 0.3.1 introduced concise context/file handoffs. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
 
 ## Upgrade from 0.1
 

@@ -1,33 +1,44 @@
 # Coordinator continuity
 
-The repository or planning files hold authoritative goals, ownership, decisions and acceptance state. A transcript or handoff summary is not the task database. Use the existing task store; do not add a queue service or new automation by default.
+Context maintenance and coordinator replacement are separate operations. Keep authoritative goals, ownership, decisions and acceptance state in existing repository/planning files. A checkpoint links those records; neither the transcript nor its summary is the task database. Do not add a queue service by default.
 
-## Bound each session
+## Check host capabilities
 
-Prepare a handoff at about 150,000 context tokens. Start a fresh coordinator around 200,000, after a completed milestone, or at least daily during active work, whichever comes first. These thresholds are starting values, not validated optima or automatic runtime limits. Use available context telemetry; if unavailable, report that and use milestone/daily boundaries instead of inventing a count. Compaction is a safety net within a task, not a replacement for rotation.
+Before relying on continuity, record the installed host/version and supported behavior for stable session identity, child handles and completion routing, survival of pending calls, cross-session child resume or readdressing, and shared artifact access. Unknown capabilities count as unsupported for the proposed operation. Model/effort evidence marked unknown is a separate matter and does not itself block dispatch.
 
-Write a 2,000–5,000-token handoff file. Load it and required instructions into the successor; do not resume or fork the large transcript. Link detail rather than copying it. Record:
+Prefer compaction in the same thread/session when the host preserves coordinator identity, child ownership and result delivery. Let the host manage context size; there is no mandatory token threshold or daily replacement. Milestones and day boundaries are opportunities to checkpoint and review. Resuming the same session may preserve continuity; a new thread sharing the same root or parent does not itself transfer children.
 
-- Goals, scope, approval gates and acceptance criteria, with authoritative file paths.
-- Active and queued task IDs, owners, integration owner and current status.
-- Open delegations: task ID, exact session/delegation IDs, assigned role/model/effort, checkout, pending/completed/unknown status and evidence/recovery paths. Preserve batch IDs when applicable.
-- Decisions with links, blockers, unresolved criteria and ordered next actions.
-- Exact repository/branch/commit and runtime revisions; dirty work and evidence limitations.
-- Dispatch owner, named successor, handoff revision, notification cursor and consumed event IDs.
+## Checkpoint and reconcile
 
-## Transfer dispatch once
+Maintain a short checkpoint linking authoritative entries as commitments change. A 2–5k-token index is a useful size guide, not a guarantee against information loss. Include:
 
-1. Stop new dispatch and checkpoint the authoritative files. Name one successor, leaving dispatch inactive during transfer. The thread starter launches it fresh as Opus/high; the successor checks available settings evidence, records unavailable proof as `unknown` and stops for confirmed mismatches. Use only the host's authorized session mechanism. If unavailable, leave the handoff ready and report the limitation, not a successful rotation.
-2. Preserve direct Farcall completion waits. Do not interrupt a pending call to satisfy the token target, inspect pending logs, or launch replacement work. Finish the wait before transfer; unknown outcomes remain open for the existing recovery procedure. Also let native subagents, including `routine-checker`, finish in their current parent and persist their results before rotation. A fresh coordinator does not inherit their handles or assume they can be resumed there. If completion or result persistence cannot be secured, defer rotation and record the reason; do not spawn replacements. Mark any delay to the rotation target.
-3. The successor checks the handoff against authoritative files/revisions and records that it owns dispatch. The predecessor stays inactive; neither another successor nor the predecessor may dispatch. If ownership is ambiguous, resolve it before assigning work.
-4. Route late results to their durable task IDs and evidence paths, not to an old chat as the only record. Never redispatch a task merely because its result arrived after rotation. Record result consumption and ignore duplicate event IDs. Retain the cursor in the next handoff. Across machines, use one authoritative store accessible to all relevant owners; local copies alone do not guarantee shared ownership.
+- Goals, scope, approvals, acceptance criteria and rejected approaches, with source links.
+- Active/queued task IDs, attempt IDs, owners, integration owner and status.
+- Dispatch intents and open delegations: exact session/delegation/batch IDs, assigned role/model/effort, checkout and pending/completed/unknown status.
+- Decisions, blockers, unresolved outcomes and ordered next actions.
+- Exact repository/branch/commit and runtime revisions, dirty work, evidence paths and delivery/recovery routes.
+- Current dispatch owner, checkpoint revision, notification cursor and consumed event IDs; named successor only when replacement is intended.
 
-## Batch notifications
+Before a worker call, persist task ID, attempt ID and dispatch intent. After it returns, save returned session/delegation IDs and result/event records. If interrupted between those writes, use the existing recovery evidence to reconcile the attempt; an intent without returned IDs must not trigger another dispatch.
 
-Children and workers write results to assigned files. Notifications contain task/event ID, outcome, exact revision and artifact link; chat reports remain at most 15 lines. Wake the coordinator immediately only for a blocker, a decision requiring it, or a result ready for acceptance. Other progress is collected per milestone or at a chosen interval of 10–15 minutes, never more often between milestones. Skip empty batches.
+Do not request or run compaction during a pending Farcall wait. Checkpoint before dispatch, keep the direct wait intact, and request manual compaction only after it returns. Do not assume automatic host compaction preserves a Farcall call: if delivery is lost, retain an unknown outcome and recover without launching a replacement worker.
 
-Record consumption in the task store; do not send acknowledgement-only messages. Notify affected owners only, not every thread. Prefer existing deterministic delivery/batching mechanisms. Do not add model-driven polling or replace Farcall's direct completion wait with notification polling. Mandatory tool completions still return normally; avoid extra progress wakeups around them.
+After compaction, reload the checkpoint and reconcile task, delegation and result records before new dispatch. Check persisted intent against returned IDs, consume results once and preserve unresolved attempts. A successful command alone does not prove compaction or recovery succeeded.
 
-## Bound active streams
+## Replace only with safe continuity
 
-Manage 3–5 active streams per coordinator; queue additional streams with priority and owner. Workers can still run independent tasks in parallel under the ownership and integration rules. A stream is a deliverable needing coordinator decisions, not every worker process. Add a coordinator only for a distinct decision responsibility; do not create another layer just to forward messages.
+Stop new dispatch before replacement. Normally, finish direct waits, let session-bound children finish in their current parent, persist their results and reconcile all outstanding records. Stopped workers alone are not enough. A verified host transfer path may carry ongoing children only if it proves their authorization lineage, completion delivery and recovery across the change. Do not compact a pending Farcall wait or break its completion contract as a shortcut.
+
+Do not assume a fresh coordinator inherits native handles. Re-parent or readdress children only through a verified host mechanism covering permissions/ancestry, queued and late notices, descendants and recovery, not merely a changed tree display. Durable task IDs identify results but do not deliver them: require shared artifact access plus working delivery/recovery before retiring the predecessor.
+
+Name exactly one successor. Transfer dispatch authority once in the authoritative record after prerequisites are met; the successor verifies the checkpoint/revisions and the predecessor remains inactive. The starter sets Opus/high; missing model/effort proof is unknown, confirmed mismatches stop dispatch. Resolve ambiguous ownership before assigning work. Never redispatch because a notice is missing; use task/attempt IDs and the existing recovery procedure.
+
+If replacement is unsafe, continue in the same thread/session where continuity is supported, or leave a checkpoint and report the limitation. Do not claim a successful transfer, invent host capabilities or change user settings.
+
+## Batch notifications and limit active streams
+
+Children/workers write result files. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports remain at most 15 lines. Wake immediately for blockers, decisions or acceptance-ready results. As tunable guidance, batch other progress by milestone or every 10–15 minutes; skip empty batches. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads.
+
+Prefer existing deterministic delivery. Never replace direct Farcall waits with model-driven polling; normal tool completions still return normally. Across machines use one authoritative store accessible to relevant owners.
+
+Start with 3–5 actively managed streams and queue additional streams with priority/owner; adapt to workload. Independent workers may remain parallel. A stream needs coordinator decisions; it is not every worker process. Add coordinators only for distinct decision responsibility.

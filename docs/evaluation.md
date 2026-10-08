@@ -39,7 +39,7 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 
 ## 0.3.3 verification scope
 
-The coordinator-continuity instructions and documentation pass local packaging/link/hook checks. Rotation, late-result delivery, batching and context savings have not been exercised live. The 150k/200k context thresholds and 3–5-stream guidance are starting values; compare workload evidence before treating them as validated. No user configuration was changed.
+The continuity instructions and documentation pass local packaging/link/hook checks. Live compaction, child delivery/transfer, batching and context savings have not been exercised. Same-session compaction and coordinator replacement have separate capability and reconciliation requirements. No fixed token or daily replacement thresholds apply; stream counts and batch intervals are adjustable guidance. User configuration is unchanged.
 
 ## 0.3.2 verification scope
 

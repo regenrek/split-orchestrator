@@ -2,11 +2,10 @@
 
 ## 0.3.3 (unreleased)
 
-- Record missing model/effort evidence as unknown without blocking dispatch; stop on confirmed mismatches. Drain native children and save their results before rotation. State Claude Code minimum versions for optional TTL and per-model compaction settings.
-
-- Bound coordinator sessions with initial 150k/200k thresholds, milestone/daily rotation and a fresh 2–5k-token file handoff. Keep authoritative task state, one dispatch owner and exact delegation/revision records; preserve pending waits and late results.
-- Manage 3–5 active streams and queue the rest. Write results to files; wake immediately only for blockers, decisions or acceptance-ready results and batch routine progress by milestone or 10–15 minutes. No acknowledgement-only messages or broad broadcasts.
-- Document optional compaction/cache controls and their tradeoffs without changing user configuration. Thresholds and savings remain unvalidated; the starter sets coordinator effort.
+- Prefer same-session compaction when host identity, child ownership and result delivery are preserved. Keep short checkpoints linking authoritative state; reconcile tasks, delegations and results after compaction. No fixed token thresholds or daily replacement.
+- Separate coordinator replacement from context maintenance. Require completed waits/children and reconciled results, or verified host transfer; transfer dispatch authority once. Persist task/attempt IDs and dispatch intent before calls. Never redispatch for a missing notice or compact during a Farcall wait.
+- Make 3–5 active streams and milestone/10–15-minute routine batches adjustable guidance. Write result files; wake immediately for blockers, decisions or acceptance-ready results, without acknowledgement-only chats or broad broadcasts.
+- Record missing model/effort evidence as unknown without blocking dispatch; stop on confirmed mismatches. Document host limitations and optional versioned compaction/cache settings without changing user configuration. The coordinator does not run `/autocompact`; the starter sets effort.
 
 ## 0.3.2 (2026-10-08)
 
