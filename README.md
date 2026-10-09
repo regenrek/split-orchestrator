@@ -47,6 +47,8 @@ Reports stay within 15 chat lines, with details in linked files. Small-context H
 
 Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams & batched routine updates, adapting to workload. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
 
+Optional: if your chosen workflow uses native Codex subagents, wait with explicit `collaboration.wait_agent(timeout_ms=1800000)`, without polling. This does not change the Farcall workflow above. [Native Codex waits & optional local setup](hosts/bb/README.md#optional-native-codex-waits).
+
 ## Why this workflow
 
 In practical builds, Opus coordinated Sol workers through Farcall & returned corrections to their original sessions. The benchmarks also exposed shared-file conflicts, lost drafts & retries that reported success without saving changes. This workflow makes ownership & persisted outcomes explicit. It is not a claim that a model pairing guarantees quality.

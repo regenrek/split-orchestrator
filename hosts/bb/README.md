@@ -12,6 +12,31 @@ Re-parenting host-managed children is unsupported by this workflow for now: auth
 
 Before replacing a coordinator, stop dispatch, finish direct waits and session-bound children, persist results and reconcile outstanding records. If this cannot be done safely, continue in place where supported, or leave the checkpoint and report the limitation. No new threads or re-parenting commands are prescribed here. See the [host-independent contract](../../plugin/skills/orchestrate/references/coordination.md).
 
+## Optional native Codex waits
+
+For separately chosen workflows using native Codex subagents, explicitly call `collaboration.wait_agent(timeout_ms=1800000)`. This host guidance does not replace Split Orchestrator's Farcall transport, model/reviewer defaults or skill runtime.
+
+The wait is interruptible by events and user input. While only waiting, do not replace it with loops of sleeps, clock checks, file reads or status queries. Handle actual messages, errors, user input and independent work normally. An empty long timeout is not an error: if the worker is still running, wait again with the explicit long timeout.
+
+Optional local setup in `~/.codex/config.toml` for Codex versions supporting these settings:
+
+```toml
+[features.multi_agent_v2]
+enabled = true
+min_wait_timeout_ms = 300000
+default_wait_timeout_ms = 1800000
+```
+
+Replace an existing `multi_agent_v2 = true` under `[features]`; do not keep both the boolean and the table. Alternatively, use this single inline-table value under the existing `[features]` header instead of the table above:
+
+```toml
+multi_agent_v2 = { enabled = true, min_wait_timeout_ms = 300000, default_wait_timeout_ms = 1800000 }
+```
+
+Keep other settings unchanged. Shorter waits are clamped to the minimum, not rejected. The minimum alone only reduces short-wait loops; the default applies when `timeout_ms` is omitted. Keep the explicit long timeout in the workflow. The plugin does not edit this configuration. Hot reload in running sessions is not guaranteed; do not restart running jobs just to apply it.
+
+Reported native smoke tests: Codex CLI 0.161.0 held one wait for 380.39 seconds with zero parent responses during the quiet interval, then woke on child completion. User steering interrupted a wait after about 80 seconds on CLI 0.161.0 and 0.160.1; both tests confirmed clamping from 60000 to 300000 ms. These are bounded observations, not a 30-minute soak, end-to-end coverage of every bb version or measured production savings.
+
 ## Remove the old 0.1 child-thread rules
 
 If you previously used this repository's optional installer, its global instruction block can still redirect work to the retired native-worker setup. The helper now only removes that marked block, preserving other instructions. Preview first; `--apply` writes the change.
