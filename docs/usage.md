@@ -6,19 +6,20 @@
 
 | Role | Model | Effort | Responsibility |
 |---|---|---|---|
-| Coordinator/reviewer | `claude-opus-5-5` | `high` | Scope, contracts, ownership, integrated review & final acceptance |
+| Coordinator | `claude-opus-5-5` | `high` | Scope, contracts, ownership, targeted evidence review & final acceptance |
 | Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
 | Routine checks (small-context subagent) | `claude-haiku-5-5` | `low` | Status, logs, HTTP/file links & content, bounded waits; no browser, GUI, Electron or product changes |
 | Browser/Electron smoke (separate sessions) | `gpt-6.1-sol` | `medium` | Fixed checklists, real browser/Electron access, screenshots & viewport/layout checks through Farcall |
+| Full-diff reviewer (separate session) | `gpt-6.1-sol` by default; explicit user/project choice, including Astra, takes precedence | `high` by default; record selected settings | Complete integrated diff, correctness findings, exact base/head, coverage & concise evidence handoff |
 | Live QA (fresh session) | `gpt-6.1-sol` | `high` | Real browser/Electron or entry-point checks, persisted outcomes & rechecks; no product fixes |
 
-Farcall is the required transport for Sol. Haiku uses the bundled native `split-orchestrator:routine-checker` subagent with a standalone brief, not a full-history fork. It is not a substitute implementer. A single Sol worker can implement & integrate; add implementers only for independent deliverables. Fresh Sol acceptance QA remains required for UI/Electron and substantial multi-worker work. Browser smoke, Electron tests and acceptance QA each have their own Sol Farcall session, separate from implementation. Medium is allowed only for fixed-checklist smoke; implementation, integration and acceptance QA require high. Haiku only handles checks without a browser or GUI. Opus reviews the integrated diff and actual evidence, assigning gaps and critical live rechecks to Sol QA. The coordinator does not click through the browser. A fresh reviewer is optional, with an agreed model and transport.
+Farcall is the required transport for Sol. Haiku uses the bundled native `split-orchestrator:routine-checker` subagent with a standalone brief, not a full-history fork. It is not a substitute implementer. A single Sol worker can implement & integrate; add implementers only for independent deliverables. Fresh Sol acceptance QA remains required for UI/Electron and substantial multi-worker work. Browser smoke, Electron tests and acceptance QA each have their own Sol Farcall session, separate from implementation. Medium is allowed only for fixed-checklist smoke; implementation, integration and acceptance QA require high. Haiku only handles checks without a browser or GUI. A separate reviewer covers the complete integrated diff. Opus retains acceptance, reading relevant/risky/contradictory hunks and actual test evidence selectively, deepening open findings and assigning live rechecks to Sol QA. Explicit reviewer choices override only the review default; record exact model, effort and transport, without silent substitutions. The coordinator does not click through the browser. See the [review contract](../plugin/skills/orchestrate/references/review.md).
 
 These are workflow instructions, not runtime enforcement of model selection or file access. The thread starter sets coordinator effort to `high`; the plugin cannot change it. The coordinator reports deviations and stops dispatch. Verify actual worker execution metadata against the assigned role and effort; for Haiku, inspect the matching Claude transcript's model and execution settings for effort. Definitions and requested values alone are not proof. Missing model/effort proof is recorded as `unknown` and does not block dispatch; only a confirmed mismatch does. Name a supported, available evidence source before requiring verified execution. Unknown worker outcomes still follow Farcall recovery. No aliases or silent substitutions.
 
 ## Keep context small
 
-Keep worker and child-agent chat reports within 15 lines, linking detailed files. Write long briefs/messages once to a file and pass its path; use Farcall `prompt_file` for long worker tasks. Read targeted ranges and filtered search results, while still reading required instructions.
+Keep worker/reviewer chat reports within 15 lines: exact commit, outcome, test evidence, blockers, risks/decisions and artifact path. Full logs/traces remain in worker artifacts. Do not routinely reread the complete diff or every artifact after separate review; unresolved evidence requires targeted follow-up, never blind acceptance. Summaries still accumulate in parent context. Write long briefs/messages once to a file and pass its path; use Farcall `prompt_file` for long worker tasks. Read targeted ranges and filtered search results, while still reading required instructions.
 
 Delegate status collection, log inspection and routine waits to Haiku with explicit checkpoints, a deadline and evidence paths. Use one bounded script or blocking wait, not repeated coordinator steps. Farcall calls still wait directly; neither agent polls pending workers.
 
@@ -54,7 +55,7 @@ Propose a short plan with observable acceptance criteria and wait for approval.
 Use the fewest workers needed, with isolated checkouts and explicit ownership.
 Give one Sol worker integration responsibility.
 For UI or substantial multi-worker work, have fresh Sol QA verify the integrated result and persisted state.
-Report coordinator review findings, evidence and unresolved criteria.
+Report separate-review findings, coordinator acceptance, evidence and unresolved criteria.
 No push, main merge, deployment or publishing without approval.
 ```
 
@@ -67,7 +68,7 @@ claude plugin marketplace update split-orchestrator
 claude plugin update split-orchestrator@split-orchestrator
 ```
 
-Start a new Claude session after updating. Version 0.3.3 adds host-aware continuity, durable checkpoints and batched notifications. Version 0.3.2 routes all browser/Electron checks to Sol and limits Haiku to non-GUI checks. Version 0.3.1 introduced concise context/file handoffs. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
+New sessions load the updated plugin. Running coordinators need the explicit updated reviewer choice and [review contract](../plugin/skills/orchestrate/references/review.md) supplied as a bounded instruction before their next review; installation alone does not prove they applied it. Do not restart or replace them just for this update. Version 0.3.4 moves full-diff review to its own session and keeps coordinator acceptance targeted. Version 0.3.3 adds host-aware continuity, durable checkpoints and batched notifications. Version 0.3.2 routes all browser/Electron checks to Sol and limits Haiku to non-GUI checks. Version 0.3.1 introduced concise context/file handoffs. Version 0.3 adds separate Sol QA, concrete stateful acceptance cases and evidence tied to the final integrated commit. See the [acceptance contract](../plugin/skills/orchestrate/references/acceptance.md).
 
 ## Upgrade from 0.1
 

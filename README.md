@@ -6,7 +6,7 @@ Opus coordinates & reviews. Haiku handles checks without a GUI. Sol builds, inte
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
-The coordinator uses `claude-opus-5-5`, high. Sol workers use `gpt-6.1-sol`: medium for fixed-checklist browser/Electron smoke, high for implementation, integration & acceptance QA. Non-GUI routine subagents use `claude-haiku-5-5`, low. No Astra or silent model substitutions.
+The coordinator uses `claude-opus-5-5`, high. Sol workers use `gpt-6.1-sol`: medium for fixed-checklist browser/Electron smoke, high for implementation, integration & acceptance QA. Non-GUI routine subagents use `claude-haiku-5-5`, low. Full-diff review runs in a separate session (Sol/high by default); explicit user/project reviewer choices, including Astra, take precedence for review only. No silent model substitutions.
 
 ## Install
 
@@ -43,7 +43,7 @@ The skill handles ownership, isolated checkouts, worker corrections & coordinato
 
 Each implementer gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
 
-Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator reviews evidence without clicking through the browser. [Context & check roles](docs/usage.md#keep-context-small).
+Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator checks risks, findings & test evidence selectively after the separate full-diff review, deepening open issues without routinely importing the entire diff again. Summaries still accumulate; context is not constant. [Context & check roles](docs/usage.md#keep-context-small).
 
 Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams & batched routine updates, adapting to workload. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
 

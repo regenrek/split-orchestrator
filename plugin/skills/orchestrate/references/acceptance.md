@@ -1,6 +1,6 @@
 # Acceptance evidence
 
-Opus defines expected behavior and applicable scenarios before implementation. Implementers keep reproducible regression tests with the code. A fresh Sol QA session exercises the integrated application; Opus evaluates the diff and evidence and owns acceptance. Sol also owns browser smoke and Electron tests, each in a separate Farcall session. Haiku checks only status, logs and HTTP/file links or content without any browser/GUI. Smoke results do not replace Sol acceptance QA. The coordinator does not click through the browser.
+Opus defines expected behavior and applicable scenarios before implementation. Implementers keep reproducible regression tests with the code. A fresh Sol QA session exercises the integrated application; A [separate reviewer](review.md) covers the complete integrated diff; Opus examines relevant risks, findings and test evidence selectively and owns final acceptance. Sol also owns browser smoke and Electron tests, each in a separate Farcall session. Haiku checks only status, logs and HTTP/file links or content without any browser/GUI. Smoke results do not replace Sol acceptance QA. The coordinator does not click through the browser.
 
 ## Browser and Electron smoke
 
@@ -37,6 +37,6 @@ QA owns an isolated checkout and runtime state. It may create test evidence; it 
 
 QA checkouts, containers and test databases belong to the run. Name them with the run ID and list them as created in the coordinator's `artifacts/<run-id>/run.md`. Remove them at run close under the skill's cleanup rules; keep the evidence in the coordinator's `artifacts/<run-id>/`.
 
-After a fix, the coordinator prepares the QA checkout and runtime at the new integrated commit while preserving evidence and unresolved drafts. Resume the original QA session, verify that revision, and repeat affected scenarios plus core journeys. Broaden coverage when shared changes or new failures justify it. Opus reviews actual evidence and assigns gaps, contradictions and pre-marked risks to Sol QA for targeted live rechecks. Keep chat handoffs within 15 lines and link the detailed report.
+After a fix, the coordinator prepares the QA checkout and runtime at the new integrated commit while preserving evidence and unresolved drafts. Resume the original QA session, verify that revision, and repeat affected scenarios plus core journeys. Broaden coverage when shared changes or new failures justify it. Opus inspects relevant evidence portions and assigns gaps, contradictions and pre-marked risks to Sol QA for targeted live rechecks. The diff reviewer covers fixes and affected interactions at the final revision; Opus deepens targeted inspection for unresolved findings without routinely reloading all artifacts. Keep chat handoffs within 15 lines and link the detailed report.
 
 Keep failures and missing evidence open. A budget limit is a stopping condition, never a pass.

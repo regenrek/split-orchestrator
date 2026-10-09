@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4 (2026-10-09)
+
+- Assign complete integrated-diff review to a separate session. Opus retains final acceptance with targeted risk, finding and test-evidence checks, deepening unresolved issues without routinely rereading the full diff or all artifacts.
+- Honor explicit user/project reviewer choices, including Astra, without silently substituting models or changing implementation/QA defaults. Bind review coverage and follow-up findings to exact revisions.
+- Keep handoffs within 15 lines with commit, outcome, test evidence, blockers, risks/decisions and artifact path. Full logs/traces stay with workers; summaries still grow coordinator context.
+
 ## 0.3.3 (2026-10-08)
 
 - Prefer same-session compaction when host identity, child ownership and result delivery are preserved. Keep short checkpoints linking authoritative state; reconcile tasks, delegations and results after compaction. No fixed token thresholds or daily replacement.

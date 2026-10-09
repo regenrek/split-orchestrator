@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.4 verification scope
+
+Separate full-diff review and targeted coordinator acceptance are instruction changes, with explicit reviewer selection and revision-bound findings. Packaging/link/hook checks do not prove review quality or reduced context usage. No live reviewer/QA workflow or context comparison has been measured for this release.
+
 ## 0.3.3 verification scope
 
 The continuity instructions and documentation pass local packaging/link/hook checks. Live compaction, child delivery/transfer, batching and context savings have not been exercised. Same-session compaction and coordinator replacement have separate capability and reconciliation requirements. No fixed token or daily replacement thresholds apply; stream counts and batch intervals are adjustable guidance. User configuration is unchanged.
