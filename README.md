@@ -6,7 +6,7 @@ Opus coordinates & reviews. Haiku handles checks without a GUI. Sol builds, inte
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
-The coordinator uses `claude-opus-5-5`, high. Sol workers use `gpt-6.1-sol`: medium for fixed-checklist browser/Electron smoke, high for implementation, integration & acceptance QA. Non-GUI routine subagents use `claude-haiku-5-5`, low. Full-diff review runs in a separate session (Sol/high by default); explicit user/project reviewer choices, including Astra, take precedence for review only. No silent model substitutions.
+[Roles, model/effort defaults & review tiers](plugin/skills/orchestrate/references/review.md) live in one place. Explicit reviewer choices, including Astra, are supported without silent substitutions. [Farcall owns transport; Split owns the workflow](plugin/skills/orchestrate/references/ownership.md). Project instructions add project facts, not another orchestration rulebook.
 
 ## Install
 

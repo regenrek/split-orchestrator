@@ -4,6 +4,14 @@ Install Split Orchestrator & Farcall's Codex worker on the machine running Claud
 
 Workers run through Farcall from that coordinator. They are not bb child threads. Do not install extra model-routing rules or use `bb thread spawn` as an implementation fallback.
 
+## Load the canonical workflow
+
+Split owns orchestration; Farcall owns its installed transport contract. Project `AGENTS.md` files add project commands, owners and criteria. Do not install a second orchestration skill with copied role, effort, review or restart rules. [Rule ownership](../../plugin/skills/orchestrate/references/ownership.md).
+
+In Claude Code, invoke `/split-orchestrator:orchestrate`. Coordinator hooks are a loading aid, not proof of role or successful workflow adoption. Other BB providers may not discover Claude plugin skills. A small host adapter can locate `split-orchestrator@split-orchestrator` in `~/.claude/plugins/installed_plugins.json`, record `version`, `gitCommitSha` and `installPath`, then read `skills/orchestrate/SKILL.md` and its referenced files at that path. Do not copy their contents into global skills. Reading the contract does not prove the other provider can execute it: verify actual role, tools, approvals and continuity; report missing capabilities instead of changing models or spawning another coordinator automatically.
+
+New sessions discover updated skills. For running coordinators, send the revised source/revision and affected contract before their next dispatch; installation alone is not adoption proof. Do not restart or replace running sessions for this update.
+
 ## Coordinator continuity
 
 Optional host guidance: prefer compaction in the existing coordinator thread only after verifying that the installed provider preserves its identity, child ownership and delivery. Keep a checkpoint and reconcile task/delegation/result records afterward. Do not compact while a direct Farcall wait is pending.

@@ -26,6 +26,7 @@ plugin/
     references/farcall.md
     references/acceptance.md
     references/review.md
+    references/ownership.md
     references/coordination.md
 hosts/
   bb/       setup notes & removal of the old custom-instruction block

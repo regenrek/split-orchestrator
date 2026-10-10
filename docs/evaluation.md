@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.6 verification scope
+
+This consolidates instruction ownership, risk tiers and host discovery. Packaging, document and bounded instruction-review checks do not prove live execution on every provider, context savings or review quality. Git-write access must be verified for the actual sandbox and metadata layout; the historical 0.3 smoke below is not a universal permission guarantee. No new live sandbox/browser workflow is claimed for this change.
+
 ## 0.3.4 verification scope
 
 Separate full-diff review and targeted coordinator acceptance are instruction changes, with explicit reviewer selection and revision-bound findings. Packaging/link/hook checks do not prove review quality or reduced context usage. No live reviewer/QA workflow or context comparison has been measured for this release.
@@ -47,7 +51,7 @@ The continuity instructions and documentation pass local packaging/link/hook che
 
 ## 0.3.2 verification scope
 
-Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Only fixed-checklist smoke uses medium; implementation, integration and acceptance QA stay high. The initial medium/high comparison is required for early real smoke runs but has not yet been performed here. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.
+This historical effort policy is superseded by the current [role/tier reference](../plugin/skills/orchestrate/references/review.md). Version 0.3.2 assigns all browser/Electron checks to Sol and limits Haiku to non-GUI work. Only fixed-checklist smoke uses medium; implementation, integration and acceptance QA stay high. The initial medium/high comparison is required for early real smoke runs but has not yet been performed here. Local packaging, hook and document checks pass. No new browser/Electron or model run was performed for this instruction update; the historical smoke records below do not establish GUI access or behavior for 0.3.2.
 
 ## 0.3.1 routine-check smoke
 

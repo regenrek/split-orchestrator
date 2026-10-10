@@ -31,7 +31,7 @@ Stop new dispatch before replacement. Normally, finish direct waits, let session
 
 Do not assume a fresh coordinator inherits native handles. Re-parent or readdress children only through a verified host mechanism covering permissions/ancestry, queued and late notices, descendants and recovery, not merely a changed tree display. Durable task IDs identify results but do not deliver them: require shared artifact access plus working delivery/recovery before retiring the predecessor.
 
-Name exactly one successor. Transfer dispatch authority once in the authoritative record after prerequisites are met; the successor verifies the checkpoint/revisions and the predecessor remains inactive. The starter sets Opus/high; missing model/effort proof is unknown, confirmed mismatches stop dispatch. Resolve ambiguous ownership before assigning work. Never redispatch because a notice is missing; use task/attempt IDs and the existing recovery procedure.
+Name exactly one successor. Transfer dispatch authority once in the authoritative record after prerequisites are met; the successor verifies the checkpoint/revisions and the predecessor remains inactive. The starter sets the [coordinator role settings](review.md#roles-and-settings); missing model/effort proof is unknown, confirmed mismatches stop dispatch. Resolve ambiguous ownership before assigning work. Never redispatch because a notice is missing; use task/attempt IDs and the existing recovery procedure.
 
 If replacement is unsafe, continue in the same thread/session where continuity is supported, or leave a checkpoint and report the limitation. Do not claim a successful transfer, invent host capabilities or change user settings.
 
@@ -40,5 +40,7 @@ If replacement is unsafe, continue in the same thread/session where continuity i
 Children/workers write result files. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports remain at most 15 lines. Wake immediately for blockers, decisions or acceptance-ready results. As tunable guidance, batch other progress by milestone or every 10–15 minutes; skip empty batches. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads.
 
 Prefer existing deterministic delivery. Never replace direct Farcall waits with model-driven polling; normal tool completions still return normally. Across machines use one authoritative store accessible to relevant owners.
+
+Repeated compaction or expensive reconciliation calls for checking the stream workload and pausing new intake; it never overrides the safe continuity requirements above.
 
 Start with 3–5 actively managed streams and queue additional streams with priority/owner; adapt to workload. Independent workers may remain parallel. A stream needs coordinator decisions; it is not every worker process. Add coordinators only for distinct decision responsibility.

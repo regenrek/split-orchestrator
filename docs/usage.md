@@ -4,20 +4,9 @@
 
 ## Roles
 
-| Role | Model | Effort | Responsibility |
-|---|---|---|---|
-| Coordinator | `claude-opus-5-5` | `high` | Scope, contracts, ownership, targeted evidence review & final acceptance |
-| Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
-| Trivial change | `gpt-6.1-sol` | `medium` | One file, no shared contract; local checks only |
-| Routine checks (small-context subagent) | `claude-haiku-5-5` | `low` | Status, logs, HTTP/file links & content, bounded waits; no browser, GUI, Electron or product changes |
-| Browser/Electron smoke (separate sessions) | `gpt-6.1-sol` | `medium` | Fixed checklists, real browser/Electron access, screenshots & viewport/layout checks through Farcall |
-| Full-diff reviewer (separate session) | `gpt-6.1-sol` by default; explicit user/project choice, including Astra, takes precedence | `high` by default; record selected settings | Complete integrated diff, correctness findings, exact base/head, coverage & concise evidence handoff |
-| Final review (security/money/data) | strong model, native | `high` | Second review after the full-diff review for auth, payments, persistence, migrations & exports |
-| Live QA (fresh session) | `gpt-6.1-sol` | `high` | Real browser/Electron or entry-point checks, persisted outcomes & rechecks; no product fixes |
+The [role and review-tier reference](../plugin/skills/orchestrate/references/review.md) owns exact models, effort and review depth. Opus coordinates and accepts, Sol builds and verifies through Farcall, and Haiku handles non-GUI routine checks. Use the fewest workers: one may implement and integrate. Review depth follows the effect of the change; a trivial edit does not need the same chain as a migration.
 
-Farcall is the required transport for Sol. Haiku uses the bundled native `split-orchestrator:routine-checker` subagent with a standalone brief, not a full-history fork. It is not a substitute implementer. A single Sol worker can implement & integrate; add implementers only for independent deliverables. Fresh Sol acceptance QA remains required for UI/Electron and substantial multi-worker work. Browser smoke, Electron tests and acceptance QA each have their own Sol Farcall session, separate from implementation. Medium is allowed only for fixed-checklist smoke; implementation, integration and acceptance QA require high. Haiku only handles checks without a browser or GUI. A separate reviewer covers the complete integrated diff. Opus retains acceptance, reading relevant/risky/contradictory hunks and actual test evidence selectively, deepening open findings and assigning live rechecks to Sol QA. Explicit reviewer choices override only the review default; record exact model, effort and transport, without silent substitutions. The coordinator does not click through the browser. See the [review contract](../plugin/skills/orchestrate/references/review.md).
-
-These are workflow instructions, not runtime enforcement of model selection or file access. The thread starter sets coordinator effort to `high`; the plugin cannot change it. The coordinator reports deviations and stops dispatch. Verify actual worker execution metadata against the assigned role and effort; for Haiku, inspect the matching Claude transcript's model and execution settings for effort. Definitions and requested values alone are not proof. Missing model/effort proof is recorded as `unknown` and does not block dispatch; only a confirmed mismatch does. Name a supported, available evidence source before requiring verified execution. Unknown worker outcomes still follow Farcall recovery. No aliases or silent substitutions.
+These are workflow instructions, not runtime enforcement. Explicit reviewer choices remain supported. Missing execution metadata is unknown, a confirmed mismatch stops dispatch, and unknown worker outcomes require Farcall recovery. [Ownership and precedence](../plugin/skills/orchestrate/references/ownership.md) keep host/project skills from creating a second workflow.
 
 ## Keep context small
 
@@ -31,7 +20,7 @@ Keep authoritative task state in repository/planning files. [Coordinator continu
 
 ## Setup
 
-Install Split Orchestrator & Farcall's `codex-worker` as shown in the README. Use Farcall with `run` & `run_batch` support; the reviewed reference is 0.1.7. Follow its [installation guide](https://github.com/regenrek/farcall-mcp/blob/main/docs/installation.md). Node 24+, a signed-in Codex CLI & access to the requested model are required.
+Install Split Orchestrator & Farcall's `codex-worker` as shown in the README. Use Farcall with `run` & `run_batch` support; check the installed adapter version and its contract. Follow its [installation guide](https://github.com/regenrek/farcall-mcp/blob/main/docs/installation.md). Node 24+, a signed-in Codex CLI & access to the requested model are required.
 
 ```sh
 CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6 (2026-10-10)
+
+- Make Farcall the transport authority and Split the single workflow source; host adapters load it and project instructions add project facts.
+- Centralize role/effort settings, classify trivial work by risk, and distinguish blocking findings from follow-ups without automatic extra review rounds.
+- Preserve safe session continuity, add bounded incident and evidence guidance, and remove copied transport recipes in favor of the installed Farcall contract.
+
 ## 0.3.5 (2026-10-10)
 
 - Load the coordinator rules only into coordinator sessions (run record present or `SPLIT_ORCHESTRATOR_ROLE=coordinator`), no longer on `/clear`; deduplicate the rules file.
