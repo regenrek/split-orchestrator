@@ -1,14 +1,19 @@
 {
-  "description": "Load the split-orchestrator delegation rules into every session, and again after /clear and compaction",
+  "description": "Load the coordinator rules only into coordinator sessions (run record present or SPLIT_ORCHESTRATOR_ROLE=coordinator), again after resume and compaction",
   "hooks": {
     "SessionStart": [
       {
-        "matcher": "startup|resume|clear|compact",
+        "matcher": "startup|resume|compact",
         "hooks": [
           {
             "type": "command",
-            "command": "cat",
-            "args": ["${CLAUDE_PLUGIN_ROOT}/rules/coordinator.md"],
+            "command": "sh",
+            "args": [
+              "-c",
+              "if [ \"$SPLIT_ORCHESTRATOR_ROLE\" = coordinator ] || ls \"${CLAUDE_PROJECT_DIR:-.}\"/artifacts/*/run.md >/dev/null 2>&1; then cat \"$1\"; fi",
+              "split-orchestrator-rules",
+              "${CLAUDE_PLUGIN_ROOT}/rules/coordinator.md"
+            ],
             "timeout": 5
           }
         ]

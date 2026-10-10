@@ -39,19 +39,32 @@ class PackagingChecks(unittest.TestCase):
             shutil.copytree(ROOT / 'plugin', plugin)
             settings = json.loads((plugin / 'hooks/hooks.json').read_text())
             expected = (plugin / 'rules/coordinator.md').read_text()
-            for event in ['startup', 'resume', 'clear', 'compact']:
-                matched = [entry for entry in settings['hooks']['SessionStart']
-                           if re.fullmatch(entry['matcher'], event)]
-                self.assertTrue(matched, event)
-                for entry in matched:
-                    for hook in entry['hooks']:
-                        # Claude's documented exec-form placeholder substitution.
-                        argv = [hook['command'], *hook['args']]
-                        argv = [arg.replace('${CLAUDE_PLUGIN_ROOT}', str(plugin)) for arg in argv]
-                        result = subprocess.run(argv, input=json.dumps({'source': event}),
-                                                text=True, capture_output=True, check=True,
-                                                cwd=tmp, timeout=hook['timeout'])
-                        self.assertEqual(result.stdout, expected)
+            env = {k: v for k, v in os.environ.items()
+                   if k not in ('SPLIT_ORCHESTRATOR_ROLE', 'CLAUDE_PROJECT_DIR')}
+            run_record = Path(tmp) / 'artifacts/run-1/run.md'
+            # Workers and plain sessions get nothing; coordinators (role or run record) get the rules.
+            cases = [('none', {}, ''), ('role', {'SPLIT_ORCHESTRATOR_ROLE': 'coordinator'}, expected),
+                     ('run-record', {}, expected)]
+            self.assertFalse([e for e in settings['hooks']['SessionStart']
+                              if re.fullmatch(e['matcher'], 'clear')])
+            for name, extra, want in cases:
+                if name == 'run-record':
+                    run_record.parent.mkdir(parents=True)
+                    run_record.write_text('run\n')
+                for event in ['startup', 'resume', 'compact']:
+                    matched = [entry for entry in settings['hooks']['SessionStart']
+                               if re.fullmatch(entry['matcher'], event)]
+                    self.assertTrue(matched, event)
+                    for entry in matched:
+                        for hook in entry['hooks']:
+                            # Claude's documented exec-form placeholder substitution.
+                            argv = [hook['command'], *hook['args']]
+                            argv = [arg.replace('${CLAUDE_PLUGIN_ROOT}', str(plugin)) for arg in argv]
+                            result = subprocess.run(argv, input=json.dumps({'source': event}),
+                                                    text=True, capture_output=True, check=True,
+                                                    cwd=tmp, timeout=hook['timeout'],
+                                                    env={**env, **extra})
+                            self.assertEqual(result.stdout, want, f'{name}/{event}')
 
 
 class LegacyCleanupChecks(unittest.TestCase):

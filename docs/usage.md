@@ -8,9 +8,11 @@
 |---|---|---|---|
 | Coordinator | `claude-opus-5-5` | `high` | Scope, contracts, ownership, targeted evidence review & final acceptance |
 | Implementation/integration | `gpt-6.1-sol` | `high` | Implementation, local checks, corrections & one exclusive integration owner |
+| Trivial change | `gpt-6.1-sol` | `medium` | One file, no shared contract; local checks only |
 | Routine checks (small-context subagent) | `claude-haiku-5-5` | `low` | Status, logs, HTTP/file links & content, bounded waits; no browser, GUI, Electron or product changes |
 | Browser/Electron smoke (separate sessions) | `gpt-6.1-sol` | `medium` | Fixed checklists, real browser/Electron access, screenshots & viewport/layout checks through Farcall |
 | Full-diff reviewer (separate session) | `gpt-6.1-sol` by default; explicit user/project choice, including Astra, takes precedence | `high` by default; record selected settings | Complete integrated diff, correctness findings, exact base/head, coverage & concise evidence handoff |
+| Final review (security/money/data) | strong model, native | `high` | Second review after the full-diff review for auth, payments, persistence, migrations & exports |
 | Live QA (fresh session) | `gpt-6.1-sol` | `high` | Real browser/Electron or entry-point checks, persisted outcomes & rechecks; no product fixes |
 
 Farcall is the required transport for Sol. Haiku uses the bundled native `split-orchestrator:routine-checker` subagent with a standalone brief, not a full-history fork. It is not a substitute implementer. A single Sol worker can implement & integrate; add implementers only for independent deliverables. Fresh Sol acceptance QA remains required for UI/Electron and substantial multi-worker work. Browser smoke, Electron tests and acceptance QA each have their own Sol Farcall session, separate from implementation. Medium is allowed only for fixed-checklist smoke; implementation, integration and acceptance QA require high. Haiku only handles checks without a browser or GUI. A separate reviewer covers the complete integrated diff. Opus retains acceptance, reading relevant/risky/contradictory hunks and actual test evidence selectively, deepening open findings and assigning live rechecks to Sol QA. Explicit reviewer choices override only the review default; record exact model, effort and transport, without silent substitutions. The coordinator does not click through the browser. See the [review contract](../plugin/skills/orchestrate/references/review.md).
@@ -36,7 +38,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
   claude --model claude-opus-5-5 --effort high
 ```
 
-Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
+Coordinator rules load at session start only when the project has a run record `artifacts/<run-id>/run.md` or `SPLIT_ORCHESTRATOR_ROLE=coordinator` is set. Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
 For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Sol browser smoke, Electron testing and acceptance QA need actual tools in their separate sessions; do not assume access from the parent connection. Verify access in each assigned session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.5 (2026-10-10)
+
+- Load the coordinator rules only into coordinator sessions (run record present or `SPLIT_ORCHESTRATOR_ROLE=coordinator`), no longer on `/clear`; deduplicate the rules file.
+- Add review tiers per change class (trivial, normal, security/money/data, UI) and an effort ladder: Sol medium for trivial changes, high by default, xhigh only for a named reason.
+- Classify red results as product, harness or environment before a rerun; stop after two correction rounds on one finding; rerun only the red stage plus one final pass. Dependent workers exchange handoffs directly. No Opus-class models through Farcall.
+
 ## 0.3.4 (2026-10-09)
 
 - Assign complete integrated-diff review to a separate session. Opus retains final acceptance with targeted risk, finding and test-evidence checks, deepening unresolved issues without routinely rereading the full diff or all artifacts.
