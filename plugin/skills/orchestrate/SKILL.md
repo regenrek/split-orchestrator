@@ -1,10 +1,12 @@
 ---
 name: orchestrate
-description: Coordinate implementation and live QA through Farcall with Opus owning architecture and acceptance and Sol building, integrating and testing. Use for features, fixes, migrations or refactors that the user wants built or orchestrated. Requires the configured Opus session and Farcall Codex worker; do not use for read-only questions.
+description: Coordinate implementation and live QA through Farcall with Opus owning architecture and acceptance and Sol building, integrating and testing. Use for features, fixes, migrations or refactors that the user wants built or orchestrated. The root coordinator requires the configured Opus session and Farcall Codex worker; do not use for read-only questions.
 argument-hint: <task and optional constraints>
 ---
 
 # Orchestrate
+
+This entrypoint describes the root coordinator. When a host stream reads it, apply the rules for its assigned role under [transport scope](references/ownership.md#transport-scope); reading this skill does not reassign the stream as root coordinator.
 
 You coordinate and own final acceptance. Sol owns implementation, integration and corrections. A fresh Sol QA session tests the integrated result without repairing product code. Haiku handles bounded non-GUI checks in a small context. Before dispatch, pick the change class from the [review tiers](references/review.md); it fixes build effort, review depth and QA form for the slice.
 
@@ -12,7 +14,7 @@ You coordinate and own final acceptance. Sol owns implementation, integration an
 
 - Read the [roles, exact model/effort defaults and review tiers](references/review.md) before dispatch. This is their canonical source. Record the chosen class and any explicit user choice; no silent substitutions. The thread starter sets coordinator effort; missing settings evidence is unknown, a confirmed mismatch stops dispatch.
 - Follow [one owner per rule](references/ownership.md): Farcall owns transport, Split owns workflow, host skills and project instructions add only their specific procedures and requirements. This skill uses Farcall tools directly.
-- Confirm Farcall and the required local tools are available. Read [the Farcall call contract](references/farcall.md) before dispatch. Do not start replacement workers through native agents, host threads or shell CLI calls if Farcall is unavailable.
+- Identify this role and the assigned transport under [transport scope](references/ownership.md#transport-scope). For coordinator dispatches assigned to Farcall, confirm availability and read [its contract](references/farcall.md); missing Farcall never permits native/CLI replacement. A host stream with an explicitly preselected native path uses its host contract instead. No rerouting of pending or unknown attempts.
 - Follow project instructions. Verify the actual entry point, start command, mandatory local checks and reproducible test data before delegation. Test fixtures must be versioned or have documented provisioning/reset steps, including external backends. Resolve only missing prerequisites; do not repeat an approval already given.
 - For browser smoke, Electron testing and acceptance QA, verify browser/Electron control in the actual assigned Sol session, not only in the coordinator. A worker does not inherit your browser connection. Missing access leaves the affected checks open; agree a transparent alternative, such as restoring access in the assigned QA session, with the user. Do not silently switch tools, models or permissions.
 
@@ -70,7 +72,7 @@ Do not edit another owner's components, delegate further, or push, merge to
 main, deploy or publish. Request shared changes from the coordinator.
 ```
 
-Use direct Farcall completion waits and batch independent tasks in disjoint checkouts. Do not dispatch consumers of unfinished contracts. Do not poll worker status, tail logs repeatedly or do the same work while waiting. A timeout or interrupted batch has an unknown outcome until reconciled, not permission to launch duplicates.
+For Farcall dispatches, use direct completion waits and batch independent tasks in disjoint checkouts. Explicitly selected native host streams use the corresponding host completion contract under [transport scope](references/ownership.md#transport-scope). Do not dispatch consumers of unfinished contracts. Do not poll worker status, tail logs repeatedly or do the same work while waiting. A timeout or interrupted batch has an unknown outcome until reconciled, not permission to launch duplicates.
 
 ## 4. Integrate and correct
 

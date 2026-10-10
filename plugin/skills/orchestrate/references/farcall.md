@@ -2,6 +2,8 @@
 
 Farcall is a separately installed dependency and the canonical owner of its call schema, supported options, waits, IDs/idempotency, resume, isolation and transport artifacts. Split calls its tools directly, rather than invoking the standalone Farcall worker skill. Split supplies task ownership and acceptance criteria as part of the user-authorized orchestration.
 
+This reference governs dispatches assigned to Farcall. An explicitly preselected native host stream follows [transport scope](ownership.md#transport-scope), not a Farcall fallback.
+
 ## Resolve the actual contract
 
 Before dispatch, identify the installed adapter/plugin version and available `codex_worker` tools. Consult that version's [installation](https://github.com/regenrek/farcall-mcp/blob/main/docs/installation.md), [usage](https://github.com/regenrek/farcall-mcp/blob/main/docs/usage.md) and [batch/recovery contract](https://github.com/regenrek/farcall-mcp/blob/main/docs/batches.md). These links show current upstream documentation; select the corresponding tag or commit for the installed artifact. A version label alone is insufficient for a modified cache: record its source revision or hash when diagnosing a mismatch. Do not replace installed-version facts with a stale checkout or assume a running session reloaded an updated plugin.

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.7 (2026-10-10)
+
+- Scope the Farcall no-fallback rule to Farcall dispatches. Explicitly preselected native host-stream delegation retains its assigned role and transport; it never permits rerouting a pending or unknown attempt or silently changing models.
+
 ## 0.3.6 (2026-10-10)
 
 - Make Farcall the transport authority and Split the single workflow source; host adapters load it and project instructions add project facts.

@@ -6,14 +6,14 @@ This is the canonical role, model and effort reference. Pick the change class be
 
 | Role | Default model / effort | Transport and responsibility |
 |---|---|---|
-| Coordinator | `claude-opus-5-5` / high | Host session; scope, contracts, owners, targeted evidence inspection and final acceptance |
+| Root coordinator | `claude-opus-5-5` / high | Host session; scope, contracts, owners, targeted evidence inspection and final acceptance |
 | Implementer / integrator | `gpt-6.1-sol` / by tier below | Farcall; build, local checks, corrections; one exclusive integrator |
 | Diff reviewer | `gpt-6.1-sol` / high, or explicit user/project choice | Separate session; full integrated diff and relevant surrounding code |
 | Acceptance QA | `gpt-6.1-sol` / high | Fresh Farcall session; real entry paths and persisted outcomes, no product repairs |
 | Browser / Electron smoke | `gpt-6.1-sol` / medium | Separate short Farcall session, fixed checklist and verified tool access; never a substitute for acceptance QA |
 | Routine checker | `claude-haiku-5-5` / low | Native small-context session; status, logs, HTTP/files, bounded waits; no browser, GUI or screenshot triage |
 
-The starter sets coordinator effort. Record exact selected model, effort and transport before dispatch. Missing execution evidence is `unknown`; only a confirmed mismatch stops dispatch for settings. Requests and self-description alone do not prove execution. Unknown worker outcomes are different and require Farcall recovery. Never silently change models, effort, permissions or transport.
+Transport entries above describe the coordinator default; [explicitly chosen native host streams](ownership.md#transport-scope) retain their assigned role and worker settings. The starter sets coordinator effort. Record exact selected model, effort and transport before dispatch. Missing execution evidence is `unknown`; only a confirmed mismatch stops dispatch for settings. Requests and self-description alone do not prove execution. Unknown worker outcomes are different and require the assigned transport's recovery contract. Never silently change models, effort, permissions or transport.
 
 Opus-class review roles run natively by default as a workflow choice, not a Farcall limitation or an API-pricing claim. Explicit user-approved alternatives still require actual tool access. Additional strong reviewers/planners need the task's risk or an explicit request. Start with at most two native strong-model children as adjustable capacity guidance, not an acceptance gate.
 
