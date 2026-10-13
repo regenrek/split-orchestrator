@@ -37,7 +37,9 @@ If replacement is unsafe, continue in the same thread/session where continuity i
 
 ## Batch notifications and limit active streams
 
-Children/workers write result files. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports remain at most 15 lines. Wake immediately for blockers, decisions or acceptance-ready results. As tunable guidance, batch other progress by milestone or every 10–15 minutes; skip empty batches. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads.
+Children/workers write result files. Status by pull: notify only for STOP, decision or acceptance-ready result; other progress stays in result files, read by the coordinator on wake. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports remain at most 15 lines. Consume each event once; a progress notice plus completion notice for the same event triggers one handling. No turn for duplicate or progress-only notices. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads.
+
+On each wake, reconcile arrived decisions and results first, then fill free stream slots with ready independent work from the plan. Plan model, provider, test-VM, GUI and build capacity separately; free model capacity is not free test capacity. On repeated provider overload, reduce new starts and secure running results instead of queueing more acceptance work.
 
 Prefer existing deterministic delivery. Never replace direct Farcall waits with model-driven polling; normal tool completions still return normally. Across machines use one authoritative store accessible to relevant owners.
 

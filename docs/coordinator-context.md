@@ -8,7 +8,7 @@ Before relying on continuity, check stable session identity, child handles/deliv
 
 The [continuity contract](../plugin/skills/orchestrate/references/coordination.md) covers safe replacement. Normally all direct waits and session-bound children must finish, with results durably collected and reconciled. A verified host transfer may preserve ongoing work, but shared ancestry alone is insufficient. Exactly one successor receives dispatch authority; its predecessor stays inactive. Missing notices never justify redispatch. If continuity is unsafe, stay in the supported session or leave a checkpoint and report the limitation.
 
-Use 3–5 active streams and milestone/10–15-minute notification batches as adjustable guidance. Workers remain parallel. Notify only affected owners, immediately for blockers, decisions or acceptance-ready results. No acknowledgement-only chats. These are instructions, not a queue/session runtime or a configuration installer.
+Use 3–5 active streams as adjustable guidance. Workers remain parallel. Status by pull: notify only affected owners, only for STOP, decisions or acceptance-ready results; other progress stays in result files. No acknowledgement-only chats. These are instructions, not a queue/session runtime or a configuration installer.
 
 ## Host notes
 

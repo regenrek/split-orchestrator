@@ -23,7 +23,7 @@ For every applicable case, the success/error message, displayed state and persis
 
 ## Reproducible evidence
 
-Before a long or expensive run, check the target, tools and capacity, then exercise one small case through the same harness. A failed precheck must be classified and corrected before expanding the run. Desktop evidence records platform, build identity and launch method, with a window capture while visible and unoccluded.
+Before a long or expensive run, check the target, tools and capacity, then exercise one small case through the same harness. A failed precheck must be classified and corrected before expanding the run. After two harness/setup aborts before the first successful relevant user path, stop the large run: owner repairs prerequisites in one bundled pass or picks an equivalent existing check path; no full matrix until the small case passes. Count per user path, not per file or finding. Debug runs never count as final acceptance. Desktop evidence records platform, build identity and launch method, with a window capture while visible and unoccluded.
 
 Keep reports, logs, screenshots, commands and hashes as evidence, not repository copies, dependencies, build output or database copies. Reference database provisioning/reset commands instead; keep a database copy only when needed to reproduce a finding, and say why.
 

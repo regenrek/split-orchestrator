@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.8 verification scope
+
+Derived from a blind four-analysis comparison of five real coordinator threads (rounds mostly from harness/evidence gaps, stacked reviewers, coordinator relay traffic). Instruction changes only. Local packaging, link and hook checks pass, including the new explicit-role hook case. Fewer rounds, faster delivery and unchanged defect detection are not yet measured; pilot on a real stream and compare rounds per deliverable, harness-vs-product reds, reviewer sessions, time to acceptance and reopened defects.
+
 ## 0.3.6 verification scope
 
 This consolidates instruction ownership, risk tiers and host discovery. Packaging, document and bounded instruction-review checks do not prove live execution on every provider, context savings or review quality. Git-write access must be verified for the actual sandbox and metadata layout; the historical 0.3 smoke below is not a universal permission guarantee. No new live sandbox/browser workflow is claimed for this change.

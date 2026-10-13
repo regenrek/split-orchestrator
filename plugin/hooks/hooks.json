@@ -1,5 +1,5 @@
 {
-  "description": "Load the coordinator rules only into coordinator sessions (run record present or SPLIT_ORCHESTRATOR_ROLE=coordinator), again after resume and compaction",
+  "description": "Load the coordinator rules only into coordinator sessions (SPLIT_ORCHESTRATOR_ROLE=coordinator, or role unset and a run record present; any other explicit role gets none), again after resume and compaction",
   "hooks": {
     "SessionStart": [
       {
@@ -10,7 +10,7 @@
             "command": "sh",
             "args": [
               "-c",
-              "if [ \"$SPLIT_ORCHESTRATOR_ROLE\" = coordinator ] || ls \"${CLAUDE_PROJECT_DIR:-.}\"/artifacts/*/run.md >/dev/null 2>&1; then cat \"$1\"; fi",
+              "case \"${SPLIT_ORCHESTRATOR_ROLE:-}\" in coordinator) cat \"$1\" ;; '') if ls \"${CLAUDE_PROJECT_DIR:-.}\"/artifacts/*/run.md >/dev/null 2>&1; then cat \"$1\"; fi ;; esac",
               "split-orchestrator-rules",
               "${CLAUDE_PLUGIN_ROOT}/rules/coordinator.md"
             ],

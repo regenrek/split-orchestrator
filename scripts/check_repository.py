@@ -43,8 +43,10 @@ class PackagingChecks(unittest.TestCase):
                    if k not in ('SPLIT_ORCHESTRATOR_ROLE', 'CLAUDE_PROJECT_DIR')}
             run_record = Path(tmp) / 'artifacts/run-1/run.md'
             # Workers and plain sessions get nothing; coordinators (role or run record) get the rules.
+            # An explicit non-coordinator role wins over a stale run record.
             cases = [('none', {}, ''), ('role', {'SPLIT_ORCHESTRATOR_ROLE': 'coordinator'}, expected),
-                     ('run-record', {}, expected)]
+                     ('run-record', {}, expected),
+                     ('worker-with-run-record', {'SPLIT_ORCHESTRATOR_ROLE': 'worker'}, '')]
             self.assertFalse([e for e in settings['hooks']['SessionStart']
                               if re.fullmatch(e['matcher'], 'clear')])
             for name, extra, want in cases:

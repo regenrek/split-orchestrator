@@ -27,7 +27,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
   claude --model claude-opus-5-5 --effort high
 ```
 
-Coordinator rules load at session start only when the project has a run record `artifacts/<run-id>/run.md` or `SPLIT_ORCHESTRATOR_ROLE=coordinator` is set. Set the environment before launching the parent. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
+Coordinator rules load at session start only when `SPLIT_ORCHESTRATOR_ROLE=coordinator` is set, or the role is unset and the project has a run record `artifacts/<run-id>/run.md`. Any other explicit role (for example `SPLIT_ORCHESTRATOR_ROLE=worker`) gets no coordinator rules. Set the environment before launching the session. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
 For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Sol browser smoke, Electron testing and acceptance QA need actual tools in their separate sessions; do not assume access from the parent connection. Verify access in each assigned session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 

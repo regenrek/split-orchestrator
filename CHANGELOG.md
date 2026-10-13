@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.8 (2026-10-14)
+
+- Count correction rounds per deliverable and user path, not per finding: one correction plus one recheck, stop after two unsuccessful rounds. Blocking only for product defects, security/data-loss risk, unmet acceptance criteria or missing sole-basis evidence; other gaps are follow-ups.
+- Owners fix their own test, fixture, harness and environment failures without STOP or a separate review chain; weakened assertions are blocking. Two setup aborts before the first successful user path stop the large run.
+- Classify security/money/data by effect (permissions, money calculation, user-data migration/deletion/export, deploy); test/harness/perf work without contract change is trivial or normal. One strong final review per integrated candidate; a strong reviewer may replace the ordinary one. UI is built by Opus high natively with one browser QA round, no separate review pass.
+- Status by pull: notify only for STOP, decisions or acceptance-ready results; consume events once; fill free slots from the plan on each wake; plan test capacity separately; at most one advisor per decision.
+- Test-suite rewrites and new harness frameworks are separate deliveries with approval and time box.
+- An explicit non-coordinator `SPLIT_ORCHESTRATOR_ROLE` no longer loads coordinator rules because a run record exists.
+
 ## 0.3.7 (2026-10-10)
 
 - Scope the Farcall no-fallback rule to Farcall dispatches. Explicitly preselected native host-stream delegation retains its assigned role and transport; it never permits rerouting a pending or unknown attempt or silently changing models.
