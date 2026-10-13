@@ -2,7 +2,7 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Opus coordinates & reviews. Haiku handles checks without a GUI. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
+Opus coordinates & reviews, and builds UI changes natively. Haiku handles checks without a GUI. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
@@ -45,7 +45,7 @@ Each implementer gets its own local clone with installed dependencies (plan seve
 
 Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator checks risks, findings & test evidence selectively after the separate full-diff review, deepening open issues without routinely importing the entire diff again. Summaries still accumulate; context is not constant. [Context & check roles](docs/usage.md#keep-context-small).
 
-Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams & batched routine updates, adapting to workload. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
+Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams, adapting to workload. Status by pull: workers notify only for STOP, decisions or acceptance-ready results. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
 
 Optional: if your chosen workflow uses native Codex subagents, wait with explicit `collaboration.wait_agent(timeout_ms=1800000)`, without polling. This does not change the Farcall workflow above. [Native Codex waits & optional local setup](hosts/bb/README.md#optional-native-codex-waits).
 

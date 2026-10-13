@@ -1,5 +1,5 @@
 {
-  "description": "Load the coordinator rules only into coordinator sessions (SPLIT_ORCHESTRATOR_ROLE=coordinator, or role unset and a run record present; any other explicit role gets none), again after resume and compaction",
+  "description": "Load the coordinator rules only into coordinator sessions (SPLIT_ORCHESTRATOR_ROLE=coordinator, or role unset/empty and a run record present; any other nonempty role gets none), again after resume and compaction",
   "hooks": {
     "SessionStart": [
       {

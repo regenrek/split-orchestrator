@@ -1,6 +1,6 @@
 {
   "name": "split-orchestrator",
-  "description": "Opus coordinates and reviews; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
+  "description": "Opus coordinates, reviews and builds UI natively; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
   "owner": {
     "name": "Kevin Kern"
   },
@@ -8,7 +8,7 @@
     {
       "name": "split-orchestrator",
       "source": "./plugin",
-      "description": "Opus coordinates and reviews; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall."
+      "description": "Opus coordinates, reviews and builds UI natively; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall."
     }
   ]
 }

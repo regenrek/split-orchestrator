@@ -46,6 +46,7 @@ class PackagingChecks(unittest.TestCase):
             # An explicit non-coordinator role wins over a stale run record.
             cases = [('none', {}, ''), ('role', {'SPLIT_ORCHESTRATOR_ROLE': 'coordinator'}, expected),
                      ('run-record', {}, expected),
+                     ('empty-role-with-run-record', {'SPLIT_ORCHESTRATOR_ROLE': ''}, expected),
                      ('worker-with-run-record', {'SPLIT_ORCHESTRATOR_ROLE': 'worker'}, '')]
             self.assertFalse([e for e in settings['hooks']['SessionStart']
                               if re.fullmatch(e['matcher'], 'clear')])

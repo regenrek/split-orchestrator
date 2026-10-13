@@ -16,7 +16,7 @@ Delegate status collection, log inspection and routine waits to Haiku with expli
 
 Sol UI smoke checks include a named viewport and no unintended element extending beyond it or horizontal overflow. Document intended scroll regions; screenshots alone do not prove the assertion. Both smoke and routine checkers record expected/actual outcomes, failed assertions and missing access. They write evidence only and never fix product code. Green smoke does not constitute acceptance; Sol-high owns acceptance QA. Spot-check the first medium smoke runs with a separate high acceptance session on the same cases, revision, runtime and data. If medium finds substantially fewer issues, return smoke to high and record why. This initial comparison does not require duplicate full checks on every run.
 
-Keep authoritative task state in repository/planning files. [Coordinator continuity](coordinator-context.md) prefers same-session compaction with verified identity, child ownership and result delivery, followed by checkpoint reconciliation. Replacement is a separate guarded operation; no fixed token thresholds or daily replacement. Stream counts and routine notification batches are adjustable guidance. Optional compaction/cache settings are documented for the user; the coordinator does not execute `/autocompact` or edit configuration.
+Keep authoritative task state in repository/planning files. [Coordinator continuity](coordinator-context.md) prefers same-session compaction with verified identity, child ownership and result delivery, followed by checkpoint reconciliation. Replacement is a separate guarded operation; no fixed token thresholds or daily replacement. Stream counts are adjustable guidance; status is pulled from result files, with notifications only for STOP, decisions or acceptance-ready results. Optional compaction/cache settings are documented for the user; the coordinator does not execute `/autocompact` or edit configuration.
 
 ## Setup
 
@@ -27,7 +27,7 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
   claude --model claude-opus-5-5 --effort high
 ```
 
-Coordinator rules load at session start only when `SPLIT_ORCHESTRATOR_ROLE=coordinator` is set, or the role is unset and the project has a run record `artifacts/<run-id>/run.md`. Any other explicit role (for example `SPLIT_ORCHESTRATOR_ROLE=worker`) gets no coordinator rules. Set the environment before launching the session. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
+Coordinator rules load at session start only when `SPLIT_ORCHESTRATOR_ROLE=coordinator` is set, or the role is unset or empty and the project has a run record `artifacts/<run-id>/run.md`. Any other nonempty role (for example `SPLIT_ORCHESTRATOR_ROLE=worker`) gets no coordinator rules. Set the environment before launching the session. The plugin cannot retrofit completion waiting into an already running session. An interrupted call must be reconciled before retrying; never launch duplicate work or replace the wait with model-driven polling.
 
 For Claude in Chrome, add `--chrome` & connect the extension before the run. Other configured browser tools can be used if they can drive the real application/backend. Check the target device, URL, ports & test data first. Sol browser smoke, Electron testing and acceptance QA need actual tools in their separate sessions; do not assume access from the parent connection. Verify access in each assigned session. Missing access leaves checks open; agree an alternative with the user instead of silently changing tools or permissions. QA needs an isolated checkout and runtime state, with reproducible start/reset commands and test data.
 
@@ -44,7 +44,7 @@ Use `/split-orchestrator:orchestrate` followed by the task & constraints. Plan a
 Constraints: <scope, product behavior and environment restrictions>.
 Propose a short plan with observable acceptance criteria and wait for approval.
 Use the fewest workers needed, with isolated checkouts and explicit ownership.
-Give one Sol worker integration responsibility.
+Give one Sol worker integration responsibility; a sole UI implementer integrates its own work.
 For UI or substantial multi-worker work, have fresh Sol QA verify the integrated result and persisted state.
 Report separate-review findings, coordinator acceptance, evidence and unresolved criteria.
 No push, main merge, deployment or publishing without approval.
