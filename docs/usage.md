@@ -4,7 +4,7 @@
 
 ## Roles
 
-The [role and review-tier reference](../plugin/skills/orchestrate/references/review.md) owns exact models, effort and review depth. Opus coordinates and accepts, Sol builds and verifies through Farcall, and Haiku handles non-GUI routine checks. Use the fewest workers: one may implement and integrate. Review depth follows the effect of the change; a trivial edit does not need the same chain as a migration.
+The [role and review-tier reference](../plugin/skills/orchestrate/references/review.md) owns exact models, effort and review depth. Opus coordinates and accepts and builds UI-class changes natively, Sol builds and verifies through Farcall, and Haiku handles non-GUI routine checks. Use the fewest workers: one may implement and integrate. Review depth follows the effect of the change; a trivial edit does not need the same chain as a migration.
 
 These are workflow instructions, not runtime enforcement. Explicit reviewer choices remain supported. Missing execution metadata is unknown, a confirmed mismatch stops dispatch, and unknown worker outcomes require Farcall recovery. [Ownership and precedence](../plugin/skills/orchestrate/references/ownership.md) keep host/project skills from creating a second workflow.
 
