@@ -1,8 +1,8 @@
 {
   "name": "split-orchestrator",
   "displayName": "Split Orchestrator",
-  "version": "0.3.8",
-  "description": "Opus coordinates, reviews and builds UI natively; Haiku checks status, logs and HTTP/files; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
+  "version": "0.3.9",
+  "description": "Opus coordinates, reviews and builds UI natively; Astra final-reviews security, money and data changes; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
   "author": {
     "name": "Kevin Kern",
     "url": "https://github.com/regenrek"

@@ -2,11 +2,11 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Opus coordinates & reviews, and builds UI changes natively. Haiku handles checks without a GUI. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
+Opus coordinates & reviews, and builds UI changes natively. Astra gives security, money & data changes one final review. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 
-[Roles, model/effort defaults & review tiers](plugin/skills/orchestrate/references/review.md) live in one place. Explicit reviewer choices, including Astra, are supported without silent substitutions. [Farcall owns transport; Split owns the workflow](plugin/skills/orchestrate/references/ownership.md). Project instructions add project facts, not another orchestration rulebook.
+[Roles, model/effort defaults & review tiers](plugin/skills/orchestrate/references/review.md) live in one place. Explicit reviewer choices are supported without silent substitutions. [Farcall owns transport; Split owns the workflow](plugin/skills/orchestrate/references/ownership.md). Project instructions add project facts, not another orchestration rulebook.
 
 ## Install
 
@@ -43,9 +43,9 @@ The skill handles ownership, isolated checkouts, worker corrections & coordinato
 
 Each implementer gets its own local clone with installed dependencies (plan several GB per worker); at close, the run removes what it created under the cleanup rules and keeps evidence & resume records.
 
-Reports stay within 15 chat lines, with details in linked files. Small-context Haiku subagents check status, logs and HTTP/file content & handle routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator checks risks, findings & test evidence selectively after the separate full-diff review, deepening open issues without routinely importing the entire diff again. Summaries still accumulate; context is not constant. [Context & check roles](docs/usage.md#keep-context-small).
+Reports stay within 15 chat lines, with details in linked files. An optional small-context Haiku subagent checks status, logs and HTTP/file content & handles routine waits. Sol runs browser smoke, Electron tests & acceptance QA in separate Farcall sessions; quick smoke uses a fixed checklist at medium. Spot-check early medium runs with high acceptance QA; return smoke to high if medium finds substantially fewer issues. The coordinator checks risks, findings & test evidence selectively after the separate full-diff review, deepening open issues without routinely importing the entire diff again. Summaries still accumulate; context is not constant. [Context & check roles](docs/usage.md#keep-context-small).
 
-Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams, adapting to workload. Status by pull: workers notify only for STOP, decisions or acceptance-ready results. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
+Prefer same-session compaction with a checkpoint in files and verified host continuity. Replace coordinators only after safe reconciliation or a verified host transfer. Start with 3–5 active streams, adapting to workload. Status by pull: workers notify only for STOP, decisions or acceptance-ready results. Open user decisions live in one ledger; reversible technical ones take the recommended default after 60 minutes. [Continuity, host notes & optional cache settings](docs/coordinator-context.md).
 
 Optional: if your chosen workflow uses native Codex subagents, wait with explicit `collaboration.wait_agent(timeout_ms=1800000)`, without polling. This does not change the Farcall workflow above. [Native Codex waits & optional local setup](hosts/bb/README.md#optional-native-codex-waits).
 

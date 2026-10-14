@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.9 verification scope
+
+Derived from run records with overlapping reviews: in `cli-mcp` S01 seven Opus and five Fable passes repeatedly reported the same findings; in S05 Fable's final pass after Opus found no new blocker. No same-revision Astra/Opus comparison exists. Instruction changes only; local packaging, link and hook checks pass. Each stream now records class, review passes, correction rounds and defects first found by QA or live runs; drop the Astra final review if pilots show it finds no blockers.
+
 ## 0.3.8 verification scope
 
 Derived from a blind four-analysis comparison of five real coordinator threads (rounds mostly from harness/evidence gaps, stacked reviewers, coordinator relay traffic). Instruction changes only. Local packaging, link and hook checks pass, including the new explicit-role hook case. Fewer rounds, faster delivery and unchanged defect detection are not yet measured; pilot on a real stream and compare rounds per deliverable, harness-vs-product reds, reviewer sessions, time to acceptance and reopened defects.

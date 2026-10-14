@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.9 (2026-10-14)
+
+- Opus 5.5 high is the diff reviewer in a fresh session, never the coordinator, and does all rechecks and delta checks. Astra (`gpt-6-astra` high) gives security/money/data candidates one final review; it rechecks only for a highest-severity blocker, changed security boundary or new material risk. No other reviewers without a named uncovered risk or user request; Astra is the single advisor role.
+- Decision ledger in `run.md`: ask once; reversible technical decisions take the recommended default after 60 minutes; payments/money movement, push, main merge, deploy/publish, deletion, account/permission/security changes, scope changes and new paid resources always wait for approval.
+- Record change class, review passes, correction rounds and defects first found by QA or live runs per stream.
+- Haiku routine checker is optional. New reviewers do not reset the correction-round count.
+- Agent-facing text compressed (about 7,400 to 7,100 words) and QA/continuity details deduplicated into their references.
+
 ## 0.3.8 (2026-10-14)
 
 - Count correction rounds per deliverable and user path, not per finding: one correction plus one recheck, stop after two unsuccessful rounds. Blocking only for product defects, security/data-loss risk, unmet acceptance criteria or missing sole-basis evidence; other gaps are follow-ups.
