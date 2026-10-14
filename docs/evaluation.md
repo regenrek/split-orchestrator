@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.11 verification scope
+
+From the 0.3.10 pilot in three projects (finance, team plugin rollout, game). Worked: the two-round limit turned a stalled test series into one decision; one decision ledger let the owner answer eight questions in one message; owner self-fixes of harness and environment failures; an early live run found seven real defects in about three hours that earlier reviews had missed. Cost: finished reviews sat unread 35 to 55 minutes because completion notices were lost; a start reported as aborted existed and caused a duplicate review; test-contract drift counted as correction rounds; long acceptance runs blocked the integration path on shared VM slots; a QA brief with exact error codes failed correct product behaviour. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+
 ## 0.3.10 verification scope
 
 From a coordinator retrospective of a three-day rollout: time went into heavy test machinery for small changes (three VM starts for one test and one doc file, each failing on the harness, about 2.5 hours) and target blockers found at the end instead of day one; a strong reviewer was most useful on the design before build, and static review passed checks that then failed in the VM. Replaces the 0.3.9 post-build Astra final review. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.

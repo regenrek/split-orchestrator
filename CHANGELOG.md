@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.3.11 (2026-10-14)
+
+- Where the tier requires diff review, Astra is the diff reviewer for Opus-built non-UI slices. The diff reviewer runs the affected tests at the reviewed head; worker-reported green alone is insufficient. New art-content class: no diff review of binary assets; review import, bake and build scripts; QA by captures in the running build.
+- Only product corrections after review or QA count as rounds; owner fixes to tests, test contracts, fixtures, harness and environment are self-fixes bounded by the reserve. A stream already at the limit when the rules change gets one recheck.
+- Codex roles default to the fast service tier; record the actual tier. A host that cannot select the default effort uses the next higher one, recorded.
+- Native or host-thread worker past its expected finish without a notice: read its result file. Uncertain start: check the host's thread or session list before any new start.
+- Full runs collect every red result; the integrator runs exact-list and snapshot tests after each intake; the integration path has priority on shared VM slots.
+- QA briefs state invariants, not exact error codes; QA may retest the pre-rebase head in parallel, proven afterwards by range diff plus one full run. Handoffs list commands with exit codes; an unlisted check counts as not run.
+- Rollouts: preflight under the real privilege and session context, packaged files against the install manifest, first live run early on the smallest target; handover and return contract when a rollout stops the coordinator's own host; live fixes committed back before run close.
+- Decision ledger: scope, licence, security and approval questions have no deadline.
+
 ## 0.3.10 (2026-10-14)
 
 - Security/money/data: read-only target inventory, then one Astra design review before build, then Sol builds once; Astra rechecks only for a highest-severity blocker, changed design or security boundary, or new material risk. Replaces the post-build Astra final review.

@@ -23,7 +23,7 @@ For every applicable case, success/error message, displayed state and persisted 
 
 ## Reproducible evidence
 
-Before a long or expensive run, check target, tools and capacity, then exercise one small case through the same harness. Run every new or changed check once locally against real stored data (existing stored test data or read-only access to the real target; no production copies) before any test-VM or remote run; no untested check goes to a VM. A check that cannot run locally runs once on the smallest single target first. Classify and correct a failed precheck before expanding the run. After two harness/setup aborts before the first successful relevant user path, stop the large run: owner repairs prerequisites in one bundled pass or picks an equivalent existing check path; no full matrix until the small case passes. Count per user path, not per file or finding. Debug runs never count as final acceptance. Desktop evidence records platform, build identity and launch method, with a window capture while visible and unoccluded.
+Before a long or expensive run, check target, tools and capacity, then exercise one small case through the same harness. Run every new or changed check once locally against real stored data (existing stored test data or read-only access to the real target; no production copies) before any test-VM or remote run; no untested check goes to a VM. A check that cannot run locally runs once on the smallest single target first. Classify and correct a failed precheck before expanding the run. After two harness/setup aborts before the first successful relevant user path, stop the large run: owner repairs prerequisites in one bundled pass or picks an equivalent existing check path; no full matrix until the small case passes. Count per user path, not per file or finding. A full run collects every red result before reporting; no stop at the first red unless the run endangers data or the reserve. Debug runs never count as final acceptance. Desktop evidence records platform, build identity and launch method, with a window capture while visible and unoccluded.
 
 No seals, checksum chains or not-run ledgers for intermediate states or test reports; checksums only on real install and release artifacts. A failure class seen before becomes a checkpoint in the project recipe (`AGENTS.md` or runbook); the coordinator adds it or assigns it with file ownership.
 
@@ -36,6 +36,8 @@ For each scenario record:
 - Reproducible start/reset instructions and versioned or documented test-data provisioning. No hidden local fixture dependencies.
 - Steps, expected behavior, actual behavior, pass/fail and useful artifacts. Assertions must fail the verification command when unmet.
 - Persisted outcome checked by reload, API or storage when applicable; explain non-applicability for checks without persisted state.
+
+QA briefs state invariants and observable outcomes, not exact error codes or precedence unless the contract fixes them. QA may retest the pre-rebase head in parallel with integration; one range diff plus one full run on the rebased head then prove the rebase.
 
 QA owns an isolated checkout and runtime state. It may create test evidence; never repairs product code. Agree file ownership before it adds regression tests, then integrate those tests through the sole integrator before final checks.
 

@@ -19,7 +19,7 @@ Keep a short checkpoint linking authoritative entries, updated as commitments ch
 - Exact repository/branch/commit and runtime revisions, dirty work, evidence paths and delivery/recovery routes.
 - Current dispatch owner, checkpoint revision, notification cursor and consumed event IDs; named successor only when replacement is intended.
 
-Before a worker call persist task ID, attempt ID and dispatch intent. After it returns save returned session/delegation IDs and result/event records. If interrupted between those writes, reconcile the attempt from existing recovery evidence; an intent without returned IDs must not trigger another dispatch.
+Before a worker call persist task ID, attempt ID and dispatch intent. After it returns save returned session/delegation IDs and result/event records. If interrupted between those writes, reconcile the attempt from existing recovery evidence; an intent without returned IDs must not trigger another dispatch. Native and host-thread starts: check the host's thread or session list for the attempt first; a start reported as aborted may exist.
 
 Never request or run compaction during a pending Farcall wait. Checkpoint before dispatch, keep the direct wait intact, request manual compaction only after it returns. Do not assume automatic host compaction preserves a Farcall call: if delivery is lost, keep the outcome unknown and recover without launching a replacement worker.
 
@@ -37,9 +37,9 @@ If replacement is unsafe, continue in the same thread/session where continuity i
 
 ## Batch notifications and limit active streams
 
-Children/workers write result files. Status by pull: notify only for STOP, decision or acceptance-ready result; other progress stays in result files, read by the coordinator on wake. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports at most 15 lines. Consume each event once; progress plus completion notice for the same event triggers one handling. No turn for duplicate or progress-only notices. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads.
+Children/workers write result files. Status by pull: notify only for STOP, decision or acceptance-ready result; other progress stays in result files, read by the coordinator on wake. Notifications contain task/attempt/event ID, outcome, exact revision and artifact link; chat reports at most 15 lines. Consume each event once; progress plus completion notice for the same event triggers one handling. No turn for duplicate or progress-only notices. Record consumption in the task store, without acknowledgement-only messages. Notify affected owners, not all threads. Record each native or host-thread worker's expected finish and arrange one bounded host wake at that time; if no notice arrived, read its result file and session status once and consume a found result once. Direct Farcall waits stay unpolled; a missing notice never authorizes redispatch.
 
-On each wake reconcile arrived decisions and results first, then fill free stream slots with ready independent work from the plan. Plan model, provider, test-VM, GUI and build capacity separately; free model capacity is not free test capacity. On repeated provider overload reduce new starts and secure running results instead of queueing more acceptance work.
+On each wake reconcile arrived decisions and results first, then fill free stream slots with ready independent work from the plan. Plan model, provider, test-VM, GUI and build capacity separately; free model capacity is not free test capacity. Shared test-VM slots: the integration path has priority; long acceptance or performance runs yield or use their own slot. On repeated provider overload reduce new starts and secure running results instead of queueing more acceptance work.
 
 Prefer existing deterministic delivery. Never replace direct Farcall waits with model-driven polling; normal tool completions still return normally. Across machines use one authoritative store accessible to relevant owners.
 
