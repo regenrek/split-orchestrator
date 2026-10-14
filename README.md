@@ -2,7 +2,7 @@
 
 ![Split Orchestrator. One coordinator helps three coding mascots assemble their separate pieces.](docs/images/split-orchestrator-banner.png)
 
-Opus coordinates & reviews, and builds UI changes natively. Astra gives security, money & data changes one final review. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
+Opus coordinates & reviews, and builds UI changes natively. Astra reviews the design of security, money & data work once before it is built. Sol builds, integrates & runs browser/Electron tests and acceptance QA through [Farcall](https://github.com/regenrek/farcall-mcp).
 
 A Claude Code plugin for clearly owned work, direct completion waits & checks against the real application. Use the fewest workers needed. One worker owns integration. A fresh Sol QA session tests the integrated app; Opus owns final acceptance.
 

@@ -8,7 +8,7 @@ argument-hint: <task and optional constraints>
 
 Entrypoint for the root coordinator. A host stream reading it applies the rules for its assigned role under [transport scope](references/ownership.md#transport-scope); reading this skill does not reassign the stream as root coordinator.
 
-You coordinate and own final acceptance. Sol owns implementation, integration and corrections; UI-class builds go to the UI implementer per review tiers. Opus diff reviewer reviews; Astra does the one final review of security / money / data candidates. Fresh Sol QA tests the integrated result without repairing product code. Optional Haiku routine checker handles bounded non-GUI checks. Before dispatch pick the change class from the [review tiers](references/review.md); it fixes build effort, review depth and QA form for the slice.
+You coordinate and own final acceptance. Sol owns implementation, integration and corrections; UI-class builds go to the UI implementer per review tiers. Opus diff reviewer reviews code; Astra reviews the design of security / money / data work once before build. Fresh Sol QA tests the integrated result without repairing product code. Optional Haiku routine checker handles bounded non-GUI checks. Before dispatch pick the change class from the [review tiers](references/review.md); it fixes build effort, review depth and QA form for the slice.
 
 ## 1. Verify the setup
 
@@ -16,11 +16,12 @@ You coordinate and own final acceptance. Sol owns implementation, integration an
 - Follow [one owner per rule](references/ownership.md): Farcall owns transport, Split owns workflow, host skills and project instructions add only their specific procedures and requirements. This skill uses Farcall tools directly.
 - Identify this role and assigned transport under [transport scope](references/ownership.md#transport-scope). For coordinator dispatches assigned to Farcall, confirm availability and read [its contract](references/farcall.md); missing Farcall never permits native/CLI replacement. Host stream with explicitly preselected native path uses its host contract. No rerouting of pending or unknown attempts.
 - Follow project instructions. Before delegation verify actual entry point, start command, mandatory local checks and reproducible test data. Test fixtures must be versioned or have documented provisioning/reset steps, including external backends. Resolve only missing prerequisites; do not repeat an approval already given.
+- Rollouts, deploys and installs on a real target: on the first day run the real preflight read-only on that target (installed versions, permissions, paths, tools); put blockers it shows into the plan before design or build.
 - For browser smoke, Electron testing and acceptance QA, verify browser/Electron control in the actual assigned Sol session, not only in the coordinator; workers do not inherit your browser connection. Missing access leaves affected checks open; agree a transparent alternative with the user, such as restoring access in the assigned QA session. Never silently switch tools, models or permissions.
 
 ## Keep context small
 
-- Worker and child chat reports: at most 15 lines; exact commit, result, test evidence, blockers, risks/decisions, artifact path. Full logs/traces stay in worker artifacts; do not import wholesale. Keep failures and unverified settings visible.
+- Worker and child chat reports: result first, plain language, no invented abbreviations or run-together terms; prose at most five sentences, finding lists or tables within 15 lines; exact commit, result, test evidence, blockers, risks/decisions, artifact path. Full logs/traces stay in worker artifacts; do not import wholesale. Keep failures and unverified settings visible.
 - Write long briefs/messages once with file-writing tools and pass the path (`prompt_file` for Farcall), not a long heredoc in a command. Ensure the receiver can read that path.
 - Read targeted ranges and search results. Do not preload large documents or entire unrelated skills into the coordinator; still read instructions fully when required.
 - Haiku ([routine checker](../../agents/routine-checker.md)) checks status, logs, links and content via HTTP/files only: no browser (including headless), GUI, Electron or screenshot triage. Sol browser smoke and Electron tests run in Farcall sessions separate from implementation and acceptance QA, under the [smoke contract](references/acceptance.md#browser-and-electron-smoke). Coordinator does not click through the browser.
@@ -40,7 +41,9 @@ Decisions put to the user: one decision ledger in `run.md` (ID, question, asked-
 - Specify success, failure, retry and conflict behavior where relevant, including observable stored outcomes, not just response messages.
 - For stateful features turn applicable cases in [acceptance evidence](references/acceptance.md) into explicit criteria. Mark high-risk cases for explicit Sol QA checks before dispatch; add checks if new risks emerge.
 - Fewest workers needed. Start with one implementer unless independent deliverables justify more. Do not split investigation, coding and fixes into separate owners.
-- Test-suite rewrites, new harness/verifier/fixture frameworks and schema/migration cleanups are separate deliveries with user approval and a time box, never side work of a feature slice. Disposable artifacts (spikes, test figures) get no final-asset acceptance criteria.
+- Security / money / data: read-only inventory of the real target and data first, then one design review per [review tiers](references/review.md), then the assigned builder builds once against the reviewed design.
+- Plan sets a bounded reserve before start: test-VM/remote starts, correction rounds (never above the two-round limit), allowed owner self-fix kinds (default: test, fixture, harness, environment). Work inside the reserve needs no STOP. An exhausted reserve is on the escalation list; then apply the round and budget rules below.
+- Test-suite rewrites, new harness/verifier/fixture frameworks and schema/migration cleanups are separate deliveries with user approval and a time box, never side work of a feature slice. Prefer an existing command over new test tooling. Disposable artifacts (spikes, test figures) get no final-asset acceptance criteria.
 - Choose one run ID. Use it in every checkout, branch, temp directory, container, volume, database and port name the run creates. Record each resource and process when created in a plain Markdown list at `artifacts/<run-id>/run.md` in the coordinator's checkout. Cleanup touches only listed items.
 - Each implementation/integration/smoke/QA worker gets an isolated checkout at an agreed base revision, explicit branch and file/component ownership. Keep the user's checkout and unsaved work intact. Multi-repository tasks: isolate every writable repository and any concurrently used mutable runtime state, ports or databases.
 - Each shared interface/component has exactly one owner. Others request changes from that owner; no competing local types, adapters or second implementations. Settle ownership in every handoff.
@@ -62,10 +65,14 @@ Run ID / resource list: <run ID; coordinator's artifacts/<run-id>/run.md>
 Ownership: <editable files/components; shared owners; integration owner>
 Contracts: <agreed interfaces and required upstream commits>
 Acceptance: <observable success, relevant failure/retry/conflict behavior>
-Checks: <mandatory local checks and actual entry point>
+Checks: <mandatory local checks and actual entry point>; run new or changed
+checks locally first; existing commands over new tooling; no seals or checksum
+chains for intermediate states
 Temp data: only inside your checkout or $TMPDIR, named with the run ID. No copies of the repository, databases, dependencies or build output. Stop processes you started. Remove disposable data you created; report leftovers (path, size, reason).
 Result file: <assigned artifact path; include task/attempt IDs and result event ID>
-Handoff: at most 15 chat lines; exact changes/commit, evidence link, blockers,
+Handoff: result first, plain language, no invented abbreviations or run-together
+terms; prose at most 5 sentences, finding lists or tables within 15 lines;
+exact changes/commit, evidence link, blockers,
 decisions and unverified criteria. Details in the assigned artifacts file.
 Do not edit another owner's components, delegate further, or push, merge to
 main, deploy or publish. Request shared changes from the coordinator.
@@ -80,7 +87,7 @@ Farcall dispatches: direct completion waits; batch independent tasks in disjoint
 - Workers keep useful regression tests with the implementation, not only in temporary worker artifacts. No extra suites or CI machinery by default.
 - Return corrections to the original worker session with findings and expected behavior; if it cannot resume, report that before assigning a replacement. Classify every red result first: product (back to implementer), harness (test owner fixes test, no product rerun) or environment (fix or move environment, nothing else changes). Never an unannounced model switch.
 - Count correction rounds per deliverable and user path, not per finding; new finding IDs, threads, reviewers or run IDs do not reset the count. Default: one batched correction plus one targeted recheck. After two unsuccessful rounds stop: narrow the task, change approach or owner, or leave named criteria open; summarize both attempts. Limits stop spending; they never turn a blocker into a pass.
-- Owners fix their own test, fixture, harness and environment failures inside their assignment and recheck: no STOP, no coordinator approval, no separate review chain. Never weaken assertions or product safety; a weakened assertion is a blocking finding. Report changed assertions in the handoff; diff reviewer checks them, or coordinator acceptance in tiers without diff review. QA may fix its own probes, never product code. Escalate only for product contract, schema, permission, security or scope change; new paid resources or accounts; two unsuccessful rounds; decisions only the user can make.
+- Owners fix their own test, fixture, harness and environment failures inside their assignment and recheck: no STOP, no coordinator approval, no separate review chain. Never weaken assertions or product safety; a weakened assertion is a blocking finding. Report changed assertions in the handoff; diff reviewer checks them, or coordinator acceptance in tiers without diff review. QA may fix its own probes, never product code. Escalate only for product contract, schema, permission, security or scope change; exhausted plan reserve; new paid resources or accounts; two unsuccessful rounds; decisions only the user can make.
 - Serialize integration with corrections to the integrator's own checkout. Reintegrate corrected commits through the same integrator; never edit worker code yourself.
 
 Live incident with owner present: an already-authorized narrow correction may stay with the same assigned implementer instead of rebuilding the review chain at each stop. Record changed files/revision and checks, return the change to the repository, apply the risk-based review tier. Grants no deployment, access or publication approval; does not bypass acceptance.
@@ -105,7 +112,7 @@ Close the run before reporting:
 - Aborted or timed-out run keeps its checkouts and reports them open. Unknown worker outcomes block cleanup.
 - Report cleanup separately from acceptance: removed items and leftovers (path, size, reason), including anything retained for an open criterion or resumable correction.
 
-Chat report within 15 lines, linking detailed evidence: integrated branch/commit, requested and verified models/efforts, what changed, check evidence, separate-review findings, coordinator acceptance, unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria stay open. No push, main merge, deployment or publishing without approval.
+Chat report per the report rule in [Keep context small](#keep-context-small); link detailed evidence: integrated branch/commit, requested and verified models/efforts, what changed, check evidence, separate-review findings, coordinator acceptance, unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria stay open. No push, main merge, deployment or publishing without approval.
 
 Record per stream in `run.md`: change class, review passes, correction rounds, and defects first found by QA or a live run rather than review. Optionally add harness/environment failures, queue wait and coordinator messages. Use them to adjust effort, review depth or concurrency; not a completion gate.
 

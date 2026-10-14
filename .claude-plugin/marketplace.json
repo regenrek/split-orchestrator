@@ -1,6 +1,6 @@
 {
   "name": "split-orchestrator",
-  "description": "Opus coordinates, reviews and builds UI natively; Astra final-reviews security, money and data changes; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
+  "description": "Opus coordinates, reviews and builds UI natively; Astra design-reviews security, money and data work before build; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall.",
   "owner": {
     "name": "Kevin Kern"
   },
@@ -8,7 +8,7 @@
     {
       "name": "split-orchestrator",
       "source": "./plugin",
-      "description": "Opus coordinates, reviews and builds UI natively; Astra final-reviews security, money and data changes; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall."
+      "description": "Opus coordinates, reviews and builds UI natively; Astra design-reviews security, money and data work before build; Sol implements, integrates and runs browser/Electron tests and acceptance QA through Farcall."
     }
   ]
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.3.10 (2026-10-14)
+
+- Security/money/data: read-only target inventory, then one Astra design review before build, then Sol builds once; Astra rechecks only for a highest-severity blocker, changed design or security boundary, or new material risk. Replaces the post-build Astra final review.
+- Rollouts and installs run the real preflight read-only on the target on the first day.
+- Trivial, test-only and doc-only changes stay local; other classes use test VMs for full suites, package builds and acceptance runs the local machine cannot provide. Every new or changed check runs once locally against real stored data (no production copies) before a VM or remote run; static review never accepts a check without its local run.
+- No seals, checksum chains or not-run ledgers for intermediate states; a repeated failure class becomes a project recipe checkpoint. Prefer existing commands over new test tooling.
+- The plan sets a bounded reserve (VM starts, rounds, self-fix kinds); inside it no STOP; an exhausted reserve joins the escalation list.
+- Reports: result first, plain language, no invented abbreviations or run-together terms; prose at most five sentences, finding lists or tables within 15 lines.
+
 ## 0.3.9 (2026-10-14)
 
 - Opus 5.5 high is the diff reviewer in a fresh session, never the coordinator, and does all rechecks and delta checks. Astra (`gpt-6-astra` high) gives security/money/data candidates one final review; it rechecks only for a highest-severity blocker, changed security boundary or new material risk. No other reviewers without a named uncovered risk or user request; Astra is the single advisor role.
