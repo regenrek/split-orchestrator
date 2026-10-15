@@ -28,8 +28,6 @@ CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS=0 MCP_TOOL_TIMEOUT=7200000 \
 
 [Setup, browser access & upgrading from 0.1](docs/usage.md).
 
-![Opus coordinates Sol workers through Farcall. One Sol worker integrates their commits. A fresh Sol QA session tests the integrated application. Opus reviews the evidence and owns acceptance.](docs/images/orchestration-example.png)
-
 ## Try it
 
 ```text
