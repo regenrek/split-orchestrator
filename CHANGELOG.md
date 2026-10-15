@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.12 (2026-10-15)
+
+- QA starts together with the diff review on the same head; review and QA findings feed one correction.
+- The bounded wake at a worker's expected finish is arranged in the same turn the finish is stated.
+- QA expectations name their spec or contract source; one without a source is an open question, not a failure. A new check fails once against a known-bad state before it counts.
+- The integrator runs every suite the project's CI runs, from its test globs, not a hand-kept list.
+- Before asking the user: check the ledger, ask only what the team cannot decide or do itself, give figures with their source.
+
 ## 0.3.11 (2026-10-14)
 
 - Where the tier requires diff review, Astra is the diff reviewer for Opus-built non-UI slices. The diff reviewer runs the affected tests at the reviewed head; worker-reported green alone is insufficient. New art-content class: no diff review of binary assets; review import, bake and build scripts; QA by captures in the running build.
