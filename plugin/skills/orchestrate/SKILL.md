@@ -109,12 +109,13 @@ Live incident with owner present: an already-authorized narrow correction may st
 Close the run before reporting:
 
 - Stop processes the run started. Remove listed checkouts, temp directories, containers, volumes and test databases, except items needed for an open criterion or resumable correction. Keep evidence in the coordinator's `artifacts/<run-id>/`.
+- Durable run record: the project chooses the repository for each run's Markdown reports (`run.md`, briefs, results, reviews) and the small text and screenshot evidence they link; add single files, never force-add folders. Downloads, SDKs, source copies, binaries, logs, dumps, checkouts and raw sessions stay out of Git in the project's evidence store; the report records location and hash, or says the evidence is unavailable. Rotate ledgers past their size limit instead of making exceptions. Size limits and store location belong in project instructions.
 - Before removing a worker checkout, copy its Farcall records for resumable sessions from `artifacts/farcall/` into the coordinator's `artifacts/<run-id>/`, retaining delegation IDs.
 - Never remove unlisted paths, anything a running process uses, or a checkout or Farcall records while `artifacts/farcall/.active` exists. Never prune shared caches or run host-wide cleanup.
 - Aborted or timed-out run keeps its checkouts and reports them open. Unknown worker outcomes block cleanup.
 - Report cleanup separately from acceptance: removed items and leftovers (path, size, reason), including anything retained for an open criterion or resumable correction.
 
-Chat report per the report rule in [Keep context small](#keep-context-small); link detailed evidence: integrated branch/commit, requested and verified models/efforts, what changed, check evidence, separate-review findings, coordinator acceptance, unresolved criteria. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria stay open. No push, main merge, deployment or publishing without approval.
+Chat report per the report rule in [Keep context small](#keep-context-small); link detailed evidence: integrated branch/commit, requested and verified models/efforts, what changed, check evidence, separate-review findings, coordinator acceptance, unresolved criteria with what is missing. Distinguish worker-complete, integrated and accepted states. Unverified or failing criteria stay open. No push, main merge, deployment or publishing without approval.
 
 Record per stream in `run.md`: change class, review passes, correction rounds, and defects first found by QA or a live run rather than review. Optionally add harness/environment failures, queue wait and coordinator messages. Use them to adjust effort, review depth or concurrency; not a completion gate.
 
