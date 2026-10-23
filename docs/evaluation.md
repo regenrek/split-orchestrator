@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.13 verification scope
+
+From a private project whose planning repository grew to about 900 MB after whole run folders, including vendor SDKs, were force-added. Adds one owner for what of a run is kept in Git and what goes to the project's evidence store; open criteria name what is missing. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+
 ## 0.3.12 verification scope
 
 From the first 0.3.11 pilot day in three projects. Worked: rounds stayed at one or two per deliverable; reviewer-run tests and a combined Opus and Astra UI review found real defects before merge. Cost: QA still waited for review and recheck; one coordinator stated expected finishes without arranging a wake and missed a completion by 73 minutes; a QA brief with an unsourced expectation produced a false failure; a crashing check reported success; an integrator's hand-kept test list missed a suite and two reds reached the main branch; a coordinator re-asked a decided question. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.

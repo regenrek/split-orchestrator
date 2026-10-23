@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.13 (2026-10-23)
 
 - Durable run record: Markdown reports and small linked evidence go into Git as single files in the project's chosen repository; downloads, binaries, logs, dumps, checkouts and raw sessions go to the project's evidence store with location and hash. Ledgers rotate past their size limit. Limits and store location belong in project instructions.
 - The final report lists each unresolved criterion with what is missing.
