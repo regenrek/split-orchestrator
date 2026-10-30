@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.3.14 (2026-10-30)
 
 - Acceptance QA (high) and browser/Electron smoke (medium) run on `gpt-6.1-terra` instead of Sol; Sol stays implementer and integrator. Terra via Farcall verified on 2026-10-30 from the Codex session record.
 - QA uses test accounts and test data only; never production credentials, data or deploy access.

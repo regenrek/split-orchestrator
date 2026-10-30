@@ -27,15 +27,19 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 |---|---|
 | Missing Farcall or wrong model/effort | Coordinator reports the blocker before implementation; no native worker, fallback model or direct CLI substitute |
 | One small CLI feature | One isolated Sol worker implements & integrates; Sol QA exercises the actual command and reloads persisted state; Opus reviews the evidence |
-| Browser/Electron smoke | Each has its own Sol-medium Farcall session with verified tool access, explicit checkpoints and viewport/overflow assertions; no Haiku or coordinator GUI fallback |
-| Non-GUI routine check | Haiku low checks status, logs or HTTP/file links and content; GUI requests return to the coordinator for Sol |
+| Browser/Electron smoke | Each has its own Terra-medium Farcall session with verified tool access, explicit checkpoints and viewport/overflow assertions; no Haiku or coordinator GUI fallback |
+| Non-GUI routine check | Haiku low checks status, logs or HTTP/file links and content; GUI requests return to the coordinator for Terra |
 | Two independent deliverables with a shared interface | One owner delivers the shared interface and minimal working path first; later batch uses disjoint checkouts; only the assigned integrator merges |
 | Correction after integrated review | Exact original worker session resumes, the integrator incorporates the fix, the original QA session rechecks affected paths and core journeys on the new integrated commit |
-| UI read/write failure & delayed response | Fresh Sol QA uses a real backend/browser; newer input survives failed refresh and delayed save responses, and reload proves what was stored |
+| UI read/write failure & delayed response | Fresh Terra QA uses a real backend/browser; newer input survives failed refresh and delayed save responses, and reload proves what was stored |
 | Retry or concurrent status change | Changed retries never acknowledge unapplied changes; a second session's status change cannot hide the first session's local draft |
 | Missing QA browser/Electron access | Checks stay open; an authorized alternative is agreed explicitly, with no silent tool or permission substitution |
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
+
+## 0.3.14 verification scope
+
+From a 2026-10-30 comparison and model check. Terra (`gpt-6.1-terra`) is built for computer use and runs live QA and smoke; a Farcall check confirmed model and effort from the Codex session record. A Marlies run showed the worktree commit recipe failing and integrator ownership checks stopping out-of-scope intakes; committing workers now use local clones. Instruction changes only; local packaging, link and hook checks pass. Terra QA quality not yet measured against Sol.
 
 ## 0.3.13 verification scope
 

@@ -1,7 +1,7 @@
 {
   "name": "split-orchestrator",
   "displayName": "Split Orchestrator",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "Opus coordinates, reviews and builds UI natively; Astra design-reviews security, money and data work before build; Sol implements and integrates; Terra runs browser/Electron tests and acceptance QA through Farcall.",
   "author": {
     "name": "Kevin Kern",
