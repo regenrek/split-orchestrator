@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- Acceptance QA (high) and browser/Electron smoke (medium) run on `gpt-6.1-terra` instead of Sol; Sol stays implementer and integrator. Terra via Farcall verified on 2026-10-30 from the Codex session record.
+- QA uses test accounts and test data only; never production credentials, data or deploy access.
+- Workers that commit get a local clone, not a worktree. A worktree shares refs, config, hooks and stash with the main repository and needs its common Git directory writable to commit; worktrees stay for read-only roles.
+
 ## 0.3.13 (2026-10-23)
 
 - Durable run record: Markdown reports and small linked evidence go into Git as single files in the project's chosen repository; downloads, binaries, logs, dumps, checkouts and raw sessions go to the project's evidence store with location and hash. Ledgers rotate past their size limit. Limits and store location belong in project instructions.

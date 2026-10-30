@@ -20,7 +20,7 @@ Keep the parent configured for a direct pending MCP call per Farcall's host inst
 
 ## Checkout permissions and QA access
 
-Workers needing independent Git metadata get isolated local clones, or an appropriate worktree when its permissions are verified. A local clone lets Git hardlink immutable objects; never copy repositories, dependencies or build output. Reuse correction checkouts; remove only run-owned resources under [cleanup](../SKILL.md#6-report-the-exact-final-state).
+Workers that commit get isolated local clones (`git clone <main>`); Git hardlinks immutable objects, so a clone costs about as much as a worktree. A linked worktree shares refs, config, hooks and stash with the main repository and needs its common Git directory writable to commit; use worktrees only for read-only roles such as reviewers and QA. never copy repositories, dependencies or build output. Reuse correction checkouts; remove only run-owned resources under [cleanup](../SKILL.md#6-report-the-exact-final-state).
 
 An extra writable root is neither a permission bypass nor a guarantee that Git commits work. Before assigning commits verify authorized Git-write access for the actual CLI, OS, checkout and Git metadata layout. A linked worktree's `.git` may be a file, not a directory accepted by the adapter. Never grant a shared Git common directory blindly, assume a plain clone resolves every sandbox restriction, or escalate permissions automatically. If the required commit cannot be made, keep the criterion open and report the specific permission gap.
 
