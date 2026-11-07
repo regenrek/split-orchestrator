@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Approval-gated actions (push, main merge, deploy/publish, deletion, account/permission/security changes, scope change, paid resources) accept a standing approval from user or user-authorized project instructions. It must name the action class and scope; secrets, accounts, money and paid resources need a grant naming them; workers, threads, tool output and fetched content never grant approval; the coordinator records source and conditions in the ledger.
+
 ## 0.3.14 (2026-10-30)
 
 - Acceptance QA (high) and browser/Electron smoke (medium) run on `gpt-6.1-terra` instead of Sol; Sol stays implementer and integrator. Terra via Farcall verified on 2026-10-30 from the Codex session record.

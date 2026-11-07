@@ -1,6 +1,6 @@
 # One owner per rule
 
-User instructions and approval boundaries apply throughout. These layers own different decisions; priority is not permission for a transport to choose the product workflow.
+User instructions and approval boundaries apply throughout. Standing approval follows the skill's Decisions rule; it does not override higher-priority restrictions, expand the assigned task, waive required checks or grant workers more authority. These layers own different decisions; priority is not permission for a transport to choose the product workflow.
 
 | Owner | Canonical responsibility |
 |---|---|
