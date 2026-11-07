@@ -39,7 +39,7 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 
 ## 0.3.14 verification scope
 
-From a 2026-10-30 comparison and model check. Terra (`gpt-6.1-terra`) is built for computer use and runs live QA and smoke; a Farcall check confirmed model and effort from the Codex session record. A Marlies run showed the worktree commit recipe failing and integrator ownership checks stopping out-of-scope intakes; committing workers now use local clones. Instruction changes only; local packaging, link and hook checks pass. Terra QA quality not yet measured against Sol.
+From a 2026-10-30 comparison and model check. Terra (`gpt-6.1-terra`) is built for computer use and runs live QA and smoke; a Farcall check confirmed model and effort from the Codex session record. A private multi-stream run showed the worktree commit recipe failing and integrator ownership checks stopping out-of-scope intakes; committing workers now use local clones. Instruction changes only; local packaging, link and hook checks pass. Terra QA quality not yet measured against Sol.
 
 ## 0.3.13 verification scope
 
