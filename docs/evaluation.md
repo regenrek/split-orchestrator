@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.16 verification scope
+
+From a review of the public plugin for defaults that fit one maintainer's setup rather than a typical user (fast service tier, timed defaults, a remote test-VM fleet, advisor topics). These become opt-in or conditional; users keep their own values in their instructions. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+
 ## 0.3.15 verification scope
 
 From users who keep standing decision rights in their own instructions while the plugin still asked before every push or merge. An advisor review of the change named the risks: a cloned repository granting itself approval, injected text posing as the user, general autonomy wording read as blanket approval, approval widening from feature branches to main, and revoked grants kept in the ledger; the wording addresses each. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.

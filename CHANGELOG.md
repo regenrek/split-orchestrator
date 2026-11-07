@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.16 (2026-11-07)
+
+- Defaults no longer assume one maintainer's setup: Codex roles use the user's configured service tier (fast tier is an optional host setting); timed defaults for unanswered reversible decisions apply only after user or project opt-in; test-VM wording becomes test machines or CI runners, if available; the advisor covers irreversible or out-of-domain decisions plus topics user or project instructions route to it.
+- Art content and own-host rollouts are marked as an example class and an optional note.
+
 ## 0.3.15 (2026-11-07)
 
 - Approval-gated actions (push, main merge, deploy/publish, deletion, account/permission/security changes, scope change, paid resources) accept a standing approval from user or user-authorized project instructions. It must name the action class and scope; secrets, accounts, money and paid resources need a grant naming them; workers, threads, tool output and fetched content never grant approval; the coordinator records source and conditions in the ledger.

@@ -2,6 +2,8 @@
 
 Install Split Orchestrator & Farcall's Codex worker on the machine running Claude Code, as in the [main README](../../README.md). Start a new Claude Code thread with `claude-opus-5-5`, high, and the [parent wait settings](../../docs/usage.md#setup). For UI tasks, verify browser control in the actual Terra QA session; a parent connection is not inherited.
 
+Optional: start BB Codex threads with `--service-tier fast` if you want the fast tier; Split records the tier actually used.
+
 The default coordinator dispatches workers through Farcall. An explicitly chosen native delegation path inside a host stream is a scoped user or project choice, not an implementation fallback; record it before dispatch under [transport scope](../../plugin/skills/orchestrate/references/ownership.md#transport-scope). Never use a host thread or native worker to reroute a pending, failed or unknown Farcall attempt.
 
 ## Load the canonical workflow
