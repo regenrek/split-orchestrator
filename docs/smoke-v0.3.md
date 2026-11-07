@@ -40,4 +40,4 @@ The initial worker commit failed because `.git` was read-only. The coordinator r
 
 The CLI had no browser/Electron surface. UI read/write failures, delayed-save races, concurrent browser sessions, multiple implementers, product-fix QA resumes & optional fresh review remain untested by this smoke. This is a narrow workflow check, not a full acceptance or cost benchmark.
 
-Raw sessions, QA command evidence & fixture repositories are retained locally under `artifacts/live-0.3/`, excluded from the published plugin. Coordinator session `d9cba2bb-142b-44e3-a586-71c90045220e`, implementation session `01a101b5-7280-7c63-80dd-ab8ee923187c`, QA session `01a101b7-4549-70b1-89d0-1ee759ecff68`.
+Raw sessions, session IDs, QA command evidence & fixture repositories were kept by the maintainer and are not published.

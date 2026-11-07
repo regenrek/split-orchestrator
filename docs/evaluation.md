@@ -11,7 +11,7 @@ Practical workflow experiments informed this change. They compare complete runs,
 - **S, Opus high → five Sol high workers.** A blocking Farcall batch, a designated integrator & original-session corrections were exercised. Shared Core files still had competing edits; failed refreshes lost drafts & changed retries could return success without saving the changes.
 - **X, Opus → two Sol workers.** At xhigh, with a separate Sol review, the evaluated result passed 23 backend cases & three input-recovery cases. A concurrent-edit/refresh path still hid unsaved work.
 
-The practical collaboration-app run also exercised Farcall batches, integration handoffs & original-session corrections. It used xhigh workers and separate Astra reviews. The earlier finance release likewise included Astra, and later added project-specific model routing. Neither is proof of the exact 0.2 high/high workflow without Astra.
+Two other practical runs also exercised Farcall batches, integration handoffs & original-session corrections. One used xhigh workers and separate Astra reviews; the other also included Astra and later added project-specific model routing. Neither is proof of the exact 0.2 high/high workflow without Astra.
 
 Version 0.2 adopted the requested Opus/Sol split with explicit shared ownership, one integration owner, an early real end-to-end path & coordinator acceptance of persisted outcomes. Version 0.3 adds a fresh Sol QA session for live testing, concrete stateful scenarios & evidence bound to the final integrated revision. Opus owns acceptance and assigns live rechecks to Sol when evidence or risk requires it. There is no general quality ranking or verified cost-saving claim for this split.
 
@@ -37,13 +37,17 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.15 verification scope
+
+From users who keep standing decision rights in their own instructions while the plugin still asked before every push or merge. An advisor review of the change named the risks: a cloned repository granting itself approval, injected text posing as the user, general autonomy wording read as blanket approval, approval widening from feature branches to main, and revoked grants kept in the ledger; the wording addresses each. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+
 ## 0.3.14 verification scope
 
 From a 2026-10-30 comparison and model check. Terra (`gpt-6.1-terra`) is built for computer use and runs live QA and smoke; a Farcall check confirmed model and effort from the Codex session record. A private multi-stream run showed the worktree commit recipe failing and integrator ownership checks stopping out-of-scope intakes; committing workers now use local clones. Instruction changes only; local packaging, link and hook checks pass. Terra QA quality not yet measured against Sol.
 
 ## 0.3.13 verification scope
 
-From a private project whose planning repository grew to about 900 MB after whole run folders, including vendor SDKs, were force-added. Adds one owner for what of a run is kept in Git and what goes to the project's evidence store; open criteria name what is missing. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+From a project whose run-record repository grew large after whole run folders, including vendored dependencies, were force-added. Adds one owner for what of a run is kept in Git and what goes to the project's evidence store; open criteria name what is missing. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
 
 ## 0.3.12 verification scope
 
@@ -51,7 +55,7 @@ From the first 0.3.11 pilot day in three projects. Worked: rounds stayed at one 
 
 ## 0.3.11 verification scope
 
-From the 0.3.10 pilot in three projects (finance, team plugin rollout, game). Worked: the two-round limit turned a stalled test series into one decision; one decision ledger let the owner answer eight questions in one message; owner self-fixes of harness and environment failures; an early live run found seven real defects in about three hours that earlier reviews had missed. Cost: finished reviews sat unread 35 to 55 minutes because completion notices were lost; a start reported as aborted existed and caused a duplicate review; test-contract drift counted as correction rounds; long acceptance runs blocked the integration path on shared VM slots; a QA brief with exact error codes failed correct product behaviour. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+From the 0.3.10 pilot in three projects of different types. Worked: the two-round limit turned a stalled test series into one decision; one decision ledger let the user answer eight questions in one message; owner self-fixes of harness and environment failures; an early live run found seven real defects in about three hours that earlier reviews had missed. Cost: finished reviews sat unread 35 to 55 minutes because completion notices were lost; a start reported as aborted existed and caused a duplicate review; test-contract drift counted as correction rounds; long acceptance runs blocked the integration path on shared VM slots; a QA brief with exact error codes failed correct product behaviour. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
 
 ## 0.3.10 verification scope
 
@@ -59,7 +63,7 @@ From a coordinator retrospective of a three-day rollout: time went into heavy te
 
 ## 0.3.9 verification scope
 
-Derived from run records with overlapping reviews: in `cli-mcp` S01 seven Opus and five Fable passes repeatedly reported the same findings; in S05 Fable's final pass after Opus found no new blocker. No same-revision Astra/Opus comparison exists. Instruction changes only; local packaging, link and hook checks pass. Each stream now records class, review passes, correction rounds and defects first found by QA or live runs; drop the Astra final review if pilots show it finds no blockers.
+Derived from run records with overlapping reviews: in one stream seven Opus and five Fable passes repeatedly reported the same findings; in another, Fable's final pass after Opus found no new blocker. No same-revision Astra/Opus comparison exists. Instruction changes only; local packaging, link and hook checks pass. Each stream now records class, review passes, correction rounds and defects first found by QA or live runs; drop the Astra final review if pilots show it finds no blockers.
 
 ## 0.3.8 verification scope
 
