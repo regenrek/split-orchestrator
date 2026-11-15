@@ -36,7 +36,7 @@ Use high for normal work. Except for the recorded host-effort fallback above, es
 
 ## Review and findings
 
-Design review input: plan, acceptance criteria, affected contracts and read-only inventory results (run by the implementer or QA session with target access). Design findings go to the coordinator, who updates the plan before dispatch.
+Design review input: plan, acceptance criteria, affected contracts, read-only inventory results (run by the implementer or QA session with target access) and the dated current-state check. Design and diff reviewers also answer whether a standard solution exists today and whether the approach is current as of the review date; a review confined to the submitted design leaves that point open. Design findings go to the coordinator, who updates the plan before dispatch.
 
 Give the diff reviewer requirements, acceptance criteria, exact base and integrated head commits, changed-file inventory and evidence paths. Review must cover full diff and relevant surrounding code for correctness, ownership, interface compatibility and regressions, and disclose any unreviewed portion, unavailable evidence or truncated input. Never treat an incomplete review as complete. New or changed checks, harness or verifier code: review needs its local run result; static review alone never accepts a check. Diff reviewer runs the affected tests at the reviewed head and records commands and exit codes; worker-reported green alone is insufficient; checks it cannot run stay open. Reviewer does not fix product code; findings return to original owners through the integrator.
 
