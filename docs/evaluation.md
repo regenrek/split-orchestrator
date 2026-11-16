@@ -37,6 +37,10 @@ Run these in disposable checkouts with the configured parent & Farcall. Keep the
 | Verification failure or unknown worker outcome | Failed assertion results in failed verification; unavailable evidence stays open; no duplicate dispatch or unauthorized push |
 | Initial smoke-effort comparison | Sample early medium smoke runs against separate high acceptance QA on the same cases/revision/data; return smoke to high if medium finds substantially fewer issues, recording the decision |
 
+## 0.3.17 verification scope
+
+From coordinator runs where outdated model knowledge shaped designs, test tooling grew larger than the change it checked, live checks on the shipped product came late, review conditions accumulated round after round, and work waited on questions or a single login's limit. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.
+
 ## 0.3.16 verification scope
 
 From a review of the public plugin for defaults that fit one maintainer's setup rather than a typical user (fast service tier, timed defaults, a remote test-VM fleet, advisor topics). These become opt-in or conditional; users keep their own values in their instructions. Instruction changes only; local packaging, link and hook checks pass. Not yet measured.

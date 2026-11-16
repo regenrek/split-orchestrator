@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.17 (2026-11-16)
+
+- Current-state check before design: platform, security, native, dependency, model and external-service decisions check official sources and today's standard solutions first; versions, model IDs and flags are verified at the source, not from memory. Reviewers also say whether a standard solution exists and the approach is current.
+- Need before design: deciding assumptions about cause, product path and relevance are checked before a product change; for new components the design reviewer judges need and simpler alternatives first.
+- Early live runs: scope and criteria are fixed before build; a small spike checks the riskiest assumption; the first live run on the user path of the shipped product follows the first build slice; each visible change gets a short live test on the reviewed head. A tripwire pauses a method after six agent hours without a new finding for a read-only outside check.
+- Questions and stalls: an approved direction carries steps inside its scope; non-urgent questions are batched with recommendation and default; a repeated kind of question becomes a proposed standing rule; user-only steps come once as a pre-checked procedure; a blocked item blocks only itself.
+- A limit on one login is not a provider limit: other already-approved capacity for the same role, model and effort is used first; no purchases, paid overage or account changes.
+- Contact with people outside the team (issues, comments, mail, posts) needs explicit or standing approval.
+- Thin test tooling: no reviewer or advisor rulings on test tooling or single runs; permanent tests protect important contracts and relevant failure cases; zero new tests is valid. Binding review conditions name a concrete harm and the smallest proportionate measure; conditions count once per revision.
+
 ## 0.3.16 (2026-11-07)
 
 - Defaults no longer assume one maintainer's setup: Codex roles use the user's configured service tier (fast tier is an optional host setting); timed defaults for unanswered reversible decisions apply only after user or project opt-in; test-VM wording becomes test machines or CI runners, if available; the advisor covers irreversible or out-of-domain decisions plus topics user or project instructions route to it.
